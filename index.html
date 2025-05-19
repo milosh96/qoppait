@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="assets/trainid.png">
-    <title>Train ID - AI Identifier</title>
+    <link rel="icon" type="image/svg+xml" href="assets/code-icon.svg">
+    <title>Qoppa IT</title>
     <style>
         * {
             margin: 0;
@@ -14,142 +14,130 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background-color: #588157;
-            color: white;
+            background-color: #1a1a1a;
+            color: #e0e0e0;
             line-height: 1.6;
+            padding: 4rem 2rem 2rem 2rem;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 2rem;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            min-height: 100vh;
         }
 
-        .content {
-            flex: 1;
-            padding: 2rem;
-            min-width: 300px;
-            order: 1;
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .title {
-            font-size: 3.5rem;
-            font-weight: bold;
-            margin-bottom: 1.5rem;
+        .header h1 {
+            font-size: 2.5rem;
+            color: #ffffff;
+            margin-bottom: 1rem;
         }
 
-        .description {
+        .header p {
             font-size: 1.2rem;
-            margin-bottom: 2rem;
-            max-width: 600px;
+            color: #b0b0b0;
+            line-height: 1.8;
         }
 
-        .store-buttons {
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .product-tile {
+            background-color: #2d2d2d;
+            border-radius: 12px;
+            padding: 1.5rem;
             display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .store-button img {
-            height: 50px;
-            transition: transform 0.2s;
-        }
-
-        .store-button:hover img {
-            transform: scale(1.05);
-        }
-
-        .phone-mockup {
-            flex: 1;
-            display: flex;
-            justify-content: center;
             align-items: center;
-            min-width: 300px;
-            order: 2;
+            gap: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            text-decoration: none;
+            color: inherit;
+            border: 1px solid #3d3d3d;
         }
 
-        .phone-mockup img {
-            max-width: 100%;
-            max-height: 600px;
-            height: auto;
-            width: auto;
+        .product-tile:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            background-color: #333333;
+        }
+
+        .product-icon {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+        }
+
+        .product-content {
+            flex: 1;
+        }
+
+        .product-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+        }
+
+        .product-description {
+            color: #b0b0b0;
+            font-size: 1rem;
         }
 
         @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-                text-align: center;
+            .products-grid {
+                grid-template-columns: 1fr;
             }
 
-            .content {
+            .product-tile {
                 padding: 1rem;
-                order: 2;
             }
 
-            .phone-mockup {
-                order: 1;
+            .product-icon {
+                width: 60px;
+                height: 60px;
             }
 
-            .title {
-                font-size: 2.5rem;
+            .header h1 {
+                font-size: 2rem;
             }
 
-            .store-buttons {
-                justify-content: center;
+            .header p {
+                font-size: 1.1rem;
             }
-
-            .phone-mockup img {
-                max-height: 500px;
-            }
-        }
-
-        .footer {
-            width: 100%;
-            text-align: center;
-            padding: 1rem;
-            margin-top: 2rem;
-        }
-
-        .footer a {
-            color: white;
-            text-decoration: none;
-            margin: 0 1rem;
-            font-size: 0.9rem;
-            border-bottom: 1px solid white;
-        }
-
-        .footer a:hover {
-            opacity: 0.8;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="content">
-            <h1 class="title">Train ID - AI Identifier</h1>
-            <p class="description">
-                Identify the model and the operator of the train. Capture within the app or choose from gallery.
-            </p>
-            <div class="store-buttons">
-                <a href="https://apps.apple.com/us/app/train-id-ai-identifier/id6744836722" class="store-button">
-                    <img src="assets/app-store-badge.png" alt="Download on the App Store">
-                </a>
-                <a href="https://play.google.com/store/apps/details?id=com.qoppait.train_identifier" class="store-button">
-                    <img src="assets/google-play-badge.png" alt="Get it on Google Play">
-                </a>
-            </div>
+        <div class="header">
+            <p>I'm a fullstack software engineer with a hobby of indie app development. My portfolio includes the apps below.</p>
         </div>
-        <div class="phone-mockup">
-            <img src="assets/phone-mockup.png" alt="Train ID App Screenshot">
+        <div class="products-grid">
+            <a href="https://4pilots.app" class="product-tile">
+                <img src="assets/4pilots.png" alt="4Pilots Icon" class="product-icon">
+                <div class="product-content">
+                    <h2 class="product-title">4Pilots - Every Aviator's Toolkit</h2>
+                    <p class="product-description">Plan your next flight, run flight-related conversions, E6B calculations and Weight & Balance check</p>
+                </div>
+            </a>
+            <a href="https://trainid.qoppait.com" class="product-tile">
+                <img src="assets/trainid.png" alt="Train ID Icon" class="product-icon">
+                <div class="product-content">
+                    <h2 class="product-title">Train ID - AI Identifier</h2>
+                    <p class="product-description">Identify any train instantly using AI</p>
+                </div>
+            </a>
         </div>
-    </div>
-    <div class="footer">
-        <a href="terms.html">Terms of Service</a>
-        <a href="privacy-policy.html">Privacy Policy</a>
     </div>
 </body>
 </html> 
