@@ -93,6 +93,39 @@
             font-size: 1rem;
         }
 
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            padding: 0.75rem 2rem;
+            background-color: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid #333;
+            z-index: 100;
+        }
+
+        nav a {
+            color: #b0b0b0;
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin: 0;
+            border-bottom: none;
+            padding-bottom: 2px;
+        }
+
+        nav a:hover {
+            color: #ffffff;
+        }
+
+        nav a.active {
+            color: #ffffff;
+            border-bottom: 1px solid #ffffff;
+        }
+
         @media (max-width: 768px) {
             .products-grid {
                 grid-template-columns: 1fr;
@@ -118,10 +151,16 @@
     </style>
 </head>
 <body>
+    <nav>
+        <a href="index.html" class="active">Apps</a>
+        <a href="terms.html">Terms</a>
+        <a href="privacy-policy.html">Privacy</a>
+        <a href="support.html">Support</a>
+    </nav>
     <div class="container">
-        <div class="header">
+        <!-- <div class="header">
             <p>I'm a fullstack software engineer with a hobby of indie app development. My portfolio includes the apps below.</p>
-        </div>
+        </div> -->
         <div class="products-grid">
             <a href="https://4pilots.app" class="product-tile">
                 <img src="assets/4pilots.png" alt="4Pilots Icon" class="product-icon">
@@ -135,6 +174,27 @@
                 <div class="product-content">
                     <h2 class="product-title">Train ID - AI Identifier</h2>
                     <p class="product-description">Identify any train instantly using AI</p>
+                </div>
+            </a>
+            <a href="https://nomadmap.link" class="product-tile">
+                <img src="assets/nomadmap.png" alt="Nomad Map Icon" class="product-icon">
+                <div class="product-content">
+                    <h2 class="product-title">Nomad Map - Discover & Track Places</h2>
+                    <p class="product-description">Find, save, and share great work and hangout spots as you travel</p>
+                </div>
+            </a>
+            <a href="https://owlio.online" class="product-tile">
+                <img src="assets/travelplanner.png" alt="Owlio Icon" class="product-icon">
+                <div class="product-content">
+                    <h2 class="product-title">Owlio - Travel Planner</h2>
+                    <p class="product-description">Plan smarter and travel better with itinerary planning, interactive maps, and local discovery</p>
+                </div>
+            </a>
+            <a href="photoguide.html" class="product-tile">
+                <img src="assets/shutterfox.jpeg" alt="ShutterFox Icon" class="product-icon">
+                <div class="product-content">
+                    <h2 class="product-title">ShutterFox - Camera Guide</h2>
+                    <p class="product-description">Learn photography with daily lessons and access cheat sheets for common scenarios</p>
                 </div>
             </a>
         </div>

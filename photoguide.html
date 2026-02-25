@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShutterFox - Learn Photography with Daily Lessons & Cheat Sheets</title>
+    <meta name="description" content="Master photography with ShutterFox. 10-minute daily lessons, cheat sheets for common scenes, and a guided learning path for beginners to advanced photographers. Works with Mirrorless, DSLR, compact, phone, and drone cameras.">
+    <meta name="keywords" content="learn photography, photography app, camera guide, photography lessons, cheat sheets, DSLR, mirrorless, beginner photography, shutterfox">
+    <meta name="author" content="Milos Cubrilo, Qoppa IT">
+    <link rel="canonical" href="https://qoppait.com/photoguide.html">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://qoppait.com/photoguide.html">
+    <meta property="og:title" content="ShutterFox - Learn Photography with Daily Lessons & Cheat Sheets">
+    <meta property="og:description" content="Master photography with 10-minute daily lessons, cheat sheets for common scenes, and a learning path for every level. Covers Mirrorless, DSLR, phone cameras and more.">
+    <meta property="og:image" content="https://qoppait.com/assets/shutterfox.jpeg">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ShutterFox - Learn Photography with Daily Lessons & Cheat Sheets">
+    <meta name="twitter:description" content="Master photography with 10-minute daily lessons, cheat sheets for common scenes, and a learning path for every level.">
+    <meta name="twitter:image" content="https://qoppait.com/assets/shutterfox.jpeg">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "MobileApplication",
+        "name": "ShutterFox - Camera Guide",
+        "description": "Master photography with 10-minute daily lessons, cheat sheets for common scenes, and a carefully crafted learning path for beginners to advanced photographers.",
+        "applicationCategory": "EducationApplication",
+        "operatingSystem": "iOS, Android",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "author": {
+            "@type": "Person",
+            "name": "Milos Cubrilo"
+        },
+        "image": "https://qoppait.com/assets/shutterfox.jpeg",
+        "url": "https://qoppait.com/photoguide.html"
+    }
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+
+        /* ── Nav ── */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            padding: 0.75rem 2rem;
+            background-color: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid #333;
+            z-index: 100;
+        }
+
+        nav a {
+            color: #b0b0b0;
+            text-decoration: none;
+            font-size: 0.9rem;
+            border-bottom: none;
+            padding-bottom: 2px;
+        }
+
+        nav a:hover { color: #ffffff; }
+
+        nav a.active {
+            color: #ffffff;
+            border-bottom: 1px solid #ffffff;
+        }
+
+        /* ── Layout ── */
+        .page {
+            padding-top: 3.5rem;
+        }
+
+        /* ── Hero ── */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 5rem 2rem 4rem;
+            gap: 1.5rem;
+        }
+
+        .app-icon {
+            width: 120px;
+            height: 120px;
+            border-radius: 24px;
+            object-fit: cover;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        .hero-eyebrow {
+            font-size: 0.85rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #e07820;
+            font-weight: 600;
+        }
+
+        .hero h1 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1.15;
+            max-width: 700px;
+        }
+
+        .hero h1 span {
+            color: #e07820;
+        }
+
+        .hero-sub {
+            font-size: 1.2rem;
+            color: #b0b0b0;
+            max-width: 520px;
+        }
+
+        .badges {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 0.5rem;
+        }
+
+        .badges a img {
+            height: 44px;
+            border-radius: 6px;
+            opacity: 0.9;
+            transition: opacity 0.2s;
+        }
+
+        .badges a img:hover { opacity: 1; }
+
+        /* ── Divider ── */
+        .section-divider {
+            height: 1px;
+            background: #2d2d2d;
+            margin: 0 2rem;
+        }
+
+        /* ── Features ── */
+        .features {
+            padding: 5rem 2rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            text-align: center;
+            font-size: 0.8rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #e07820;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 3rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .feature-card {
+            background-color: #222;
+            border: 1px solid #2d2d2d;
+            border-radius: 14px;
+            padding: 1.75rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            transition: border-color 0.2s, transform 0.2s;
+        }
+
+        .feature-card:hover {
+            border-color: #e07820;
+            transform: translateY(-3px);
+        }
+
+        .feature-icon {
+            width: 44px;
+            height: 44px;
+            background-color: rgba(224, 120, 32, 0.15);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .feature-icon svg {
+            width: 22px;
+            height: 22px;
+            stroke: #e07820;
+            fill: none;
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .feature-card h3 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+        }
+
+        .feature-card p {
+            font-size: 0.9rem;
+            color: #909090;
+            line-height: 1.55;
+        }
+
+        /* ── Screenshots ── */
+        .screenshots {
+            padding: 5rem 0;
+            overflow: hidden;
+        }
+
+        .screenshots .section-label,
+        .screenshots .section-title {
+            padding: 0 2rem;
+        }
+
+        .screenshots-wrapper {
+            position: relative;
+        }
+
+        .screenshots-fade {
+            display: none;
+        }
+
+        .screenshots-dots {
+            display: none;
+        }
+
+        .screenshots-track {
+            display: flex;
+            gap: 1.5rem;
+            padding: 2rem 2rem 1rem;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+
+        .screenshots-track::-webkit-scrollbar {
+            display: none;
+        }
+
+        .screenshots-track img {
+            height: 520px;
+            width: auto;
+            border-radius: 28px;
+            scroll-snap-align: start;
+            flex-shrink: 0;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+            transition: transform 0.2s;
+        }
+
+        .screenshots-track img:hover {
+            transform: translateY(-6px);
+        }
+
+        @media (max-width: 768px) {
+            .screenshots-fade {
+                display: block;
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                width: 72px;
+                background: linear-gradient(to right, transparent, #1a1a1a);
+                pointer-events: none;
+                transition: opacity 0.3s;
+            }
+
+            .screenshots-dots {
+                display: flex;
+                justify-content: center;
+                gap: 0.5rem;
+                padding: 0.75rem 0 0;
+            }
+
+            .dot {
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background: #444;
+                cursor: pointer;
+                transition: background 0.2s, transform 0.2s;
+            }
+
+            .dot.active {
+                background: #e07820;
+                transform: scale(1.4);
+            }
+        }
+
+        /* ── About ── */
+        .about {
+            background-color: #1e1e1e;
+            border-top: 1px solid #2d2d2d;
+            border-bottom: 1px solid #2d2d2d;
+            padding: 5rem 2rem;
+        }
+
+        .about-inner {
+            max-width: 760px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .about-inner p {
+            font-size: 1.05rem;
+            color: #b0b0b0;
+            line-height: 1.8;
+        }
+
+        .about-inner p strong {
+            color: #e0e0e0;
+        }
+
+        /* ── Camera types ── */
+        .cameras {
+            padding: 5rem 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .camera-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .chip {
+            background-color: #252525;
+            border: 1px solid #333;
+            border-radius: 999px;
+            padding: 0.45rem 1.1rem;
+            font-size: 0.9rem;
+            color: #c0c0c0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .chip svg {
+            width: 16px;
+            height: 16px;
+            stroke: #e07820;
+            fill: none;
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        /* ── Footer ── */
+        footer {
+            text-align: center;
+            padding: 2.5rem 2rem;
+            border-top: 1px solid #2d2d2d;
+            color: #555;
+            font-size: 0.85rem;
+        }
+
+        footer a {
+            color: #777;
+            text-decoration: none;
+            border-bottom: none;
+        }
+
+        footer a:hover { color: #aaa; }
+
+        /* ── Responsive ── */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.2rem; }
+            .features-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .features-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (min-width: 769px) {
+            .screenshots-track { justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- <nav>
+        <a href="index.html">Apps</a>
+        <a href="terms.html">Terms</a>
+        <a href="privacy-policy.html">Privacy</a>
+        <a href="support.html">Support</a>
+    </nav> -->
+
+    <div class="page">
+
+        <!-- Hero -->
+        <section class="hero">
+            <img src="assets/shutterfox.jpeg" alt="ShutterFox Icon" class="app-icon">
+            <p class="hero-eyebrow">ShutterFox &mdash; Camera Guide</p>
+            <h1>Master <span>Photography</span></h1>
+            <p class="hero-sub">Learn with 10-minute daily lessons, cheat sheets, and a learning path built for every level.</p>
+            <div class="badges">
+                <a href="#"><img src="assets/app-store-badge.png" alt="Download on the App Store"></a>
+                <a href="#"><img src="assets/google-play-badge.png" alt="Get it on Google Play"></a>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Features -->
+        <section class="features">
+            <p class="section-label">What's inside</p>
+            <h2 class="section-title">Everything you need to level up</h2>
+            <div class="features-grid">
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24"><path d="M4 6h16M4 10h16M4 14h10"/></svg>
+                    </div>
+                    <h3>Extensive Topic Library</h3>
+                    <p>Explore a wide-ranging catalogue of photography topics — from exposure fundamentals to advanced composition techniques.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+                    </div>
+                    <h3>Cheat Sheets for Common Scenes</h3>
+                    <p>Quick-access reference cards for portraits, landscapes, night shots, sports, and more — always at your fingertips.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                    </div>
+                    <h3>10-Minute Daily Lessons</h3>
+                    <p>Short, focused lessons designed to fit into your day. Build a consistent habit and make steady progress without feeling overwhelmed.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24"><path d="M3 17l4-8 4 4 4-6 4 10"/></svg>
+                    </div>
+                    <h3>Crafted Learning Path</h3>
+                    <p>Follow a structured curriculum or jump to any topic you want. Build your own path and progress at your own pace.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                    </div>
+                    <h3>Comprehensive Lessons</h3>
+                    <p>In-depth lessons with clear explanations, visual examples, and practical tips you can apply immediately in the field.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/><path d="M17 13l2 2 4-4"/></svg>
+                    </div>
+                    <h3>Test Your Knowledge</h3>
+                    <p>Reinforce what you've learned with quizzes and recall exercises. Track your progress and remember key concepts long-term.</p>
+                </div>
+
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Screenshots -->
+        <section class="screenshots">
+            <p class="section-label">See it in action</p>
+            <h2 class="section-title">Built for learning</h2>
+            <div class="screenshots-wrapper">
+                <div class="screenshots-track">
+                    <img src="assets/pg_1.png" alt="ShutterFox screenshot 1">
+                    <img src="assets/pg_2.png" alt="ShutterFox screenshot 2">
+                    <img src="assets/pg_3.png" alt="ShutterFox screenshot 3">
+                    <img src="assets/pg_4.png" alt="ShutterFox screenshot 4">
+                    <img src="assets/pg_5.png" alt="ShutterFox screenshot 5">
+                </div>
+                <div class="screenshots-fade"></div>
+            </div>
+            <div class="screenshots-dots">
+                <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- About -->
+        <section class="about">
+            <div class="about-inner">
+                <p class="section-label" style="text-align:left;">Who is it for?</p>
+                <p>
+                    ShutterFox is dedicated to a <strong>wide range of photographers</strong> — beginners, intermediate,
+                    and even advanced. For everyone who wants to learn, refresh their knowledge, and have cheat sheets
+                    always available.
+                </p>
+                <p>
+                    Start learning from wherever you want. Build your own learning path, check your knowledge, and recall
+                    essential figures whenever you need them.
+                </p>
+            </div>
+        </section>
+
+        <!-- Camera Types -->
+        <section class="cameras">
+            <p class="section-label">Camera compatibility</p>
+            <h2 class="section-title">Works for every camera type</h2>
+            <div class="camera-chips">
+                <div class="chip">
+                    <svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="14" rx="2"/><circle cx="12" cy="13" r="4"/><path d="M8 6V4h8v2"/></svg>
+                    Mirrorless
+                </div>
+                <div class="chip">
+                    <svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="14" rx="2"/><circle cx="12" cy="13" r="4"/><path d="M8 6V4h8v2"/></svg>
+                    DSLR
+                </div>
+                <div class="chip">
+                    <svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="14" rx="2"/><circle cx="12" cy="13" r="4"/><path d="M8 6V4h8v2"/></svg>
+                    Compact
+                </div>
+                <div class="chip">
+                    <svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><circle cx="12" cy="16" r="2"/></svg>
+                    Phone Cameras
+                </div>
+                <div class="chip">
+                    <svg viewBox="0 0 24 24"><path d="M12 2l2 4h4l-3 3 1 4-4-2-4 2 1-4-3-3h4z"/><path d="M12 15v7"/></svg>
+                    Drone
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2026 Qubi &mdash; <a href="index.html">All Apps</a> &middot; <a href="terms.html">Terms</a> &middot; <a href="privacy-policy.html">Privacy</a> &middot; <a href="support.html">Support</a></p>
+        </footer>
+
+    </div>
+
+    <script>
+        const track = document.querySelector('.screenshots-track');
+        const dots = Array.from(document.querySelectorAll('.dot'));
+        const fade = document.querySelector('.screenshots-fade');
+
+        function updateDots() {
+            const imgs = Array.from(track.querySelectorAll('img'));
+            const center = track.scrollLeft + track.clientWidth / 2;
+            let activeIndex = 0;
+            imgs.forEach((img, i) => {
+                if (img.offsetLeft <= center) activeIndex = i;
+            });
+            dots.forEach((d, i) => d.classList.toggle('active', i === activeIndex));
+            if (fade) {
+                const atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 8;
+                fade.style.opacity = atEnd ? '0' : '1';
+            }
+        }
+
+        dots.forEach((dot, i) => {
+            dot.addEventListener('click', () => {
+                const imgs = Array.from(track.querySelectorAll('img'));
+                if (imgs[i]) track.scrollTo({ left: imgs[i].offsetLeft, behavior: 'smooth' });
+            });
+        });
+
+        track.addEventListener('scroll', updateDots, { passive: true });
+    </script>
+</body>
+</html>
