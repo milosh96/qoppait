@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ShutterFox - Learn Photography with Daily Lessons & Cheat Sheets</title>
-    <meta name="description" content="Master photography with ShutterFox. 10-minute daily lessons, cheat sheets for common scenes, and a guided learning path for beginners to advanced photographers. Works with Mirrorless, DSLR, compact, phone, and drone cameras.">
-    <meta name="keywords" content="learn photography, photography app, camera guide, photography lessons, cheat sheets, DSLR, mirrorless, beginner photography, shutterfox">
+    <meta name="description"
+        content="Master photography with ShutterFox. 10-minute daily lessons, cheat sheets for common scenes, and a guided learning path for beginners to advanced photographers. Works with Mirrorless, DSLR, compact, phone, and drone cameras.">
+    <meta name="keywords"
+        content="learn photography, photography app, camera guide, photography lessons, cheat sheets, DSLR, mirrorless, beginner photography, shutterfox">
     <meta name="author" content="Milos Cubrilo, Qoppa IT">
     <link rel="canonical" href="https://qoppait.com/photoguide.html">
 
@@ -13,13 +16,15 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://qoppait.com/photoguide.html">
     <meta property="og:title" content="ShutterFox - Learn Photography with Daily Lessons & Cheat Sheets">
-    <meta property="og:description" content="Master photography with 10-minute daily lessons, cheat sheets for common scenes, and a learning path for every level. Covers Mirrorless, DSLR, phone cameras and more.">
+    <meta property="og:description"
+        content="Master photography with 10-minute daily lessons, cheat sheets for common scenes, and a learning path for every level. Covers Mirrorless, DSLR, phone cameras and more.">
     <meta property="og:image" content="https://qoppait.com/assets/shutterfox.jpeg">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="ShutterFox - Learn Photography with Daily Lessons & Cheat Sheets">
-    <meta name="twitter:description" content="Master photography with 10-minute daily lessons, cheat sheets for common scenes, and a learning path for every level.">
+    <meta name="twitter:description"
+        content="Master photography with 10-minute daily lessons, cheat sheets for common scenes, and a learning path for every level.">
     <meta name="twitter:image" content="https://qoppait.com/assets/shutterfox.jpeg">
 
     <!-- Structured Data -->
@@ -82,7 +87,9 @@
             padding-bottom: 2px;
         }
 
-        nav a:hover { color: #ffffff; }
+        nav a:hover {
+            color: #ffffff;
+        }
 
         nav a.active {
             color: #ffffff;
@@ -153,7 +160,9 @@
             transition: opacity 0.2s;
         }
 
-        .badges a img:hover { opacity: 1; }
+        .badges a img:hover {
+            opacity: 1;
+        }
 
         /* ── Divider ── */
         .section-divider {
@@ -408,31 +417,84 @@
             border-bottom: none;
         }
 
-        footer a:hover { color: #aaa; }
+        footer a:hover {
+            color: #aaa;
+        }
 
         /* ── Responsive ── */
+        /* ── Waitlist Form ── */
+        .waitlist-form {
+            background: #222;
+            border: 1px solid #2d2d2d;
+            border-radius: 20px;
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            width: 100%;
+            max-width: 380px;
+        }
+
+        .waitlist-form input[type="email"] {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
+            color: #e0e0e0;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .waitlist-form input[type="email"]::placeholder {
+            color: #555;
+        }
+
+        .waitlist-form input[type="email"]:focus {
+            border-color: #555;
+        }
+
+        .waitlist-form button {
+            background: #e0e0e0;
+            color: #1a1a1a;
+            border: none;
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .waitlist-form button:hover {
+            background: #ffffff;
+        }
+
         @media (max-width: 768px) {
-            .hero h1 { font-size: 2.2rem; }
-            .features-grid { grid-template-columns: 1fr; }
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (min-width: 769px) and (max-width: 1024px) {
-            .features-grid { grid-template-columns: repeat(2, 1fr); }
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
 
         @media (min-width: 769px) {
-            .screenshots-track { justify-content: center; }
+            .screenshots-track {
+                justify-content: center;
+            }
         }
     </style>
 </head>
-<body>
 
-    <!-- <nav>
-        <a href="index.html">Apps</a>
-        <a href="terms.html">Terms</a>
-        <a href="privacy-policy.html">Privacy</a>
-        <a href="support.html">Support</a>
-    </nav> -->
+<body>
 
     <div class="page">
 
@@ -441,11 +503,19 @@
             <img src="assets/shutterfox.jpeg" alt="ShutterFox Icon" class="app-icon">
             <p class="hero-eyebrow">ShutterFox &mdash; Camera Guide</p>
             <h1>Master <span>Photography</span></h1>
-            <p class="hero-sub">Learn with 10-minute daily lessons, cheat sheets, and a learning path built for every level.</p>
-            <div class="badges">
+            <p class="hero-sub">Learn with 10-minute daily lessons, cheat sheets, and a learning path built for every
+                level.</p>
+            <!-- <div class="badges">
                 <a href="#"><img src="assets/app-store-badge.png" alt="Download on the App Store"></a>
                 <a href="#"><img src="assets/google-play-badge.png" alt="Get it on Google Play"></a>
-            </div>
+            </div> -->
+            <form class="waitlist-form" action="https://submit-form.com/DUXOCZMnM">
+                <p>We're putting the finishing touches on the App. Leave us your email and we'll let you know when it's ready</p>
+                <br>
+                <input type="email" id="email" name="email" placeholder="your@email.com" required="" />
+                <button type="submit">Join the waitlist</button>
+            </form>
+
         </section>
 
         <div class="section-divider"></div>
@@ -458,50 +528,72 @@
 
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <svg viewBox="0 0 24 24"><path d="M4 6h16M4 10h16M4 14h10"/></svg>
+                        <svg viewBox="0 0 24 24">
+                            <path d="M4 6h16M4 10h16M4 14h10" />
+                        </svg>
                     </div>
                     <h3>Extensive Topic Library</h3>
-                    <p>Explore a wide-ranging catalogue of photography topics — from exposure fundamentals to advanced composition techniques.</p>
+                    <p>Explore a wide-ranging catalogue of photography topics — from exposure fundamentals to advanced
+                        composition techniques.</p>
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+                        <svg viewBox="0 0 24 24">
+                            <rect x="3" y="3" width="18" height="18" rx="2" />
+                            <path d="M3 9h18M9 21V9" />
+                        </svg>
                     </div>
                     <h3>Cheat Sheets for Common Scenes</h3>
-                    <p>Quick-access reference cards for portraits, landscapes, night shots, sports, and more — always at your fingertips.</p>
+                    <p>Quick-access reference cards for portraits, landscapes, night shots, sports, and more — always at
+                        your fingertips.</p>
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                        <svg viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="10" />
+                            <path d="M12 6v6l4 2" />
+                        </svg>
                     </div>
                     <h3>10-Minute Daily Lessons</h3>
-                    <p>Short, focused lessons designed to fit into your day. Build a consistent habit and make steady progress without feeling overwhelmed.</p>
+                    <p>Short, focused lessons designed to fit into your day. Build a consistent habit and make steady
+                        progress without feeling overwhelmed.</p>
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <svg viewBox="0 0 24 24"><path d="M3 17l4-8 4 4 4-6 4 10"/></svg>
+                        <svg viewBox="0 0 24 24">
+                            <path d="M3 17l4-8 4 4 4-6 4 10" />
+                        </svg>
                     </div>
                     <h3>Crafted Learning Path</h3>
-                    <p>Follow a structured curriculum or jump to any topic you want. Build your own path and progress at your own pace.</p>
+                    <p>Follow a structured curriculum or jump to any topic you want. Build your own path and progress at
+                        your own pace.</p>
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <svg viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z" />
+                        </svg>
                     </div>
                     <h3>Comprehensive Lessons</h3>
-                    <p>In-depth lessons with clear explanations, visual examples, and practical tips you can apply immediately in the field.</p>
+                    <p>In-depth lessons with clear explanations, visual examples, and practical tips you can apply
+                        immediately in the field.</p>
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/><path d="M17 13l2 2 4-4"/></svg>
+                        <svg viewBox="0 0 24 24">
+                            <circle cx="12" cy="8" r="4" />
+                            <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
+                            <path d="M17 13l2 2 4-4" />
+                        </svg>
                     </div>
                     <h3>Test Your Knowledge</h3>
-                    <p>Reinforce what you've learned with quizzes and recall exercises. Track your progress and remember key concepts long-term.</p>
+                    <p>Reinforce what you've learned with quizzes and recall exercises. Track your progress and remember
+                        key concepts long-term.</p>
                 </div>
 
             </div>
@@ -544,7 +636,8 @@
                     always available.
                 </p>
                 <p>
-                    Start learning from wherever you want. Build your own learning path, check your knowledge, and recall
+                    Start learning from wherever you want. Build your own learning path, check your knowledge, and
+                    recall
                     essential figures whenever you need them.
                 </p>
             </div>
@@ -556,23 +649,41 @@
             <h2 class="section-title">Works for every camera type</h2>
             <div class="camera-chips">
                 <div class="chip">
-                    <svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="14" rx="2"/><circle cx="12" cy="13" r="4"/><path d="M8 6V4h8v2"/></svg>
+                    <svg viewBox="0 0 24 24">
+                        <rect x="2" y="6" width="20" height="14" rx="2" />
+                        <circle cx="12" cy="13" r="4" />
+                        <path d="M8 6V4h8v2" />
+                    </svg>
                     Mirrorless
                 </div>
                 <div class="chip">
-                    <svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="14" rx="2"/><circle cx="12" cy="13" r="4"/><path d="M8 6V4h8v2"/></svg>
+                    <svg viewBox="0 0 24 24">
+                        <rect x="2" y="6" width="20" height="14" rx="2" />
+                        <circle cx="12" cy="13" r="4" />
+                        <path d="M8 6V4h8v2" />
+                    </svg>
                     DSLR
                 </div>
                 <div class="chip">
-                    <svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="14" rx="2"/><circle cx="12" cy="13" r="4"/><path d="M8 6V4h8v2"/></svg>
+                    <svg viewBox="0 0 24 24">
+                        <rect x="2" y="6" width="20" height="14" rx="2" />
+                        <circle cx="12" cy="13" r="4" />
+                        <path d="M8 6V4h8v2" />
+                    </svg>
                     Compact
                 </div>
                 <div class="chip">
-                    <svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><circle cx="12" cy="16" r="2"/></svg>
+                    <svg viewBox="0 0 24 24">
+                        <rect x="5" y="2" width="14" height="20" rx="2" />
+                        <circle cx="12" cy="16" r="2" />
+                    </svg>
                     Phone Cameras
                 </div>
                 <div class="chip">
-                    <svg viewBox="0 0 24 24"><path d="M12 2l2 4h4l-3 3 1 4-4-2-4 2 1-4-3-3h4z"/><path d="M12 15v7"/></svg>
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 2l2 4h4l-3 3 1 4-4-2-4 2 1-4-3-3h4z" />
+                        <path d="M12 15v7" />
+                    </svg>
                     Drone
                 </div>
             </div>
@@ -580,7 +691,8 @@
 
         <!-- Footer -->
         <footer>
-            <p>&copy; 2026 Qubi &mdash; <a href="index.html">All Apps</a> &middot; <a href="terms.html">Terms</a> &middot; <a href="privacy-policy.html">Privacy</a> &middot; <a href="support.html">Support</a></p>
+            <p>&copy; 2026 Qubi &mdash; <a href="index.html">All Apps</a> &middot; <a href="terms.html">Terms</a>
+                &middot; <a href="privacy-policy.html">Privacy</a> &middot; <a href="support.html">Support</a></p>
         </footer>
 
     </div>
@@ -614,4 +726,5 @@
         track.addEventListener('scroll', updateDots, { passive: true });
     </script>
 </body>
+
 </html>
