@@ -71,13 +71,36 @@
             left: 0;
             right: 0;
             display: flex;
-            justify-content: center;
-            gap: 2rem;
+            align-items: center;
+            justify-content: end;
             padding: 0.75rem 2rem;
             background-color: rgba(26, 26, 26, 0.95);
             backdrop-filter: blur(8px);
             border-bottom: 1px solid #333;
             z-index: 100;
+        }
+
+        .nav-brand {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #ffffff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-brand img {
+            width: 26px;
+            height: 26px;
+            border-radius: 6px;
+            object-fit: cover;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
         }
 
         nav a {
@@ -496,6 +519,12 @@
 </head>
 
 <body>
+
+    <nav>
+        <div class="nav-links">
+            <a href="blog/index.html">Blog</a>
+        </div>
+    </nav>
 
     <div class="page">
 

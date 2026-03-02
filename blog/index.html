@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photography Tips &amp; Guides — ShutterFox Blog</title>
+    <meta name="description" content="Photography tips, guides, and tutorials from the ShutterFox team. Learn camera settings, composition, lighting, and more — for every camera type.">
+    <meta name="keywords" content="photography tips, camera settings, learn photography, photography guide, beginner photography, ISO aperture shutter speed, ShutterFox">
+    <meta name="author" content="Milos Cubrilo">
+    <link rel="canonical" href="https://qoppait.com/blog/">
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://qoppait.com/blog/">
+    <meta property="og:title" content="Photography Tips &amp; Guides — ShutterFox Blog">
+    <meta property="og:description" content="Photography tips, guides, and tutorials from the ShutterFox team. Learn camera settings, composition, lighting, and more.">
+    <meta property="og:image" content="https://qoppait.com/assets/shutterfox.jpeg">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Photography Tips &amp; Guides — ShutterFox Blog">
+    <meta name="twitter:description" content="Photography tips, guides, and tutorials from the ShutterFox team. Learn camera settings, composition, lighting, and more.">
+    <meta name="twitter:image" content="https://qoppait.com/assets/shutterfox.jpeg">
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Blog",
+        "name": "ShutterFox Blog",
+        "description": "Photography tips, guides, and tutorials to help you take better photos — whatever camera you shoot with.",
+        "url": "https://qoppait.com/blog/",
+        "publisher": {
+            "@type": "Organization",
+            "name": "ShutterFox",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://qoppait.com/assets/shutterfox.jpeg"
+            }
+        }
+    }
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+
+        /* ── Nav ── */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            align-items: center;
+            justify-content: end;
+            padding: 0.75rem 2rem;
+            background-color: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid #333;
+            z-index: 100;
+        }
+
+        .nav-home {
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #b0b0b0;
+            text-decoration: none;
+        }
+
+        .nav-home svg {
+            flex-shrink: 0;
+        }
+
+        .nav-home:hover {
+            color: #ffffff;
+        }
+
+        /* ── Layout ── */
+        .page {
+            padding-top: 3.5rem;
+        }
+
+        /* ── Header ── */
+        .blog-header {
+            padding: 4rem 2rem 3rem;
+            text-align: center;
+        }
+
+        .blog-eyebrow {
+            font-size: 0.8rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #e07820;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .blog-header h1 {
+            font-size: 2.6rem;
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1.15;
+            margin-bottom: 0.75rem;
+        }
+
+        .blog-header p {
+            font-size: 1.05rem;
+            color: #909090;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* ── Blog grid ── */
+        .blog-grid-section {
+            padding: 0 2rem 5rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .blog-card {
+            background-color: #222;
+            border: 1px solid #2d2d2d;
+            border-radius: 14px;
+            overflow: hidden;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            transition: border-color 0.2s, transform 0.2s;
+        }
+
+        .blog-card:hover {
+            border-color: #e07820;
+            transform: translateY(-3px);
+        }
+
+        .blog-card-img {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+            display: block;
+            background: #2d2d2d;
+        }
+
+        .blog-card-body {
+            padding: 1.25rem 1.5rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            flex: 1;
+        }
+
+        .blog-card-tag {
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #e07820;
+            font-weight: 600;
+        }
+
+        .blog-card h2 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.4;
+        }
+
+        .blog-card p {
+            font-size: 0.875rem;
+            color: #909090;
+            line-height: 1.55;
+            flex: 1;
+        }
+
+        .blog-card-meta {
+            font-size: 0.78rem;
+            color: #555;
+            margin-top: 0.5rem;
+        }
+
+        /* ── Footer ── */
+        footer {
+            text-align: center;
+            padding: 2.5rem 2rem;
+            border-top: 1px solid #2d2d2d;
+            color: #555;
+            font-size: 0.85rem;
+        }
+
+        footer a {
+            color: #777;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: #aaa;
+        }
+
+        @media (max-width: 768px) {
+            .blog-header h1 {
+                font-size: 1.9rem;
+            }
+
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .blog-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <a href="../photoguide.html" class="nav-home">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+                <polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+            Home
+        </a>
+    </nav>
+
+    <div class="page">
+
+        <header class="blog-header">
+            <h1>Photography Tips &amp; Guides</h1>
+            <p>Practical articles related to improving your photography skills.</p>
+        </header>
+
+        <section class="blog-grid-section">
+            <div class="blog-grid">
+
+                <a href="understanding-exposure-triangle.html" class="blog-card">
+                    <img class="blog-card-img" src="../assets/pg_1.png" alt="Understanding the Exposure Triangle">
+                    <div class="blog-card-body">
+                        <span class="blog-card-tag">Fundamentals</span>
+                        <h2>Understanding the Exposure Triangle</h2>
+                        <p>ISO, aperture, and shutter speed work together to determine every photo you take. Learn how to balance them for perfect exposures in any situation.</p>
+                        <span class="blog-card-meta">March 1, 2026 &middot; 6 min read</span>
+                    </div>
+                </a>
+
+                <a href="portrait-photography-settings.html" class="blog-card">
+                    <img class="blog-card-img" src="../assets/pg_2.png" alt="Best Camera Settings for Portraits">
+                    <div class="blog-card-body">
+                        <span class="blog-card-tag">Portraits</span>
+                        <h2>Best Camera Settings for Portrait Photography</h2>
+                        <p>Nail sharp eyes, creamy bokeh, and flattering light every time. A practical breakdown of aperture, shutter speed, and ISO for shooting people.</p>
+                        <span class="blog-card-meta">February 20, 2026 &middot; 5 min read</span>
+                    </div>
+                </a>
+
+                <a href="shooting-in-low-light.html" class="blog-card">
+                    <img class="blog-card-img" src="../assets/pg_3.png" alt="Shooting in Low Light">
+                    <div class="blog-card-body">
+                        <span class="blog-card-tag">Low Light</span>
+                        <h2>How to Shoot in Low Light Without a Tripod</h2>
+                        <p>Night scenes and dimly lit rooms don't have to mean blurry, noisy shots. These techniques and settings will help you get clean images hand-held in the dark.</p>
+                        <span class="blog-card-meta">February 10, 2026 &middot; 7 min read</span>
+                    </div>
+                </a>
+
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 Qubi &mdash; <a href="../index.html">All Apps</a> &middot; <a href="../terms.html">Terms</a> &middot; <a href="../privacy-policy.html">Privacy</a> &middot; <a href="../support.html">Support</a></p>
+        </footer>
+
+    </div>
+
+</body>
+
+</html>

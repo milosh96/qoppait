@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding the Exposure Triangle: ISO, Aperture &amp; Shutter Speed — ShutterFox</title>
+    <meta name="description" content="Master the exposure triangle in photography. Learn exactly how ISO, aperture, and shutter speed work together to create perfectly exposed photos in any lighting condition.">
+    <meta name="keywords" content="exposure triangle, ISO aperture shutter speed, camera exposure, photography basics, f-stop guide, beginner photography, how to expose a photo">
+    <meta name="author" content="Milos Cubrilo">
+    <link rel="canonical" href="https://qoppait.com/blog/understanding-exposure-triangle.html">
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://qoppait.com/blog/understanding-exposure-triangle.html">
+    <meta property="og:title" content="Understanding the Exposure Triangle: ISO, Aperture &amp; Shutter Speed">
+    <meta property="og:description" content="Master the exposure triangle in photography. Learn exactly how ISO, aperture, and shutter speed work together to create perfectly exposed photos.">
+    <meta property="og:image" content="https://qoppait.com/assets/pg_1.png">
+    <meta property="article:published_time" content="2026-03-01">
+    <meta property="article:author" content="Milos Cubrilo">
+    <meta property="article:section" content="Fundamentals">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Understanding the Exposure Triangle: ISO, Aperture &amp; Shutter Speed">
+    <meta name="twitter:description" content="Master the exposure triangle in photography. Learn exactly how ISO, aperture, and shutter speed work together to create perfectly exposed photos.">
+    <meta name="twitter:image" content="https://qoppait.com/assets/pg_1.png">
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Understanding the Exposure Triangle: ISO, Aperture and Shutter Speed",
+        "description": "Master the exposure triangle in photography. Learn exactly how ISO, aperture, and shutter speed work together to create perfectly exposed photos in any lighting condition.",
+        "image": "https://qoppait.com/assets/pg_1.png",
+        "author": { "@type": "Person", "name": "Milos Cubrilo" },
+        "publisher": {
+            "@type": "Organization",
+            "name": "ShutterFox",
+            "logo": { "@type": "ImageObject", "url": "https://qoppait.com/assets/shutterfox.jpeg" }
+        },
+        "datePublished": "2026-03-01",
+        "dateModified": "2026-03-01",
+        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://qoppait.com/blog/understanding-exposure-triangle.html" }
+    }
+    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 2rem;
+            background-color: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid #333;
+            z-index: 100;
+        }
+
+        .nav-home {
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #b0b0b0;
+            text-decoration: none;
+        }
+
+        .nav-home svg { flex-shrink: 0; }
+        .nav-home:hover { color: #ffffff; }
+
+        .page { padding-top: 3.5rem; }
+
+        /* ── Post layout ── */
+        .post-hero {
+            width: 100%;
+            max-height: 420px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .post-container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 3rem 2rem 5rem;
+        }
+
+        .post-tag {
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #e07820;
+            font-weight: 600;
+        }
+
+        .post-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1.2;
+            margin-top: 0.6rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .post-meta {
+            font-size: 0.82rem;
+            color: #555;
+            margin-bottom: 2.5rem;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.85rem;
+            color: #777;
+            text-decoration: none;
+            margin-bottom: 2.5rem;
+        }
+
+        .back-link:hover { color: #b0b0b0; }
+
+        .post-body h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-top: 2.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .post-body p {
+            font-size: 1rem;
+            color: #b0b0b0;
+            line-height: 1.8;
+            margin-bottom: 1.25rem;
+        }
+
+        .post-body ul {
+            margin: 0 0 1.25rem 1.5rem;
+            color: #b0b0b0;
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        .post-body li { margin-bottom: 0.4rem; }
+
+        .callout {
+            background: #222;
+            border-left: 3px solid #e07820;
+            border-radius: 0 10px 10px 0;
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+            color: #c0c0c0;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        /* ── Footer ── */
+        footer {
+            text-align: center;
+            padding: 2.5rem 2rem;
+            border-top: 1px solid #2d2d2d;
+            color: #555;
+            font-size: 0.85rem;
+        }
+
+        footer a { color: #777; text-decoration: none; }
+        footer a:hover { color: #aaa; }
+
+        @media (max-width: 768px) {
+            .post-title { font-size: 1.6rem; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- <nav>
+        <a href="../photoguide.html" class="nav-home">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+                <polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+            Home
+        </a>
+    </nav> -->
+
+    <div class="page">
+
+        <img class="post-hero" src="../assets/pg_1.png" alt="Understanding the Exposure Triangle">
+
+        <div class="post-container">
+
+            <a href="index.html" class="back-link">
+                ← Back to Blog
+            </a>
+
+            <p class="post-tag">Fundamentals</p>
+            <h1 class="post-title">Understanding the Exposure Triangle</h1>
+            <p class="post-meta">March 1, 2026 &middot; 6 min read</p>
+
+            <div class="post-body">
+
+                <p>Every photograph is the result of light hitting a sensor (or film) for a specific amount of time. Three settings control how much light reaches that sensor: <strong>ISO</strong>, <strong>aperture</strong>, and <strong>shutter speed</strong>. Together they form the exposure triangle — and mastering them is the single biggest leap you can make as a photographer.</p>
+
+                <h2>Aperture — Control the light and the look</h2>
+                <p>Aperture is the opening inside your lens that lets light through, measured in f-stops (f/1.8, f/4, f/11, etc.). A lower f-number means a wider opening and more light. A wider aperture also produces a shallower depth of field — that blurry background effect called bokeh that looks so good in portraits.</p>
+                <ul>
+                    <li><strong>f/1.4–f/2.8</strong> — Wide open, lots of light, very shallow depth of field</li>
+                    <li><strong>f/4–f/5.6</strong> — A good all-around range</li>
+                    <li><strong>f/8–f/16</strong> — Most of the scene in sharp focus, ideal for landscapes</li>
+                </ul>
+
+                <h2>Shutter Speed — Freeze or blur motion</h2>
+                <p>Shutter speed is how long your sensor is exposed to light, measured in seconds or fractions of a second. A fast shutter speed (1/1000s) freezes motion. A slow one (1/30s or slower) can create motion blur — great for silky waterfalls, but bad for sharp handheld shots.</p>
+
+                <div class="callout">
+                    A useful rule of thumb: your shutter speed should be at least <strong>1/focal length</strong> to avoid camera shake. Shooting at 50mm? Use at least 1/50s. With image stabilisation you can often go slower.
+                </div>
+
+                <h2>ISO — Sensitivity to light</h2>
+                <p>ISO controls how sensitive your camera's sensor is to light. ISO 100 is the base — clean and detailed. Higher ISO values (800, 3200, 6400) make the sensor more sensitive so you can shoot in darker conditions, but they introduce digital noise (grain) into the image.</p>
+                <p>Modern cameras handle high ISO much better than older ones, but it's still good practice to keep ISO as low as possible and raise it only when aperture and shutter speed can't give you enough light on their own.</p>
+
+                <h2>Balancing the three</h2>
+                <p>The art of exposure is in the balance. If you widen your aperture to let in more light, you might need to raise your shutter speed to avoid overexposure. If you increase your shutter speed to freeze motion, you might need to raise your ISO to compensate for the loss of light.</p>
+                <p>Start by setting the priority that matters most for your shot:</p>
+                <ul>
+                    <li>Shooting portraits? Prioritise aperture (wide, for bokeh).</li>
+                    <li>Photographing sports? Prioritise shutter speed (fast, to freeze action).</li>
+                    <li>Landscape at dusk? Use a tripod and keep ISO low.</li>
+                </ul>
+
+                <p>With practice, adjusting these three settings becomes second nature. The ShutterFox app has scene-specific cheat sheets that tell you exactly where to start for dozens of common situations — so you spend less time guessing and more time shooting.</p>
+
+            </div>
+
+        </div>
+
+        <footer>
+            <p>&copy; 2026 Qubi &mdash; <a href="../index.html">All Apps</a> &middot; <a href="../terms.html">Terms</a> &middot; <a href="../privacy-policy.html">Privacy</a> &middot; <a href="../support.html">Support</a></p>
+        </footer>
+
+    </div>
+
+</body>
+
+</html>
