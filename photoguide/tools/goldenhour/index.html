@@ -637,6 +637,50 @@
     background: var(--amber) !important;
   }
 
+  /* ── API Response ── */
+  .api-response {
+    margin-bottom: 2rem;
+  }
+
+  .api-response-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+  }
+
+  .api-response pre {
+    background: rgba(6,13,24,0.8);
+    border: 1px solid rgba(212,134,10,0.15);
+    border-radius: 2px;
+    padding: 1.25rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: rgba(245,239,230,0.6);
+    overflow-x: auto;
+    line-height: 1.6;
+    white-space: pre;
+  }
+
+  /* ── Attribution ── */
+  .api-attribution {
+    text-align: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    color: rgba(140,122,94,0.5);
+    letter-spacing: 0.08em;
+    margin-bottom: 2rem;
+  }
+
+  .api-attribution a {
+    color: rgba(212,134,10,0.6);
+    text-decoration: none;
+  }
+
+  .api-attribution a:hover {
+    color: var(--amber);
+  }
+
   footer {
     text-align: center;
     font-family: 'DM Mono', monospace;
@@ -746,6 +790,10 @@
 
     <div class="phases-list" id="phases-list"></div>
 
+  </div>
+
+  <div class="api-attribution">
+    Solar data provided by <a href="https://sunrise-sunset.org/api" target="_blank" rel="noopener">sunrise-sunset.org API</a>
   </div>
 
   <div id="blog-cta"></div>
