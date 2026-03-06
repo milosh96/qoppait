@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Depth of Field Calculator — DOF, Hyperfocal Distance & Bokeh Preview</title>
+<meta name="description" content="Free depth of field calculator for photographers. Instantly compute near/far focus limits, hyperfocal distance, and see a live bokeh preview for any lens, aperture, and camera sensor.">
+<meta name="keywords" content="depth of field calculator, DOF calculator, hyperfocal distance, bokeh calculator, aperture depth of field, focal length DOF, near focus limit, far focus limit, photography tools, shallow depth of field, circle of confusion, f-stop depth of field, portrait bokeh, camera focus calculator, full frame DOF, APS-C depth of field, micro four thirds DOF, bokeh simulation, focus distance calculator, photography calculator, lens focus calculator, DOF preview, how to calculate depth of field, camera lens calculator, subject isolation photography">
+<link rel="canonical" href="https://qoppait.com/photoguide/tools/dof/">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://qoppait.com/photoguide/tools/dof/">
+<meta property="og:title" content="Depth of Field Calculator — DOF, Hyperfocal Distance & Bokeh Preview">
+<meta property="og:description" content="Free depth of field calculator for photographers. Instantly compute near/far focus limits, hyperfocal distance, and see a live bokeh preview for any lens, aperture, and camera sensor.">
+<meta property="og:site_name" content="PhotoGuide by Qoppa">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Depth of Field Calculator — DOF, Hyperfocal Distance & Bokeh Preview">
+<meta name="twitter:description" content="Free depth of field calculator for photographers. Instantly compute near/far focus limits, hyperfocal distance, and see a live bokeh preview for any lens, aperture, and camera sensor.">
+
+<!-- JSON-LD structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Depth of Field Calculator",
+  "description": "Free depth of field calculator for photographers. Instantly compute near/far focus limits, hyperfocal distance, and see a live bokeh preview for any lens, aperture, and camera sensor.",
+  "url": "https://qoppait.com/photoguide/tools/dof/",
+  "applicationCategory": "PhotographyApplication",
+  "operatingSystem": "Any",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Qoppa",
+    "url": "https://qoppait.com"
+  },
+  "featureList": [
+    "Depth of field calculation",
+    "Hyperfocal distance calculation",
+    "Near and far focus limits",
+    "Live bokeh preview",
+    "Support for Full Frame, APS-C, Micro 4/3, and 1-inch sensors",
+    "Metric and imperial units"
+  ]
+}
+</script>
+
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink:   #111;
+    --paper: #e0e0e0;
+    --lens:  #e07820;
+    --focus: #e8a422;
+    --muted: #888;
+  }
+
+  html, body {
+    height: 100%;
+    color: var(--paper);
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    overflow-x: hidden;
+  }
+
+  body {
+    background-color: #1a1a1a;
+    min-height: 100vh;
+    position: relative;
+  }
+
+  /* ── Nav ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    padding: 0.75rem 2rem;
+    background-color: rgba(26, 26, 26, 0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid #333;
+    z-index: 100;
+  }
+
+  .nav-links { display: flex; gap: 1.5rem; align-items: center; }
+
+  nav a {
+    color: #b0b0b0;
+    text-decoration: none;
+    font-size: 0.9rem;
+    padding-bottom: 2px;
+  }
+
+  nav a:hover { color: #ffffff; }
+  .nav-links a.active { color: #e8a422; }
+
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 5.5rem 1.5rem 4rem;
+  }
+
+  /* ── Header ── */
+  header {
+    text-align: center;
+    padding: 2rem 0 2.5rem;
+  }
+
+  .eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--lens);
+    margin-bottom: 1rem;
+    opacity: 0.9;
+  }
+
+  h1 {
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+  }
+
+  h1 em {
+    font-style: normal;
+    font-weight: 600;
+    color: var(--lens);
+  }
+
+  .subtitle {
+    font-size: 1rem;
+    font-weight: 300;
+    color: var(--muted);
+    margin-top: 0.75rem;
+  }
+
+  .lens-ornament {
+    width: 42px;
+    height: 42px;
+    margin: 1.25rem auto 0;
+  }
+
+  .lens-ornament svg {
+    width: 100%;
+    height: 100%;
+    animation: rotate-slow 20s linear infinite;
+  }
+
+  @keyframes rotate-slow { to { transform: rotate(360deg); } }
+
+  /* ── Input panel ── */
+  .panel {
+    background: rgba(224, 120, 32, 0.04);
+    border: 1px solid rgba(224, 120, 32, 0.2);
+    border-radius: 2px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    backdrop-filter: blur(4px);
+  }
+
+  .panel-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(224, 120, 32, 0.15);
+  }
+
+  .inputs-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 560px) {
+    .inputs-grid { grid-template-columns: 1fr; }
+  }
+
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .slider-row {
+    display: flex;
+    gap: 0.6rem;
+    align-items: center;
+  }
+
+  input[type="range"] {
+    flex: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 3px;
+    background: rgba(224, 120, 32, 0.2);
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--lens);
+    cursor: pointer;
+    box-shadow: 0 0 6px rgba(224, 120, 32, 0.5);
+  }
+
+  input[type="number"] {
+    background: rgba(224, 120, 32, 0.05);
+    border: 1px solid rgba(224, 120, 32, 0.25);
+    border-radius: 2px;
+    padding: 0.45rem 0.6rem;
+    color: var(--paper);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+    outline: none;
+    width: 72px;
+    text-align: center;
+    transition: border-color 0.2s;
+  }
+
+  input[type="number"]:focus { border-color: var(--lens); }
+
+  /* Sensor pills */
+  .pill-group {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+
+  .pill {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    padding: 0.35rem 0.75rem;
+    border: 1px solid rgba(224, 120, 32, 0.25);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .pill:hover { border-color: var(--lens); color: var(--paper); }
+  .pill.active {
+    background: rgba(224, 120, 32, 0.18);
+    border-color: var(--lens);
+    color: var(--lens);
+  }
+
+  /* Unit toggle */
+  .unit-toggle {
+    display: flex;
+    gap: 0;
+    margin-top: 0.15rem;
+  }
+
+  .unit-btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.1em;
+    padding: 0.3rem 0.65rem;
+    border: 1px solid rgba(224, 120, 32, 0.25);
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .unit-btn:first-child { border-radius: 2px 0 0 2px; }
+  .unit-btn:last-child  { border-radius: 0 2px 2px 0; margin-left: -1px; }
+  .unit-btn.active { background: rgba(224, 120, 32, 0.18); border-color: var(--lens); color: var(--lens); }
+
+  /* Aperture select */
+  select {
+    background: rgba(224, 120, 32, 0.05);
+    border: 1px solid rgba(224, 120, 32, 0.25);
+    border-radius: 2px;
+    padding: 0.55rem 0.75rem;
+    color: var(--paper);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+    outline: none;
+    cursor: pointer;
+    width: 100%;
+    transition: border-color 0.2s;
+  }
+
+  select:focus { border-color: var(--lens); }
+  select option { background: #1a1a1a; }
+
+  /* ── Visualization ── */
+  .viz-wrap {
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .viz-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+
+  /* ── DOF Scene bar ── */
+  .scene-wrap {
+    background: rgba(224, 120, 32, 0.03);
+    border: 1px solid rgba(224, 120, 32, 0.12);
+    border-radius: 2px;
+    padding: 1.5rem 1.25rem 1rem;
+  }
+
+  .scene-bar-outer {
+    position: relative;
+    height: 48px;
+    display: flex;
+    margin-bottom: 0.5rem;
+  }
+
+  .scene-camera {
+    position: absolute;
+    left: -8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    color: var(--muted);
+    z-index: 2;
+  }
+
+  .scene-bar {
+    flex: 1;
+    display: flex;
+    height: 100%;
+    border-radius: 2px;
+    overflow: visible;
+    position: relative;
+    margin-left: 14px;
+  }
+
+  .scene-zone {
+    height: 100%;
+    transition: flex 0.35s ease;
+    position: relative;
+  }
+
+  .zone-near {
+    background: rgba(224, 120, 32, 0.06);
+    border-radius: 2px 0 0 2px;
+    border: 1px solid rgba(224, 120, 32, 0.1);
+    border-right: none;
+  }
+
+  .zone-sharp {
+    background: rgba(224, 120, 32, 0.22);
+    border-top: 2px solid var(--lens);
+    border-bottom: 2px solid var(--lens);
+    position: relative;
+  }
+
+  .zone-sharp::after {
+    content: 'SHARP';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.5rem;
+    letter-spacing: 0.2em;
+    color: var(--lens);
+    opacity: 0.7;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  .zone-far {
+    background: rgba(224, 120, 32, 0.04);
+    border-radius: 0 2px 2px 0;
+    border: 1px solid rgba(224, 120, 32, 0.1);
+    border-left: none;
+  }
+
+  /* Markers */
+  .scene-markers {
+    position: relative;
+    height: 32px;
+    margin-left: 14px;
+  }
+
+  .scene-marker {
+    position: absolute;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    pointer-events: none;
+  }
+
+  .marker-tick {
+    width: 1px;
+    height: 8px;
+    background: var(--lens);
+    opacity: 0.6;
+  }
+
+  .marker-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.5rem;
+    letter-spacing: 0.06em;
+    color: var(--lens);
+    white-space: nowrap;
+    opacity: 0.8;
+  }
+
+  .marker-focus .marker-tick { opacity: 1; height: 10px; background: var(--focus); }
+  .marker-focus .marker-label { color: var(--focus); opacity: 1; font-weight: 400; }
+
+  .infinity-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.55rem;
+    color: var(--muted);
+    text-align: right;
+    margin-top: 0.4rem;
+    letter-spacing: 0.06em;
+  }
+
+  /* ── Bokeh sim ── */
+  .bokeh-wrap {
+    background: rgba(224, 120, 32, 0.03);
+    border: 1px solid rgba(224, 120, 32, 0.12);
+    border-radius: 2px;
+    padding: 1.25rem;
+  }
+
+  #bokeh-sim {
+    width: 100%;
+    height: 160px;
+    border-radius: 2px;
+    background: #0e0e0e;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .b-dot {
+    position: absolute;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    transition: width 0.25s ease, height 0.25s ease;
+  }
+
+  /* ── Results grid ── */
+  .results-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: rgba(224, 120, 32, 0.1);
+    border: 1px solid rgba(224, 120, 32, 0.1);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+  }
+
+  @media (max-width: 560px) {
+    .results-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .result-cell {
+    background: rgba(224, 120, 32, 0.03);
+    padding: 1.25rem 1rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    align-items: center;
+  }
+
+  .result-value {
+    font-family: 'DM Mono', monospace;
+    font-size: 1.35rem;
+    font-weight: 300;
+    color: var(--paper);
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  .result-value.dof-wide  { color: #4ade80; }
+  .result-value.dof-mid   { color: #e8a422; }
+  .result-value.dof-tight { color: #f87171; }
+
+  .result-sublabel {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.52rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ── Creative look ── */
+  .creative-look {
+    background: rgba(224, 120, 32, 0.07);
+    border: 1px solid rgba(224, 120, 32, 0.25);
+    border-radius: 2px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .creative-look-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--lens);
+    white-space: nowrap;
+    padding-top: 0.15rem;
+    flex-shrink: 0;
+  }
+
+  .creative-look-text {
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: var(--paper);
+    line-height: 1.55;
+  }
+
+  .creative-look-text strong {
+    color: var(--focus);
+    font-weight: 600;
+  }
+
+  /* ── Attribution ── */
+  .attribution {
+    text-align: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: rgba(195, 196, 197, 0.5);
+    letter-spacing: 0.08em;
+    margin-bottom: 2rem;
+  }
+
+  /* ── CTA overrides ── */
+  .blog-cta-section {
+    border-top: 1px solid rgba(224, 120, 32, 0.15) !important;
+    background: transparent !important;
+  }
+
+  .blog-cta-form input[type="email"] {
+    background: rgba(224, 120, 32, 0.05) !important;
+    border-color: rgba(224, 120, 32, 0.25) !important;
+    color: var(--paper) !important;
+  }
+
+  .blog-cta-form input[type="email"]:focus {
+    border-color: var(--lens) !important;
+  }
+
+  .blog-cta-form input[type="email"]::placeholder {
+    color: var(--muted) !important;
+  }
+
+  .blog-cta-form button {
+    background: linear-gradient(135deg, #c06010, #e07820) !important;
+    color: var(--ink) !important;
+    border-radius: 4px !important;
+  }
+
+  footer {
+    text-align: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.55rem;
+    color: rgba(74, 138, 154, 0.4);
+    letter-spacing: 0.1em;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(224, 120, 32, 0.08);
+    margin-top: 1rem;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .result-cell { animation: fadeUp 0.3s ease both; }
+  .result-cell:nth-child(1) { animation-delay: 0.04s; }
+  .result-cell:nth-child(2) { animation-delay: 0.08s; }
+  .result-cell:nth-child(3) { animation-delay: 0.12s; }
+  .result-cell:nth-child(4) { animation-delay: 0.16s; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-links">
+    <a href="../../../photoguide.html">Home</a>
+    <a href="../index.html" class="active">Tools</a>
+    <a href="../../blog/index.html">Blog</a>
+  </div>
+</nav>
+
+<div class="container">
+
+  <header>
+    <p class="eyebrow">Creative Focus Planner</p>
+    <h1><em>Depth of Field</em><br>Calculator</h1>
+    <p class="subtitle">Your most important creative decision in photography.</p>
+    <div class="lens-ornament">
+      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="24" cy="24" r="10" stroke="#e07820" stroke-width="1.5"/>
+        <circle cx="24" cy="24" r="5" stroke="#e07820" stroke-width="1" opacity="0.5"/>
+        <circle cx="24" cy="24" r="15" stroke="#e07820" stroke-width="0.5" stroke-dasharray="2 3" opacity="0.35"/>
+        <circle cx="24" cy="24" r="20" stroke="#e07820" stroke-width="0.4" stroke-dasharray="1 4" opacity="0.2"/>
+        <line x1="24" y1="1" x2="24" y2="7"   stroke="#e07820" stroke-width="1" opacity="0.5"/>
+        <line x1="24" y1="41" x2="24" y2="47" stroke="#e07820" stroke-width="1" opacity="0.5"/>
+        <line x1="1"  y1="24" x2="7"  y2="24" stroke="#e07820" stroke-width="1" opacity="0.5"/>
+        <line x1="41" y1="24" x2="47" y2="24" stroke="#e07820" stroke-width="1" opacity="0.5"/>
+      </svg>
+    </div>
+  </header>
+
+  <!-- Input panel -->
+  <div class="panel">
+    <div class="panel-title">Your Creative Choices</div>
+    <div class="inputs-grid">
+
+      <!-- Focal Length -->
+      <div class="input-group">
+        <label>Focal Length</label>
+        <div class="slider-row">
+          <input type="range" id="fl-slider" min="14" max="400" value="50" step="1">
+          <input type="number" id="fl-input" min="1" max="2000" value="50">
+        </div>
+        <div style="font-family:'DM Mono',monospace;font-size:0.55rem;color:var(--muted);letter-spacing:0.08em;" id="fl-display">50 mm</div>
+      </div>
+
+      <!-- Aperture -->
+      <div class="input-group">
+        <label>Aperture</label>
+        <select id="aperture">
+          <option value="1.2">f / 1.2</option>
+          <option value="1.4">f / 1.4</option>
+          <option value="1.8">f / 1.8</option>
+          <option value="2">f / 2</option>
+          <option value="2.8" selected>f / 2.8</option>
+          <option value="4">f / 4</option>
+          <option value="5.6">f / 5.6</option>
+          <option value="8">f / 8</option>
+          <option value="11">f / 11</option>
+          <option value="16">f / 16</option>
+          <option value="22">f / 22</option>
+        </select>
+      </div>
+
+      <!-- Subject Distance -->
+      <div class="input-group">
+        <label>Subject Distance</label>
+        <div class="slider-row">
+          <input type="range" id="dist-slider" min="0.5" max="50" value="3" step="0.1">
+          <input type="number" id="dist-input" min="0.1" max="10000" value="3" step="0.1">
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+          <div style="font-family:'DM Mono',monospace;font-size:0.55rem;color:var(--muted);letter-spacing:0.08em;" id="dist-display">3.0 m</div>
+          <div class="unit-toggle">
+            <button class="unit-btn active" id="unit-m" onclick="setUnit('m')">m</button>
+            <button class="unit-btn" id="unit-ft" onclick="setUnit('ft')">ft</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sensor Format -->
+      <div class="input-group">
+        <label>Sensor Format</label>
+        <div class="pill-group" id="sensor-pills">
+          <button class="pill active" data-sensor="ff">Full Frame</button>
+          <button class="pill" data-sensor="apsc">APS-C</button>
+          <button class="pill" data-sensor="mft">Micro 4/3</button>
+          <button class="pill" data-sensor="one">1-inch</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Visualizations -->
+  <div class="viz-wrap">
+
+    <!-- Scene bar -->
+    <div class="scene-wrap">
+      <div class="viz-label">Sharp Zone — What's in focus</div>
+      <div class="scene-bar-outer">
+        <svg class="scene-camera" viewBox="0 0 16 16" fill="none">
+          <rect x="1" y="4" width="10" height="8" rx="1.5" stroke="currentColor" stroke-width="1.2"/>
+          <path d="M11 7l4-2v6l-4-2V7z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
+          <circle cx="6" cy="8" r="2" stroke="currentColor" stroke-width="1"/>
+        </svg>
+        <div class="scene-bar" id="scene-bar">
+          <div class="scene-zone zone-near" id="zone-near"></div>
+          <div class="scene-zone zone-sharp" id="zone-sharp"></div>
+          <div class="scene-zone zone-far" id="zone-far"></div>
+        </div>
+      </div>
+      <div class="scene-markers" id="scene-markers"></div>
+      <div class="infinity-label" id="infinity-label"></div>
+    </div>
+
+    <!-- Bokeh preview -->
+    <div class="bokeh-wrap">
+      <div class="viz-label">Background Blur — How the out-of-focus areas render</div>
+      <div id="bokeh-sim"></div>
+    </div>
+
+  </div>
+
+  <!-- Results -->
+  <div class="results-grid">
+    <div class="result-cell">
+      <div class="result-value" id="res-hyperfocal">—</div>
+      <div class="result-sublabel">Hyperfocal</div>
+    </div>
+    <div class="result-cell">
+      <div class="result-value" id="res-near">—</div>
+      <div class="result-sublabel">Near Limit</div>
+    </div>
+    <div class="result-cell">
+      <div class="result-value" id="res-far">—</div>
+      <div class="result-sublabel">Far Limit</div>
+    </div>
+    <div class="result-cell">
+      <div class="result-value" id="res-dof">—</div>
+      <div class="result-sublabel">Total DOF</div>
+    </div>
+  </div>
+
+  <!-- Creative interpretation -->
+  <div class="creative-look">
+    <span class="creative-look-text" id="creative-look-text">—</span>
+  </div>
+
+  <div class="attribution">
+    Calculations based on standard thin-lens DOF formulas. Circle of confusion per sensor format.
+  </div>
+
+  <div id="blog-cta"></div>
+  <div id="site-footer"></div>
+
+</div>
+
+<script src="../../../assets/blog-cta.js"></script>
+<script src="/assets/footer.js"></script>
+
+<script>
+// ── Sensor data ──────────────────────────────────────────────────────────
+const SENSORS = {
+  ff:   { coc: 0.029, diag: 43.3, label: 'Full Frame' },
+  apsc: { coc: 0.019, diag: 28.2, label: 'APS-C' },
+  mft:  { coc: 0.015, diag: 21.6, label: 'Micro 4/3' },
+  one:  { coc: 0.011, diag: 15.9, label: '1-inch' },
+};
+
+// ── State ────────────────────────────────────────────────────────────────
+let state = {
+  fl: 50,       // focal length mm
+  ap: 2.8,      // aperture f-number
+  dist: 3,      // subject distance meters
+  sensor: 'ff',
+  unit: 'm',
+};
+
+// ── Bokeh points (randomized once) ──────────────────────────────────────
+const BOKEH_POINTS = (function() {
+  const pts = [];
+  const palettes = [
+    [255, 220, 120], [255, 180, 80], [180, 230, 255],
+    [100, 210, 255], [255, 255, 220], [200, 180, 255],
+    [255, 140, 120], [120, 230, 200],
+  ];
+  for (let i = 0; i < 28; i++) {
+    const c = palettes[Math.floor(Math.random() * palettes.length)];
+    pts.push({
+      x: Math.random(),
+      y: Math.random(),
+      scale: 0.6 + Math.random() * 0.8,
+      r: c[0], g: c[1], b: c[2],
+      alpha: 0.4 + Math.random() * 0.45,
+    });
+  }
+  return pts;
+})();
+
+// ── DOF Calculations ─────────────────────────────────────────────────────
+function calcDOF(fl_mm, aperture, dist_m, sensorKey) {
+  const coc = SENSORS[sensorKey].coc;  // mm
+  const d   = dist_m * 1000;           // convert to mm
+  const f   = fl_mm;
+
+  // Hyperfocal (mm)
+  const H = (f * f) / (aperture * coc);
+
+  // Near limit (mm)
+  const Dn = (H * d) / (H + d);
+
+  // Far limit (mm) — infinity when d >= H
+  const Df = d >= H ? Infinity : (H * d) / (H - d);
+
+  // Total DOF
+  const dof = Df === Infinity ? Infinity : Df - Dn;
+
+  return {
+    H_m:   H / 1000,
+    Dn_m:  Dn / 1000,
+    Df_m:  Df === Infinity ? Infinity : Df / 1000,
+    dof_m: dof === Infinity ? Infinity : dof / 1000,
+  };
+}
+
+// ── Formatting ───────────────────────────────────────────────────────────
+function fmtDist(m, unit) {
+  if (m === Infinity || m > 9999) return '∞';
+  if (unit === 'ft') {
+    const ft = m * 3.28084;
+    return ft < 10 ? ft.toFixed(1) + ' ft' : Math.round(ft) + ' ft';
+  }
+  return m < 10 ? m.toFixed(2) + ' m' : m.toFixed(1) + ' m';
+}
+
+function fmtDOF(m, unit) {
+  if (m === Infinity || m > 9999) return '∞';
+  if (unit === 'ft') {
+    const ft = m * 3.28084;
+    return ft < 10 ? ft.toFixed(1) + ' ft' : Math.round(ft) + ' ft';
+  }
+  if (m < 0.01) return '<1 cm';
+  if (m < 1)    return (m * 100).toFixed(0) + ' cm';
+  return m < 10 ? m.toFixed(2) + ' m' : m.toFixed(1) + ' m';
+}
+
+// ── Render results ───────────────────────────────────────────────────────
+function renderResults(r) {
+  document.getElementById('res-hyperfocal').textContent = fmtDist(r.H_m, state.unit);
+  document.getElementById('res-near').textContent       = fmtDist(r.Dn_m, state.unit);
+  document.getElementById('res-far').textContent        = fmtDist(r.Df_m, state.unit);
+
+  const dofEl = document.getElementById('res-dof');
+  dofEl.textContent = fmtDOF(r.dof_m, state.unit);
+  dofEl.className = 'result-value';
+  if (r.dof_m === Infinity || r.dof_m > 2) dofEl.classList.add('dof-wide');
+  else if (r.dof_m > 0.5)                  dofEl.classList.add('dof-mid');
+  else                                      dofEl.classList.add('dof-tight');
+
+  // Creative look
+  const lookEl = document.getElementById('creative-look-text');
+  const dof = r.dof_m;
+  const ap  = state.ap;
+  let look;
+  if (dof === Infinity || dof > 30) {
+    look = '<strong>Everything sharp.</strong>\nAt this aperture and distance, the entire scene from foreground to background falls within the depth of field. Ideal for landscapes, architecture, and street photography where you want full environmental context.';
+  } else if (dof > 3) {
+    look = '<strong>Deep, environmental depth of field.</strong>\nA wide range of the scene is sharp. Great for environmental portraits, travel, and documentary — your subject stays in context with the world around them.';
+  } else if (dof > 0.8) {
+    look = '<strong>Medium depth of field.</strong>\nYour subject is sharp and the background starts to soften. Works well for portraits with setting, product shots, and any situation where you want subject clarity without full background separation.';
+  } else if (dof > 0.2) {
+    look = '<strong>Shallow depth of field.</strong>\nOnly your subject is in focus — the background melts into soft, creamy blur. This is the classic portrait look. Aperture and focal length are working together to isolate your subject.';
+  } else {
+    look = '<strong>Razor-thin depth of field.</strong>\nThe sharpness plane is just ' + fmtDOF(dof, state.unit) + ' deep. A slight shift in subject distance will pull focus entirely. Used for extreme subject isolation, macro work, and artistic effect — but demands precise focusing.';
+  }
+  lookEl.innerHTML = look;
+}
+
+// ── Render scene bar ─────────────────────────────────────────────────────
+function renderScene(r) {
+  const d   = state.dist;
+  const near = r.Dn_m;
+  const far  = Math.min(r.Df_m, r.H_m * 2.5); // cap the visual range
+  const inf  = r.Df_m === Infinity;
+
+  // Use log scale: log(1 + x) so 0m → 0, large → compressed
+  const maxDist = Math.max(far * 1.3, d * 2.5, near * 3);
+  function toLog(x) {
+    return Math.log1p(x) / Math.log1p(maxDist);
+  }
+
+  const nearPct  = toLog(near) * 100;
+  const focusPct = toLog(d)    * 100;
+  const farPct   = inf ? 88 : Math.min(toLog(far) * 100, 92);
+
+  document.getElementById('zone-near').style.flex  = nearPct;
+  document.getElementById('zone-sharp').style.flex = Math.max(farPct - nearPct, 1);
+  document.getElementById('zone-far').style.flex   = Math.max(100 - farPct, 2);
+
+  // Markers
+  const markersEl = document.getElementById('scene-markers');
+  markersEl.innerHTML = '';
+
+  function addMarker(pct, label, cls) {
+    const m = document.createElement('div');
+    m.className = 'scene-marker' + (cls ? ' ' + cls : '');
+    m.style.left = pct + '%';
+    m.innerHTML = `<div class="marker-tick"></div><div class="marker-label">${label}</div>`;
+    markersEl.appendChild(m);
+  }
+
+  addMarker(nearPct,  fmtDist(near, state.unit), '');
+  addMarker(focusPct, fmtDist(d, state.unit), 'marker-focus');
+  if (!inf) addMarker(farPct, fmtDist(r.Df_m, state.unit), '');
+
+  document.getElementById('infinity-label').textContent =
+    inf ? 'Far limit: ∞ — everything beyond near limit is sharp' : '';
+}
+
+// ── Bokeh simulation (CSS dots) ───────────────────────────────────────────
+const _bokehSim  = document.getElementById('bokeh-sim');
+const _bokehDots = BOKEH_POINTS.map(pt => {
+  const el = document.createElement('div');
+  el.className = 'b-dot';
+  el.style.left       = (pt.x * 100).toFixed(1) + '%';
+  el.style.top        = (pt.y * 100).toFixed(1) + '%';
+  el.style.background = `radial-gradient(circle,
+    rgba(${pt.r},${pt.g},${pt.b},${pt.alpha.toFixed(2)}) 0%,
+    rgba(${pt.r},${pt.g},${pt.b},${(pt.alpha * 0.4).toFixed(2)}) 45%,
+    rgba(${pt.r},${pt.g},${pt.b},0) 100%)`;
+  _bokehSim.appendChild(el);
+  return { el, pt };
+});
+
+function renderBokeh(dof) {
+  // H/d ratio: how far below hyperfocal the focus distance is.
+  // d << H → huge blur; d ≈ H → background just sharp; d > H → min blur.
+  const ratio = Math.min(dof.H_m / state.dist, 200);
+  const R     = Math.max(3, Math.min(Math.log1p(ratio) * 18, 75));
+
+  _bokehDots.forEach(({ el, pt }) => {
+    const r  = R * pt.scale;
+    const px = (r * 2).toFixed(1) + 'px';
+    el.style.width  = px;
+    el.style.height = px;
+  });
+}
+
+// ── Main update ───────────────────────────────────────────────────────────
+function update() {
+  const r = calcDOF(state.fl, state.ap, state.dist, state.sensor);
+  renderResults(r);
+  renderScene(r);
+  renderBokeh(r);
+}
+
+// ── Unit toggle ───────────────────────────────────────────────────────────
+function setUnit(u) {
+  state.unit = u;
+  document.getElementById('unit-m').classList.toggle('active', u === 'm');
+  document.getElementById('unit-ft').classList.toggle('active', u === 'ft');
+  // Sync dist input to new unit
+  const inEl = document.getElementById('dist-input');
+  if (u === 'ft') {
+    inEl.value = (state.dist * 3.28084).toFixed(1);
+    document.getElementById('dist-display').textContent = inEl.value + ' ft';
+  } else {
+    inEl.value = state.dist.toFixed(1);
+    document.getElementById('dist-display').textContent = state.dist.toFixed(1) + ' m';
+  }
+  update();
+}
+
+// ── Input wiring ──────────────────────────────────────────────────────────
+
+// Focal length
+document.getElementById('fl-slider').addEventListener('input', function() {
+  state.fl = +this.value;
+  document.getElementById('fl-input').value = state.fl;
+  document.getElementById('fl-display').textContent = state.fl + ' mm';
+  update();
+});
+
+document.getElementById('fl-input').addEventListener('input', function() {
+  const v = Math.max(1, Math.min(2000, +this.value || 50));
+  state.fl = v;
+  const sliderEl = document.getElementById('fl-slider');
+  sliderEl.value = Math.min(v, +sliderEl.max);
+  document.getElementById('fl-display').textContent = v + ' mm';
+  update();
+});
+
+// Aperture
+document.getElementById('aperture').addEventListener('change', function() {
+  state.ap = +this.value;
+  update();
+});
+
+// Subject distance
+document.getElementById('dist-slider').addEventListener('input', function() {
+  const raw = +this.value;
+  state.dist = state.unit === 'ft' ? raw / 3.28084 : raw;
+  const displayVal = state.unit === 'ft' ? (state.dist * 3.28084).toFixed(1) : state.dist.toFixed(1);
+  document.getElementById('dist-input').value = displayVal;
+  document.getElementById('dist-display').textContent = displayVal + ' ' + state.unit;
+  update();
+});
+
+document.getElementById('dist-input').addEventListener('input', function() {
+  const v = Math.max(0.1, +this.value || 3);
+  state.dist = state.unit === 'ft' ? v / 3.28084 : v;
+  const sliderEl = document.getElementById('dist-slider');
+  sliderEl.value = Math.min(state.unit === 'ft' ? v : state.dist, +sliderEl.max);
+  document.getElementById('dist-display').textContent = v.toFixed(1) + ' ' + state.unit;
+  update();
+});
+
+// Sensor pills
+document.getElementById('sensor-pills').addEventListener('click', function(e) {
+  const btn = e.target.closest('.pill');
+  if (!btn) return;
+  document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  state.sensor = btn.dataset.sensor;
+  update();
+});
+
+// Resize → re-render
+window.addEventListener('resize', update);
+
+// ── Init ──────────────────────────────────────────────────────────────────
+update();
+</script>
+
+<script type="module">
+  import { analytics, logEvent } from '/assets/firebase-analytics.js';
+  logEvent(analytics, 'tool_opened', { tool_name: 'dof' });
+</script>
+</body>
+</html>
