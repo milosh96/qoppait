@@ -295,6 +295,10 @@
     color: var(--amber);
     font-size: 0.7rem;
     padding: 0.6rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4em;
   }
 
   .btn-locate:hover { background: rgba(212,134,10,0.08); opacity: 1; }
@@ -743,7 +747,7 @@
             <input type="text" id="lng" placeholder="2.3522" />
           </div>
         </div>
-        <button class="btn btn-locate" onclick="getLocation()">⊕ Use My Location</button>
+        <button class="btn btn-locate" onclick="getLocation()"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>Use My Location</button>
         <div id="error-msg" class="error-msg"></div>
       </div>
       <div class="date-group">
@@ -751,7 +755,7 @@
           <label>Date</label>
           <input type="date" id="date" />
         </div>
-        <button class="btn" onclick="calculate()">Calculate →</button>
+        <button class="btn" onclick="calculate()">Calculate</button>
       </div>
     </div>
   </div>
