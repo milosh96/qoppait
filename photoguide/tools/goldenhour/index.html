@@ -17,10 +17,6 @@
     --gold: #d4860a;
     --amber: #e8a422;
     --muted: #8c7a5e;
-    --sky-top: #060d18;
-    --sky-bottom: #0a0f1e;
-    --sky-glow-a: rgba(20,40,80,0.2);
-    --sky-glow-b: rgba(30,50,110,0.15);
   }
 
   html, body {
@@ -31,22 +27,9 @@
   }
 
   body {
-    background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-bottom) 100%);
+    background: linear-gradient(180deg, #080e22 0%, #1a2a4a 100%);
     min-height: 100vh;
     position: relative;
-    transition: background 3s ease;
-  }
-
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background:
-      radial-gradient(ellipse 80% 40% at 50% -10%, var(--sky-glow-a) 0%, transparent 70%),
-      radial-gradient(ellipse 60% 30% at 20% 110%, var(--sky-glow-b) 0%, transparent 60%);
-    pointer-events: none;
-    z-index: 0;
-    transition: background 3s ease;
   }
 
   /* ── Nav ── */
@@ -427,28 +410,43 @@
     padding: 0 2px;
   }
 
-  /* ── Phase list (column) ── */
-  .phases-list {
+  /* ── Phase sections ── */
+  .phases-container {
+    margin-bottom: 2rem;
     display: flex;
     flex-direction: column;
-    gap: 1px;
-    background: rgba(212,134,10,0.1);
+    gap: 0.5rem;
+  }
+
+  .phases-section {
     border: 1px solid rgba(212,134,10,0.12);
     border-radius: 2px;
     overflow: hidden;
-    margin-bottom: 2rem;
+  }
+
+  .phases-section-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 0.55rem 1.25rem;
+    background: rgba(212,134,10,0.06);
+    border-bottom: 1px solid rgba(212,134,10,0.1);
   }
 
   .phase-row {
     background: rgba(10,8,4,0.8);
-    padding: 1rem 1.5rem;
+    padding: 0.7rem 1.25rem;
     display: flex;
     align-items: center;
-    gap: 1.25rem;
+    justify-content: space-between;
     position: relative;
     transition: background 0.15s;
+    border-top: 1px solid rgba(255,255,255,0.03);
   }
 
+  .phase-row:first-child { border-top: none; }
   .phase-row:hover { background: rgba(22,16,8,0.95); }
 
   .phase-row::before {
@@ -458,69 +456,45 @@
     width: 3px;
   }
 
-  .phase-row.astro::before    { background: #1e3a60; }
-  .phase-row.naut::before     { background: #2a5080; }
-  .phase-row.civil::before    { background: #3a70b0; }
-  .phase-row.blue::before     { background: #4090d0; }
-  .phase-row.golden::before   { background: linear-gradient(180deg, var(--amber), var(--gold)); }
-  .phase-row.solar-noon::before { background: #f0d040; }
-
-  .phase-icon {
-    font-size: 1.2rem;
-    width: 28px;
-    text-align: center;
-    flex-shrink: 0;
-    opacity: 0.85;
-  }
-
-  .phase-main {
-    flex: 1;
-    min-width: 0;
-  }
+  .phase-row.astro::before   { background: #1e3a60; }
+  .phase-row.naut::before    { background: #2a5080; }
+  .phase-row.blue::before    { background: #4090d0; }
+  .phase-row.golden::before  { background: linear-gradient(180deg, var(--amber), var(--gold)); }
 
   .phase-name {
-    font-size: 0.9rem;
-    font-weight: 600;
+    font-size: 0.8rem;
+    font-weight: 400;
     color: var(--paper);
-    margin-bottom: 0.1rem;
-  }
-
-  .phase-desc {
-    font-size: 0.75rem;
-    font-weight: 300;
-    color: var(--muted);
-    line-height: 1.4;
-  }
-
-  .phase-duration {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.55rem;
-    color: rgba(140,122,94,0.6);
-    margin-top: 0.2rem;
-    letter-spacing: 0.05em;
-  }
-
-  .phase-times {
     display: flex;
-    gap: 1.5rem;
-    flex-shrink: 0;
-    text-align: right;
+    align-items: center;
+    gap: 0.6em;
   }
 
-  .phase-time-label {
+  .phase-timerange {
     font-family: 'DM Mono', monospace;
-    font-size: 0.5rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--muted);
-    display: block;
-    margin-bottom: 0.15rem;
+    font-size: 0.75rem;
+    color: rgba(245,239,230,0.55);
+    letter-spacing: 0.02em;
   }
 
-  .phase-time-val {
+  .phase-dur {
     font-family: 'DM Mono', monospace;
-    font-size: 0.82rem;
-    color: var(--paper);
+    font-size: 0.75rem;
+    color: rgba(245, 239, 230, 0.455);
+    letter-spacing: 0.05em;
+    font-weight: 300;
+  }
+
+  .solar-noon-divider {
+    text-align: center;
+    padding: 0.8rem 1.25rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--amber);
+    letter-spacing: 0.12em;
+    border: 1px solid rgba(212,134,10,0.2);
+    border-radius: 2px;
+    background: rgba(212,134,10,0.05);
   }
 
   /* ── Location display ── */
@@ -603,13 +577,15 @@
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  .phase-row { animation: fadeUp 0.35s ease both; }
-  .phase-row:nth-child(1) { animation-delay: 0.04s; }
-  .phase-row:nth-child(2) { animation-delay: 0.08s; }
-  .phase-row:nth-child(3) { animation-delay: 0.12s; }
-  .phase-row:nth-child(4) { animation-delay: 0.16s; }
-  .phase-row:nth-child(5) { animation-delay: 0.20s; }
-  .phase-row:nth-child(6) { animation-delay: 0.24s; }
+  .phase-row { animation: fadeUp 0.3s ease both; }
+  .phases-section:nth-child(1) .phase-row:nth-child(1) { animation-delay: 0.04s; }
+  .phases-section:nth-child(1) .phase-row:nth-child(2) { animation-delay: 0.08s; }
+  .phases-section:nth-child(1) .phase-row:nth-child(3) { animation-delay: 0.12s; }
+  .phases-section:nth-child(1) .phase-row:nth-child(4) { animation-delay: 0.16s; }
+  .phases-section:nth-child(3) .phase-row:nth-child(1) { animation-delay: 0.20s; }
+  .phases-section:nth-child(3) .phase-row:nth-child(2) { animation-delay: 0.24s; }
+  .phases-section:nth-child(3) .phase-row:nth-child(3) { animation-delay: 0.28s; }
+  .phases-section:nth-child(3) .phase-row:nth-child(4) { animation-delay: 0.32s; }
 
   /* ── CTA overrides (match golden hour theme) ── */
   .blog-cta-section {
@@ -765,13 +741,6 @@
   <!-- Results -->
   <div id="results">
 
-    <div style="text-align:center; margin-bottom:2rem;">
-      <div class="sky-phase-badge">
-        <div class="dot"></div>
-        <span id="sky-phase-label">—</span>
-      </div>
-    </div>
-
     <div class="location-bar" id="location-bar"></div>
 
     <div class="countdown-card">
@@ -792,7 +761,7 @@
       <div class="timeline-ticks" id="timeline-ticks"></div>
     </div>
 
-    <div class="phases-list" id="phases-list"></div>
+    <div class="phases-container" id="phases-list"></div>
 
   </div>
 
@@ -830,60 +799,6 @@
 
 document.getElementById('date').valueAsDate = new Date();
 
-// ── Sky themes ─────────────────────────────────────────────────────────
-const SKY = {
-  night:      { top: '#020510', bot: '#060d18', glowA: 'rgba(10,20,60,0.2)',  glowB: 'rgba(5,10,40,0.15)',  stars: 1,    label: 'Night' },
-  astro:      { top: '#04091a', bot: '#0d1b2e', glowA: 'rgba(15,30,80,0.25)', glowB: 'rgba(10,20,60,0.2)',  stars: 0.9,  label: 'Astronomical Twilight' },
-  naut:       { top: '#080e22', bot: '#1a2a4a', glowA: 'rgba(30,50,110,0.3)', glowB: 'rgba(20,40,90,0.2)',  stars: 0.7,  label: 'Nautical Twilight' },
-  blueDawn:   { top: '#0a1530', bot: '#1e3a6a', glowA: 'rgba(50,90,160,0.4)', glowB: 'rgba(40,70,130,0.3)', stars: 0.4,  label: 'Blue Hour' },
-  goldenDawn: { top: '#1a0800', bot: '#7a2e0a', glowA: 'rgba(212,100,10,0.5)',glowB: 'rgba(180,80,10,0.3)', stars: 0.1,  label: 'Morning Golden Hour' },
-  day:        { top: '#0a1828', bot: '#152035', glowA: 'rgba(80,130,200,0.2)',glowB: 'rgba(60,100,170,0.15)',stars: 0,    label: 'Daylight' },
-  goldenDusk: { top: '#1a0400', bot: '#8a1e04', glowA: 'rgba(220,80,10,0.5)', glowB: 'rgba(180,50,10,0.35)',stars: 0.05, label: 'Evening Golden Hour' },
-  blueDusk:   { top: '#0a1530', bot: '#1e3a6a', glowA: 'rgba(50,90,160,0.4)', glowB: 'rgba(40,70,130,0.3)', stars: 0.4,  label: 'Blue Hour' },
-  civilDusk:  { top: '#080e22', bot: '#1a2a4a', glowA: 'rgba(30,50,110,0.3)', glowB: 'rgba(20,40,90,0.2)',  stars: 0.6,  label: 'Civil Twilight' },
-  nautDusk:   { top: '#04091a', bot: '#0d1b2e', glowA: 'rgba(15,30,80,0.25)', glowB: 'rgba(10,20,60,0.2)',  stars: 0.8,  label: 'Nautical Twilight' },
-};
-
-function getSkyTheme(d) {
-  if (!d) return SKY.night;
-  const now = new Date();
-  const aB  = new Date(d.astronomical_twilight_begin);
-  const nB  = new Date(d.nautical_twilight_begin);
-  const cB  = new Date(d.civil_twilight_begin);
-  const sr  = new Date(d.sunrise);
-  const ghME = new Date(sr.getTime() + 60 * 60000);
-  const ss   = new Date(d.sunset);
-  const ghES = new Date(ss.getTime() - 60 * 60000);
-  const cE   = new Date(d.civil_twilight_end);
-  const nE   = new Date(d.nautical_twilight_end);
-  const aE   = new Date(d.astronomical_twilight_end);
-
-  if (now < aB || now > aE)  return SKY.night;
-  if (now < nB)              return SKY.astro;
-  if (now < cB)              return SKY.naut;
-  if (now < sr)              return SKY.blueDawn;
-  if (now < ghME)            return SKY.goldenDawn;
-  if (now < ghES)            return SKY.day;
-  if (now < ss)              return SKY.goldenDusk;
-  if (now < cE)              return SKY.blueDusk;
-  if (now < nE)              return SKY.civilDusk;
-  return SKY.nautDusk;
-}
-
-function applySkyTheme(d) {
-  const theme = getSkyTheme(d);
-  const root = document.documentElement;
-  root.style.setProperty('--sky-top',    theme.top);
-  root.style.setProperty('--sky-bottom', theme.bot);
-  root.style.setProperty('--sky-glow-a', theme.glowA);
-  root.style.setProperty('--sky-glow-b', theme.glowB);
-  document.querySelectorAll('.star').forEach(star => {
-    star.style.opacity = theme.stars === 0 ? '0' : '';
-  });
-  const label = document.getElementById('sky-phase-label');
-  if (label) label.textContent = theme.label;
-}
-
 // ── Geolocation ────────────────────────────────────────────────────────
 function getLocation() {
   if (!navigator.geolocation) { showError('Geolocation not supported.'); return; }
@@ -904,7 +819,7 @@ function showError(msg) {
 // ── Helpers ────────────────────────────────────────────────────────────
 function fmtTime(isoStr) {
   if (!isoStr || isoStr === 'none') return '—';
-  return new Date(isoStr).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+  return new Date(isoStr).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit', timeZone: lastTzId});
 }
 
 function minutesDiff(a, b) {
@@ -914,17 +829,87 @@ function minutesDiff(a, b) {
 function fmtDuration(mins) {
   if (mins <= 0) return '—';
   if (mins >= 60) return `${Math.floor(mins/60)}h ${mins%60}m`;
-  return `${mins}m`;
+  return `${mins} minutes`;
 }
 
 function toLocalMinutes(isoStr) {
   const d = new Date(isoStr);
-  return d.getHours() * 60 + d.getMinutes() + d.getSeconds() / 60;
+  const parts = new Intl.DateTimeFormat('en-US', {
+    timeZone: lastTzId,
+    hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false
+  }).formatToParts(d);
+  const h = parseInt(parts.find(p => p.type === 'hour').value) % 24;
+  const m = parseInt(parts.find(p => p.type === 'minute').value);
+  const s = parseInt(parts.find(p => p.type === 'second').value);
+  return h * 60 + m + s / 60;
+}
+
+// ── Solar Position (NOAA algorithm) ────────────────────────────────────
+function solarElevation(lat, lng, dateObj) {
+  const JD = dateObj.getTime() / 86400000 + 2440587.5;
+  const JC = (JD - 2451545) / 36525;
+
+  const L0 = (280.46646 + JC * (36000.76983 + JC * 0.0003032)) % 360;
+  const M  = 357.52911 + JC * (35999.05029 - JC * 0.0001537);
+  const Mrad = M * Math.PI / 180;
+  const C = Math.sin(Mrad) * (1.914602 - JC * (0.004817 + 0.000014 * JC))
+          + Math.sin(2 * Mrad) * (0.019993 - 0.000101 * JC)
+          + Math.sin(3 * Mrad) * 0.000289;
+
+  const sunLon = L0 + C;
+  const omega  = 125.04 - 1934.136 * JC;
+  const lambda = sunLon - 0.00569 - 0.00478 * Math.sin(omega * Math.PI / 180);
+
+  const eps0 = 23 + (26 + (21.448 - JC * (46.815 + JC * (0.00059 - JC * 0.001813))) / 60) / 60;
+  const eps  = eps0 + 0.00256 * Math.cos(omega * Math.PI / 180);
+  const decl = Math.asin(Math.sin(eps * Math.PI / 180) * Math.sin(lambda * Math.PI / 180));
+
+  const y    = Math.tan((eps / 2) * Math.PI / 180) ** 2;
+  const ecc  = 0.016708634;
+  const L0r  = L0 * Math.PI / 180;
+  const Mr   = M  * Math.PI / 180;
+  const eot  = 4 * (180 / Math.PI) * (
+    y * Math.sin(2 * L0r) - 2 * ecc * Math.sin(Mr)
+    + 4 * ecc * y * Math.sin(Mr) * Math.cos(2 * L0r)
+    - 0.5 * y * y * Math.sin(4 * L0r)
+    - 1.25 * ecc * ecc * Math.sin(2 * Mr)
+  );
+
+  const utcMin   = dateObj.getUTCHours() * 60 + dateObj.getUTCMinutes() + dateObj.getUTCSeconds() / 60;
+  const solarMin = 720 - 4 * lng - eot;
+  const ha       = (utcMin - solarMin) / 4; // degrees
+
+  const latRad = lat * Math.PI / 180;
+  const cosZ   = Math.sin(latRad) * Math.sin(decl)
+               + Math.cos(latRad) * Math.cos(decl) * Math.cos(ha * Math.PI / 180);
+  return Math.asin(cosZ) * 180 / Math.PI;
+}
+
+// Binary-search for the moment sun crosses targetDeg elevation.
+// ascending=true → sun going up (morning); false → going down (evening).
+function findElevationCrossing(lat, lng, anchorDate, targetDeg, ascending) {
+  let lo = new Date(anchorDate.getTime() - 3 * 3600000);
+  let hi = new Date(anchorDate.getTime() + 3 * 3600000);
+  for (let i = 0; i < 42; i++) {
+    const mid  = new Date((lo.getTime() + hi.getTime()) / 2);
+    const elev = solarElevation(lat, lng, mid);
+    if (ascending ? elev < targetDeg : elev > targetDeg) lo = mid;
+    else hi = mid;
+  }
+  return new Date((lo.getTime() + hi.getTime()) / 2);
 }
 
 // ── API ────────────────────────────────────────────────────────────────
-async function fetchSunData(lat, lng, dateStr) {
-  const url = `https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lng}&date=${dateStr}&formatted=0`;
+async function fetchTimezone(lat, lng) {
+  const r = await fetch(`https://timeapi.io/api/timezone/coordinate?latitude=${lat}&longitude=${lng}`);
+  if (!r.ok) throw new Error('TZ API error');
+  const j = await r.json();
+  if (!j.timeZone) throw new Error('No timezone returned');
+  return j.timeZone;
+}
+
+async function fetchSunData(lat, lng, dateStr, tzId) {
+  const url = `https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lng}&date=${dateStr}&formatted=0&tzid=${encodeURIComponent(tzId)}`;
   const r = await fetch(url);
   const j = await r.json();
   if (j.status !== 'OK') throw new Error('API error');
@@ -933,8 +918,8 @@ async function fetchSunData(lat, lng, dateStr) {
 
 // ── Main ───────────────────────────────────────────────────────────────
 let countdownInterval = null;
-let skyInterval = null;
 let lastSolarData = null;
+let lastTzId = 'UTC';
 
 async function calculate() {
   const lat = parseFloat(document.getElementById('lat').value);
@@ -950,20 +935,22 @@ async function calculate() {
   document.getElementById('results').classList.remove('visible');
 
   try {
-    const d = await fetchSunData(lat, lng, dateStr);
+    try {
+      lastTzId = await fetchTimezone(lat, lng);
+    } catch {
+      lastTzId = 'UTC';
+    }
+
+    const d = await fetchSunData(lat, lng, dateStr, lastTzId);
     lastSolarData = d;
 
     document.getElementById('loading').classList.remove('visible');
     document.getElementById('results').classList.add('visible');
 
-    renderLocationBar(lat, lng, dateStr);
-    renderPhases(d);
-    renderTimeline(d);
-    startCountdown(d);
-    applySkyTheme(d);
-
-    if (skyInterval) clearInterval(skyInterval);
-    skyInterval = setInterval(() => applySkyTheme(lastSolarData), 60000);
+    renderLocationBar(lat, lng, dateStr, lastTzId);
+    renderPhases(d, lat, lng);
+    renderTimeline(d, lat, lng);
+    startCountdown(d, lat, lng);
 
   } catch(e) {
     document.getElementById('loading').classList.remove('visible');
@@ -972,80 +959,46 @@ async function calculate() {
 }
 
 // ── Phases ─────────────────────────────────────────────────────────────
-function renderPhases(d) {
-  const sunriseDT = new Date(d.sunrise);
-  const sunsetDT  = new Date(d.sunset);
-  const goldenMornEnd  = new Date(sunriseDT.getTime() + 60 * 60000);
-  const goldenEvnStart = new Date(sunsetDT.getTime()  - 60 * 60000);
-  const blueMornStart  = new Date(d.civil_twilight_begin);
+function renderPhases(d, lat, lng) {
+  const sunriseDT      = new Date(d.sunrise);
+  const sunsetDT       = new Date(d.sunset);
+  const goldenMornEnd  = findElevationCrossing(lat, lng, sunriseDT, 6, true);
+  const goldenEvnStart = findElevationCrossing(lat, lng, sunsetDT, 6, false);
 
-  const phases = [
-    {
-      key: 'astro', icon: '✦', name: 'Astronomical Twilight',
-      desc: 'The faintest hint of light; stars still fully visible.',
-      times: [{label:'Dawn', val: d.astronomical_twilight_begin}, {label:'Dusk', val: d.astronomical_twilight_end}],
-      dur: minutesDiff(d.astronomical_twilight_begin, d.nautical_twilight_begin)
-    },
-    {
-      key: 'naut', icon: '⚓', name: 'Nautical Twilight',
-      desc: 'Horizon becomes visible; ideal for seascape silhouettes.',
-      times: [{label:'Dawn', val: d.nautical_twilight_begin}, {label:'Dusk', val: d.nautical_twilight_end}],
-      dur: minutesDiff(d.nautical_twilight_begin, d.civil_twilight_begin)
-    },
-    {
-      key: 'civil', icon: '◐', name: 'Civil Twilight',
-      desc: 'Soft, diffused light — perfect for street and portrait work.',
-      times: [{label:'Dawn', val: d.civil_twilight_begin}, {label:'Dusk', val: d.civil_twilight_end}],
-      dur: minutesDiff(d.civil_twilight_begin, d.sunrise)
-    },
-    {
-      key: 'blue', icon: '◑', name: 'Blue Hour',
-      desc: 'Cool blue tones before sunrise and after sunset.',
-      times: [{label:'Morning', val: blueMornStart.toISOString()}, {label:'Evening', val: sunsetDT.toISOString()}],
-      dur: minutesDiff(blueMornStart.toISOString(), sunriseDT.toISOString())
-    },
-    {
-      key: 'golden', icon: '◉', name: 'Golden Hour',
-      desc: 'Warm, directional light — the magic hour every photographer chases.',
-      times: [{label:'Morning', val: d.sunrise}, {label:'Evening', val: goldenEvnStart.toISOString()}],
-      dur: 60
-    },
-    {
-      key: 'solar-noon', icon: '☀', name: 'Solar Noon',
-      desc: 'Sun at peak — harsh shadows, great for abstract & architecture.',
-      times: [{label:'Noon', val: d.solar_noon}],
-      dur: null
-    },
+  const morning = [
+    { key: 'astro',  name: 'Astronomical Twilight', start: d.astronomical_twilight_begin, end: d.nautical_twilight_begin },
+    { key: 'naut',   name: 'Nautical Twilight',     start: d.nautical_twilight_begin,     end: d.civil_twilight_begin },
+    { key: 'blue',   name: 'Blue Hour',             start: d.civil_twilight_begin,        end: d.sunrise },
+    { key: 'golden', name: 'Golden Hour',           start: d.sunrise,                    end: goldenMornEnd.toISOString() },
   ];
 
-  const list = document.getElementById('phases-list');
-  list.innerHTML = '';
+  const evening = [
+    { key: 'golden', name: 'Golden Hour',           start: goldenEvnStart.toISOString(), end: d.sunset },
+    { key: 'blue',   name: 'Blue Hour',             start: d.sunset,                    end: d.civil_twilight_end },
+    { key: 'naut',   name: 'Nautical Twilight',     start: d.civil_twilight_end,         end: d.nautical_twilight_end },
+    { key: 'astro',  name: 'Astronomical Twilight', start: d.nautical_twilight_end,      end: d.astronomical_twilight_end },
+  ];
 
-  phases.forEach(p => {
-    const row = document.createElement('div');
-    row.className = `phase-row ${p.key}`;
-    row.innerHTML = `
-      <div class="phase-icon">${p.icon}</div>
-      <div class="phase-main">
-        <div class="phase-name">${p.name}</div>
-        <div class="phase-desc">${p.desc}</div>
-        ${p.dur ? `<div class="phase-duration">~${fmtDuration(p.dur)}</div>` : ''}
-      </div>
-      <div class="phase-times">
-        ${p.times.map(t => `
-          <div class="phase-time-item">
-            <span class="phase-time-label">${t.label}</span>
-            <span class="phase-time-val">${fmtTime(t.val)}</span>
-          </div>
-        `).join('')}
-      </div>
-    `;
-    list.appendChild(row);
-  });
+  function buildRows(phases) {
+    return phases.map(p => {
+      const dur = minutesDiff(p.start, p.end);
+      return `<div class="phase-row ${p.key}">
+        <span class="phase-name">${p.name}  <span class="phase-dur">(${fmtDuration(dur)})</span></span>
+        <span class="phase-timerange">${fmtTime(p.start)} — ${fmtTime(p.end)}</span>
+      </div>`;
+    }).join('');
+  }
+
+  const container = document.getElementById('phases-list');
+  container.innerHTML = `
+    <div class="phases-section">\n      <div class="phases-section-title">Morning</div>\n      ${buildRows(morning)}\n    </div>
+    <div class="solar-noon-divider">Solar Noon &nbsp;&nbsp; ${fmtTime(d.solar_noon)}</div>
+    <div class="phases-section">\n      <div class="phases-section-title">Evening</div>\n      ${buildRows(evening)}\n    </div>
+  `;
 }
 
 // ── Timeline ───────────────────────────────────────────────────────────
-function renderTimeline(d) {
+function renderTimeline(d, lat, lng) {
   const bar = document.getElementById('timeline-bar');
   bar.innerHTML = '';
   const totalMins = 24 * 60;
@@ -1057,8 +1010,8 @@ function renderTimeline(d) {
 
   const sunriseDT    = new Date(d.sunrise);
   const sunsetDT     = new Date(d.sunset);
-  const goldenMornEnd  = new Date(sunriseDT.getTime() + 60 * 60000).toISOString();
-  const goldenEvnStart = new Date(sunsetDT.getTime()  - 60 * 60000).toISOString();
+  const goldenMornEnd  = findElevationCrossing(lat, lng, sunriseDT, 6, true).toISOString();
+  const goldenEvnStart = findElevationCrossing(lat, lng, sunsetDT, 6, false).toISOString();
 
   const segments = [
     { cls: 'seg-night',       from: 0,                                   to: pct(d.astronomical_twilight_begin), label: 'Night' },
@@ -1096,13 +1049,13 @@ function renderTimeline(d) {
 }
 
 // ── Countdown ──────────────────────────────────────────────────────────
-function startCountdown(d) {
+function startCountdown(d, lat, lng) {
   if (countdownInterval) clearInterval(countdownInterval);
 
-  const sunriseDT     = new Date(d.sunrise);
-  const sunsetDT      = new Date(d.sunset);
-  const goldenMornEnd = new Date(sunriseDT.getTime() + 60 * 60000);
-  const goldenEvnStart = new Date(sunsetDT.getTime() - 60 * 60000);
+  const sunriseDT      = new Date(d.sunrise);
+  const sunsetDT       = new Date(d.sunset);
+  const goldenMornEnd  = findElevationCrossing(lat, lng, sunriseDT, 6, true);
+  const goldenEvnStart = findElevationCrossing(lat, lng, sunsetDT, 6, false);
 
   const events = [
     { label: 'Morning Golden Hour begins', time: sunriseDT },
@@ -1151,9 +1104,9 @@ function startCountdown(d) {
 }
 
 // ── Location bar ───────────────────────────────────────────────────────
-function renderLocationBar(lat, lng, dateStr) {
+function renderLocationBar(lat, lng, dateStr, tzId) {
   document.getElementById('location-bar').innerHTML =
-    `<span>${Math.abs(lat).toFixed(4)}° ${lat >= 0 ? 'N' : 'S'}</span> &nbsp;·&nbsp; <span>${Math.abs(lng).toFixed(4)}° ${lng >= 0 ? 'E' : 'W'}</span> &nbsp;·&nbsp; ${dateStr}`;
+    `<span>${Math.abs(lat).toFixed(4)}° ${lat >= 0 ? 'N' : 'S'}</span> &nbsp;·&nbsp; <span>${Math.abs(lng).toFixed(4)}° ${lng >= 0 ? 'E' : 'W'}</span> &nbsp;·&nbsp; <span>${dateStr}</span> &nbsp;·&nbsp; <span>${tzId}</span>`;
 }
 
 // ── Auto-detect on load ────────────────────────────────────────────────
