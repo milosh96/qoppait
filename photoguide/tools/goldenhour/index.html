@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Golden Hour Calculator — Find Sunrise, Sunset & Blue Hour Times</title>
+<meta name="description" content="Find exact golden hour, blue hour, sunrise, and sunset times for any location and date. Free photography light planner with a live countdown and full-day timeline.">
+<meta name="keywords" content="golden hour calculator, blue hour calculator, sunrise sunset photography, golden hour time, golden hour today, blue hour time, sunrise time, sunset time, photography light planner, best light for photography, magic hour calculator">
+<link rel="canonical" href="https://qoppait.com/photoguide/tools/goldenhour/">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1208;
+    --paper: #f5efe6;
+    --gold: #d4860a;
+    --amber: #e8a422;
+    --muted: #8c7a5e;
+    --sky-top: #060d18;
+    --sky-bottom: #0a0f1e;
+    --sky-glow-a: rgba(20,40,80,0.2);
+    --sky-glow-b: rgba(30,50,110,0.15);
+  }
+
+  html, body {
+    height: 100%;
+    color: var(--paper);
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    overflow-x: hidden;
+  }
+
+  body {
+    background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-bottom) 100%);
+    min-height: 100vh;
+    position: relative;
+    transition: background 3s ease;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 40% at 50% -10%, var(--sky-glow-a) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 30% at 20% 110%, var(--sky-glow-b) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+    transition: background 3s ease;
+  }
+
+  /* ── Nav ── */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            align-items: center;
+            justify-content: end;
+            padding: 0.75rem 2rem;
+            background-color: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid #333;
+            z-index: 100;
+        }
+
+        .nav-brand {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #ffffff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-brand img {
+            width: 26px;
+            height: 26px;
+            border-radius: 6px;
+            object-fit: cover;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        nav a {
+            color: #b0b0b0;
+            text-decoration: none;
+            font-size: 0.9rem;
+            border-bottom: none;
+            padding-bottom: 2px;
+        }
+
+        nav a:hover {
+            color: #ffffff;
+        }
+
+        .nav-links a.active {
+            color: #e8a422;
+        }
+
+
+  /* ── Stars ── */
+  .stars {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle var(--d, 3s) ease-in-out infinite alternate;
+    transition: opacity 2s ease;
+  }
+
+  @keyframes twinkle {
+    from { opacity: var(--min-op, 0.2); transform: scale(1); }
+    to   { opacity: var(--max-op, 0.8); transform: scale(1.3); }
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 5.5rem 1.5rem 4rem;
+  }
+
+  /* ── Header ── */
+  header {
+    text-align: center;
+    padding: 2rem 0 2.5rem;
+  }
+
+  .eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 1rem;
+    opacity: 0.9;
+  }
+
+  h1 {
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+  }
+
+  h1 em {
+    font-style: normal;
+    font-weight: 600;
+    color: var(--amber);
+  }
+
+  .subtitle {
+    font-size: 1rem;
+    font-weight: 300;
+    color: var(--muted);
+    margin-top: 0.75rem;
+  }
+
+  .sun-ornament {
+    width: 42px;
+    height: 42px;
+    margin: 1.25rem auto 0;
+  }
+
+  .sun-ornament svg {
+    width: 100%;
+    height: 100%;
+    animation: rotate-slow 20s linear infinite;
+  }
+
+  @keyframes rotate-slow { to { transform: rotate(360deg); } }
+
+  /* ── Input panel ── */
+  .panel {
+    background: rgba(245,239,230,0.05);
+    border: 1px solid rgba(212,134,10,0.2);
+    border-radius: 2px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    backdrop-filter: blur(4px);
+  }
+
+  .panel-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(212,134,10,0.15);
+  }
+
+  .inputs-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1.5rem;
+    align-items: start;
+  }
+
+  @media (max-width: 560px) {
+    .inputs-row { grid-template-columns: 1fr; }
+  }
+
+  .coords-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .coords-fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .date-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  input[type="text"], input[type="date"] {
+    background: rgba(245,239,230,0.05);
+    border: 1px solid rgba(212,134,10,0.25);
+    border-radius: 2px;
+    padding: 0.65rem 0.85rem;
+    color: var(--paper);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+  }
+
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(0.7) sepia(1) saturate(2) hue-rotate(10deg);
+    cursor: pointer;
+  }
+
+  input:focus { border-color: var(--amber); }
+
+  .btn {
+    background: linear-gradient(135deg, var(--gold), var(--amber));
+    border: none;
+    border-radius: 2px;
+    padding: 0.7rem 1.5rem;
+    color: var(--ink);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.15s;
+    width: 100%;
+  }
+
+  .btn:hover { opacity: 0.85; transform: translateY(-1px); }
+  .btn:active { transform: translateY(0); }
+
+  .btn-locate {
+    background: transparent;
+    border: 1px solid rgba(212,134,10,0.4);
+    color: var(--amber);
+    font-size: 0.7rem;
+    padding: 0.6rem 1rem;
+  }
+
+  .btn-locate:hover { background: rgba(212,134,10,0.08); opacity: 1; }
+
+  /* ── Results ── */
+  #results { display: none; }
+  #results.visible { display: block; }
+
+  /* ── Countdown ── */
+  .countdown-card {
+    background: linear-gradient(135deg, rgba(212,134,10,0.12), rgba(58,95,138,0.12));
+    border: 1px solid rgba(212,134,10,0.3);
+    border-radius: 2px;
+    padding: 1.75rem 2rem;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .countdown-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.3rem;
+  }
+
+  .countdown-next {
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--amber);
+    margin-bottom: 0.15rem;
+  }
+
+  .countdown-time {
+    font-family: 'DM Mono', monospace;
+    font-size: 2rem;
+    color: var(--paper);
+    letter-spacing: 0.05em;
+  }
+
+  .countdown-since {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-align: right;
+  }
+
+  /* ── Timeline ── */
+  .timeline-wrap { margin-bottom: 2rem; }
+
+  .timeline-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 0.75rem;
+  }
+
+  .section-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .timeline-bar {
+    height: 52px;
+    border-radius: 2px;
+    overflow: hidden;
+    display: flex;
+    width: 100%;
+    position: relative;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .timeline-segment {
+    height: 100%;
+    position: relative;
+    transition: flex 0.6s ease;
+    cursor: default;
+  }
+
+  .timeline-segment:hover::after {
+    content: attr(data-label);
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(20,12,4,0.95);
+    border: 1px solid rgba(212,134,10,0.3);
+    color: var(--paper);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    padding: 0.3rem 0.6rem;
+    white-space: nowrap;
+    z-index: 10;
+    letter-spacing: 0.05em;
+    pointer-events: none;
+  }
+
+  .seg-astro-dawn  { background: #0d1b2e; }
+  .seg-naut-dawn   { background: #162440; }
+  .seg-civil-dawn  { background: #2a3a60; }
+  .seg-blue-dawn   { background: #1e4a7a; }
+  .seg-golden-dawn { background: linear-gradient(90deg, #8b3e1a, #d4860a); }
+  .seg-day         { background: linear-gradient(90deg, #f0c040, #e8d080, #f0c040); }
+  .seg-golden-dusk { background: linear-gradient(90deg, #d4860a, #c03010); }
+  .seg-blue-dusk   { background: #1e4a7a; }
+  .seg-civil-dusk  { background: #2a3a60; }
+  .seg-naut-dusk   { background: #162440; }
+  .seg-astro-dusk  { background: #0d1b2e; }
+  .seg-night       { background: #060d18; }
+
+  .timeline-ticks {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.4rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.55rem;
+    color: rgba(140,122,94,0.6);
+    padding: 0 2px;
+  }
+
+  /* ── Phase list (column) ── */
+  .phases-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: rgba(212,134,10,0.1);
+    border: 1px solid rgba(212,134,10,0.12);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+  }
+
+  .phase-row {
+    background: rgba(10,8,4,0.8);
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    position: relative;
+    transition: background 0.15s;
+  }
+
+  .phase-row:hover { background: rgba(22,16,8,0.95); }
+
+  .phase-row::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+  }
+
+  .phase-row.astro::before    { background: #1e3a60; }
+  .phase-row.naut::before     { background: #2a5080; }
+  .phase-row.civil::before    { background: #3a70b0; }
+  .phase-row.blue::before     { background: #4090d0; }
+  .phase-row.golden::before   { background: linear-gradient(180deg, var(--amber), var(--gold)); }
+  .phase-row.solar-noon::before { background: #f0d040; }
+
+  .phase-icon {
+    font-size: 1.2rem;
+    width: 28px;
+    text-align: center;
+    flex-shrink: 0;
+    opacity: 0.85;
+  }
+
+  .phase-main {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .phase-name {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--paper);
+    margin-bottom: 0.1rem;
+  }
+
+  .phase-desc {
+    font-size: 0.75rem;
+    font-weight: 300;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  .phase-duration {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.55rem;
+    color: rgba(140,122,94,0.6);
+    margin-top: 0.2rem;
+    letter-spacing: 0.05em;
+  }
+
+  .phase-times {
+    display: flex;
+    gap: 1.5rem;
+    flex-shrink: 0;
+    text-align: right;
+  }
+
+  .phase-time-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.5rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 0.15rem;
+  }
+
+  .phase-time-val {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.82rem;
+    color: var(--paper);
+  }
+
+  /* ── Location display ── */
+  .location-bar {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    text-align: center;
+    margin-bottom: 2rem;
+    letter-spacing: 0.08em;
+  }
+
+  .location-bar span { color: var(--amber); }
+
+  /* ── Sky phase badge ── */
+  .sky-phase-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: rgba(245,239,230,0.05);
+    border: 1px solid rgba(212,134,10,0.2);
+    border-radius: 999px;
+    padding: 0.3rem 0.8rem;
+    margin-bottom: 2rem;
+  }
+
+  .sky-phase-badge .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--amber);
+  }
+
+  /* ── Error ── */
+  .error-msg {
+    background: rgba(180,40,20,0.15);
+    border: 1px solid rgba(180,40,20,0.3);
+    border-radius: 2px;
+    padding: 0.75rem 1rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: #e07060;
+    margin-top: 0.25rem;
+    display: none;
+  }
+
+  /* ── Loading ── */
+  .loading {
+    text-align: center;
+    padding: 3rem;
+    font-weight: 300;
+    color: var(--muted);
+    display: none;
+  }
+
+  .loading.visible { display: block; }
+
+  .loading::after {
+    content: '';
+    display: inline-block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--amber);
+    margin-left: 0.5rem;
+    animation: pulse 1s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%,100% { opacity: 0.2; transform: scale(0.8); }
+    50%      { opacity: 1;   transform: scale(1.2); }
+  }
+
+  /* ── Animate in ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .phase-row { animation: fadeUp 0.35s ease both; }
+  .phase-row:nth-child(1) { animation-delay: 0.04s; }
+  .phase-row:nth-child(2) { animation-delay: 0.08s; }
+  .phase-row:nth-child(3) { animation-delay: 0.12s; }
+  .phase-row:nth-child(4) { animation-delay: 0.16s; }
+  .phase-row:nth-child(5) { animation-delay: 0.20s; }
+  .phase-row:nth-child(6) { animation-delay: 0.24s; }
+
+  /* ── CTA overrides (match golden hour theme) ── */
+  .blog-cta-section {
+    border-top: 1px solid rgba(212,134,10,0.15) !important;
+    background: transparent !important;
+  }
+
+  .blog-cta-form input[type="email"] {
+    background: rgba(245,239,230,0.05) !important;
+    border-color: rgba(212,134,10,0.25) !important;
+    color: var(--paper) !important;
+  }
+
+  .blog-cta-form input[type="email"]:focus {
+    border-color: var(--amber) !important;
+  }
+
+  .blog-cta-form input[type="email"]::placeholder {
+    color: var(--muted) !important;
+  }
+
+  .blog-cta-form button {
+    background: linear-gradient(135deg, var(--gold), var(--amber)) !important;
+    color: var(--ink) !important;
+    border-radius: 4px !important;
+  }
+
+  .blog-cta-form button:hover {
+    background: var(--amber) !important;
+  }
+
+  footer {
+    text-align: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.55rem;
+    color: rgba(140,122,94,0.4);
+    letter-spacing: 0.1em;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(212,134,10,0.08);
+    margin-top: 1rem;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-links">
+    <a href="../../../photoguide.html">Home</a>
+    <a href="../index.html" class="active">Tools</a>
+    <a href="../../blog/index.html">Blog</a>
+  </div>
+</nav>
+
+<div class="stars" id="stars"></div>
+
+<div class="container">
+
+  <header>
+    <p class="eyebrow">Photography Light Planner</p>
+    <h1><em>Golden</em> Hour<br>Calculator</h1>
+    <p class="subtitle">Plan your perfect shoot. Chase the light.</p>
+    <div class="sun-ornament">
+      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="24" cy="24" r="8" stroke="#d4860a" stroke-width="1.5"/>
+        <g stroke="#d4860a" stroke-width="1" opacity="0.6">
+          <line x1="24" y1="2" x2="24" y2="8"/>
+          <line x1="24" y1="40" x2="24" y2="46"/>
+          <line x1="2" y1="24" x2="8" y2="24"/>
+          <line x1="40" y1="24" x2="46" y2="24"/>
+          <line x1="7.5" y1="7.5" x2="11.8" y2="11.8"/>
+          <line x1="36.2" y1="36.2" x2="40.5" y2="40.5"/>
+          <line x1="40.5" y1="7.5" x2="36.2" y2="11.8"/>
+          <line x1="11.8" y1="36.2" x2="7.5" y2="40.5"/>
+        </g>
+        <circle cx="24" cy="24" r="11" stroke="#d4860a" stroke-width="0.5" stroke-dasharray="2 3" opacity="0.4"/>
+      </svg>
+    </div>
+  </header>
+
+  <!-- Input Panel -->
+  <div class="panel">
+    <div class="inputs-row">
+      <div class="coords-group">
+        <div class="coords-fields">
+          <div class="input-group">
+            <label>Latitude</label>
+            <input type="text" id="lat" placeholder="48.8566" />
+          </div>
+          <div class="input-group">
+            <label>Longitude</label>
+            <input type="text" id="lng" placeholder="2.3522" />
+          </div>
+        </div>
+        <button class="btn btn-locate" onclick="getLocation()">⊕ Use My Location</button>
+        <div id="error-msg" class="error-msg"></div>
+      </div>
+      <div class="date-group">
+        <div class="input-group">
+          <label>Date</label>
+          <input type="date" id="date" />
+        </div>
+        <button class="btn" onclick="calculate()">Calculate →</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="loading" id="loading">Fetching solar data</div>
+
+  <!-- Results -->
+  <div id="results">
+
+    <div style="text-align:center; margin-bottom:2rem;">
+      <div class="sky-phase-badge">
+        <div class="dot"></div>
+        <span id="sky-phase-label">—</span>
+      </div>
+    </div>
+
+    <div class="location-bar" id="location-bar"></div>
+
+    <div class="countdown-card">
+      <div>
+        <div class="countdown-label">Next Golden Hour</div>
+        <div class="countdown-next" id="next-label">—</div>
+        <div class="countdown-time" id="countdown">—</div>
+      </div>
+      <div class="countdown-since" id="sun-position"></div>
+    </div>
+
+    <div class="timeline-wrap">
+      <div class="timeline-header">
+        <span class="section-title">Day Timeline</span>
+        <span class="section-title" id="date-display"></span>
+      </div>
+      <div class="timeline-bar" id="timeline-bar"></div>
+      <div class="timeline-ticks" id="timeline-ticks"></div>
+    </div>
+
+    <div class="phases-list" id="phases-list"></div>
+
+  </div>
+
+  <div id="blog-cta"></div>
+
+  <div id="site-footer"></div>
+
+</div>
+<script src="../../../assets/blog-cta.js"></script>
+<script src="/assets/footer.js"></script>
+
+<script>
+// ── Stars ─────────────────────────────────────────────────────────────
+(function() {
+  const s = document.getElementById('stars');
+  for (let i = 0; i < 120; i++) {
+    const el = document.createElement('div');
+    const size = Math.random() * 1.8 + 0.4;
+    el.className = 'star';
+    el.style.cssText = `
+      left:${Math.random()*100}%;top:${Math.random()*100}%;
+      width:${size}px;height:${size}px;
+      --d:${(Math.random()*3+2).toFixed(1)}s;
+      --min-op:${(Math.random()*0.2+0.05).toFixed(2)};
+      --max-op:${(Math.random()*0.5+0.3).toFixed(2)};
+      animation-delay:${(Math.random()*4).toFixed(1)}s;
+    `;
+    s.appendChild(el);
+  }
+})();
+
+document.getElementById('date').valueAsDate = new Date();
+
+// ── Sky themes ─────────────────────────────────────────────────────────
+const SKY = {
+  night:      { top: '#020510', bot: '#060d18', glowA: 'rgba(10,20,60,0.2)',  glowB: 'rgba(5,10,40,0.15)',  stars: 1,    label: 'Night' },
+  astro:      { top: '#04091a', bot: '#0d1b2e', glowA: 'rgba(15,30,80,0.25)', glowB: 'rgba(10,20,60,0.2)',  stars: 0.9,  label: 'Astronomical Twilight' },
+  naut:       { top: '#080e22', bot: '#1a2a4a', glowA: 'rgba(30,50,110,0.3)', glowB: 'rgba(20,40,90,0.2)',  stars: 0.7,  label: 'Nautical Twilight' },
+  blueDawn:   { top: '#0a1530', bot: '#1e3a6a', glowA: 'rgba(50,90,160,0.4)', glowB: 'rgba(40,70,130,0.3)', stars: 0.4,  label: 'Blue Hour' },
+  goldenDawn: { top: '#1a0800', bot: '#7a2e0a', glowA: 'rgba(212,100,10,0.5)',glowB: 'rgba(180,80,10,0.3)', stars: 0.1,  label: 'Morning Golden Hour' },
+  day:        { top: '#0a1828', bot: '#152035', glowA: 'rgba(80,130,200,0.2)',glowB: 'rgba(60,100,170,0.15)',stars: 0,    label: 'Daylight' },
+  goldenDusk: { top: '#1a0400', bot: '#8a1e04', glowA: 'rgba(220,80,10,0.5)', glowB: 'rgba(180,50,10,0.35)',stars: 0.05, label: 'Evening Golden Hour' },
+  blueDusk:   { top: '#0a1530', bot: '#1e3a6a', glowA: 'rgba(50,90,160,0.4)', glowB: 'rgba(40,70,130,0.3)', stars: 0.4,  label: 'Blue Hour' },
+  civilDusk:  { top: '#080e22', bot: '#1a2a4a', glowA: 'rgba(30,50,110,0.3)', glowB: 'rgba(20,40,90,0.2)',  stars: 0.6,  label: 'Civil Twilight' },
+  nautDusk:   { top: '#04091a', bot: '#0d1b2e', glowA: 'rgba(15,30,80,0.25)', glowB: 'rgba(10,20,60,0.2)',  stars: 0.8,  label: 'Nautical Twilight' },
+};
+
+function getSkyTheme(d) {
+  if (!d) return SKY.night;
+  const now = new Date();
+  const aB  = new Date(d.astronomical_twilight_begin);
+  const nB  = new Date(d.nautical_twilight_begin);
+  const cB  = new Date(d.civil_twilight_begin);
+  const sr  = new Date(d.sunrise);
+  const ghME = new Date(sr.getTime() + 60 * 60000);
+  const ss   = new Date(d.sunset);
+  const ghES = new Date(ss.getTime() - 60 * 60000);
+  const cE   = new Date(d.civil_twilight_end);
+  const nE   = new Date(d.nautical_twilight_end);
+  const aE   = new Date(d.astronomical_twilight_end);
+
+  if (now < aB || now > aE)  return SKY.night;
+  if (now < nB)              return SKY.astro;
+  if (now < cB)              return SKY.naut;
+  if (now < sr)              return SKY.blueDawn;
+  if (now < ghME)            return SKY.goldenDawn;
+  if (now < ghES)            return SKY.day;
+  if (now < ss)              return SKY.goldenDusk;
+  if (now < cE)              return SKY.blueDusk;
+  if (now < nE)              return SKY.civilDusk;
+  return SKY.nautDusk;
+}
+
+function applySkyTheme(d) {
+  const theme = getSkyTheme(d);
+  const root = document.documentElement;
+  root.style.setProperty('--sky-top',    theme.top);
+  root.style.setProperty('--sky-bottom', theme.bot);
+  root.style.setProperty('--sky-glow-a', theme.glowA);
+  root.style.setProperty('--sky-glow-b', theme.glowB);
+  document.querySelectorAll('.star').forEach(star => {
+    star.style.opacity = theme.stars === 0 ? '0' : '';
+  });
+  const label = document.getElementById('sky-phase-label');
+  if (label) label.textContent = theme.label;
+}
+
+// ── Geolocation ────────────────────────────────────────────────────────
+function getLocation() {
+  if (!navigator.geolocation) { showError('Geolocation not supported.'); return; }
+  navigator.geolocation.getCurrentPosition(pos => {
+    document.getElementById('lat').value = pos.coords.latitude.toFixed(5);
+    document.getElementById('lng').value = pos.coords.longitude.toFixed(5);
+    document.getElementById('error-msg').style.display = 'none';
+    calculate();
+  }, () => showError('Location access denied.'));
+}
+
+function showError(msg) {
+  const el = document.getElementById('error-msg');
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+
+// ── Helpers ────────────────────────────────────────────────────────────
+function fmtTime(isoStr) {
+  if (!isoStr || isoStr === 'none') return '—';
+  return new Date(isoStr).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+}
+
+function minutesDiff(a, b) {
+  return Math.round((new Date(b) - new Date(a)) / 60000);
+}
+
+function fmtDuration(mins) {
+  if (mins <= 0) return '—';
+  if (mins >= 60) return `${Math.floor(mins/60)}h ${mins%60}m`;
+  return `${mins}m`;
+}
+
+function toLocalMinutes(isoStr) {
+  const d = new Date(isoStr);
+  return d.getHours() * 60 + d.getMinutes() + d.getSeconds() / 60;
+}
+
+// ── API ────────────────────────────────────────────────────────────────
+async function fetchSunData(lat, lng, dateStr) {
+  const url = `https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lng}&date=${dateStr}&formatted=0`;
+  const r = await fetch(url);
+  const j = await r.json();
+  if (j.status !== 'OK') throw new Error('API error');
+  return j.results;
+}
+
+// ── Main ───────────────────────────────────────────────────────────────
+let countdownInterval = null;
+let skyInterval = null;
+let lastSolarData = null;
+
+async function calculate() {
+  const lat = parseFloat(document.getElementById('lat').value);
+  const lng = parseFloat(document.getElementById('lng').value);
+  const dateStr = document.getElementById('date').value;
+
+  if (isNaN(lat) || isNaN(lng) || !dateStr) {
+    showError('Please enter valid latitude, longitude and date.');
+    return;
+  }
+
+  document.getElementById('loading').classList.add('visible');
+  document.getElementById('results').classList.remove('visible');
+
+  try {
+    const d = await fetchSunData(lat, lng, dateStr);
+    lastSolarData = d;
+
+    document.getElementById('loading').classList.remove('visible');
+    document.getElementById('results').classList.add('visible');
+
+    renderLocationBar(lat, lng, dateStr);
+    renderPhases(d);
+    renderTimeline(d);
+    startCountdown(d);
+    applySkyTheme(d);
+
+    if (skyInterval) clearInterval(skyInterval);
+    skyInterval = setInterval(() => applySkyTheme(lastSolarData), 60000);
+
+  } catch(e) {
+    document.getElementById('loading').classList.remove('visible');
+    showError('Failed to fetch solar data. Check your connection.');
+  }
+}
+
+// ── Phases ─────────────────────────────────────────────────────────────
+function renderPhases(d) {
+  const sunriseDT = new Date(d.sunrise);
+  const sunsetDT  = new Date(d.sunset);
+  const goldenMornEnd  = new Date(sunriseDT.getTime() + 60 * 60000);
+  const goldenEvnStart = new Date(sunsetDT.getTime()  - 60 * 60000);
+  const blueMornStart  = new Date(d.civil_twilight_begin);
+
+  const phases = [
+    {
+      key: 'astro', icon: '✦', name: 'Astronomical Twilight',
+      desc: 'The faintest hint of light; stars still fully visible.',
+      times: [{label:'Dawn', val: d.astronomical_twilight_begin}, {label:'Dusk', val: d.astronomical_twilight_end}],
+      dur: minutesDiff(d.astronomical_twilight_begin, d.nautical_twilight_begin)
+    },
+    {
+      key: 'naut', icon: '⚓', name: 'Nautical Twilight',
+      desc: 'Horizon becomes visible; ideal for seascape silhouettes.',
+      times: [{label:'Dawn', val: d.nautical_twilight_begin}, {label:'Dusk', val: d.nautical_twilight_end}],
+      dur: minutesDiff(d.nautical_twilight_begin, d.civil_twilight_begin)
+    },
+    {
+      key: 'civil', icon: '◐', name: 'Civil Twilight',
+      desc: 'Soft, diffused light — perfect for street and portrait work.',
+      times: [{label:'Dawn', val: d.civil_twilight_begin}, {label:'Dusk', val: d.civil_twilight_end}],
+      dur: minutesDiff(d.civil_twilight_begin, d.sunrise)
+    },
+    {
+      key: 'blue', icon: '◑', name: 'Blue Hour',
+      desc: 'Cool blue tones before sunrise and after sunset.',
+      times: [{label:'Morning', val: blueMornStart.toISOString()}, {label:'Evening', val: sunsetDT.toISOString()}],
+      dur: minutesDiff(blueMornStart.toISOString(), sunriseDT.toISOString())
+    },
+    {
+      key: 'golden', icon: '◉', name: 'Golden Hour',
+      desc: 'Warm, directional light — the magic hour every photographer chases.',
+      times: [{label:'Morning', val: d.sunrise}, {label:'Evening', val: goldenEvnStart.toISOString()}],
+      dur: 60
+    },
+    {
+      key: 'solar-noon', icon: '☀', name: 'Solar Noon',
+      desc: 'Sun at peak — harsh shadows, great for abstract & architecture.',
+      times: [{label:'Noon', val: d.solar_noon}],
+      dur: null
+    },
+  ];
+
+  const list = document.getElementById('phases-list');
+  list.innerHTML = '';
+
+  phases.forEach(p => {
+    const row = document.createElement('div');
+    row.className = `phase-row ${p.key}`;
+    row.innerHTML = `
+      <div class="phase-icon">${p.icon}</div>
+      <div class="phase-main">
+        <div class="phase-name">${p.name}</div>
+        <div class="phase-desc">${p.desc}</div>
+        ${p.dur ? `<div class="phase-duration">~${fmtDuration(p.dur)}</div>` : ''}
+      </div>
+      <div class="phase-times">
+        ${p.times.map(t => `
+          <div class="phase-time-item">
+            <span class="phase-time-label">${t.label}</span>
+            <span class="phase-time-val">${fmtTime(t.val)}</span>
+          </div>
+        `).join('')}
+      </div>
+    `;
+    list.appendChild(row);
+  });
+}
+
+// ── Timeline ───────────────────────────────────────────────────────────
+function renderTimeline(d) {
+  const bar = document.getElementById('timeline-bar');
+  bar.innerHTML = '';
+  const totalMins = 24 * 60;
+
+  function pct(isoStr) {
+    if (!isoStr || isoStr === 'none') return null;
+    return toLocalMinutes(isoStr) / totalMins * 100;
+  }
+
+  const sunriseDT    = new Date(d.sunrise);
+  const sunsetDT     = new Date(d.sunset);
+  const goldenMornEnd  = new Date(sunriseDT.getTime() + 60 * 60000).toISOString();
+  const goldenEvnStart = new Date(sunsetDT.getTime()  - 60 * 60000).toISOString();
+
+  const segments = [
+    { cls: 'seg-night',       from: 0,                                   to: pct(d.astronomical_twilight_begin), label: 'Night' },
+    { cls: 'seg-astro-dawn',  from: pct(d.astronomical_twilight_begin),  to: pct(d.nautical_twilight_begin),    label: 'Astronomical Twilight' },
+    { cls: 'seg-naut-dawn',   from: pct(d.nautical_twilight_begin),      to: pct(d.civil_twilight_begin),       label: 'Nautical Twilight' },
+    { cls: 'seg-blue-dawn',   from: pct(d.civil_twilight_begin),         to: pct(d.sunrise),                    label: 'Blue Hour (Dawn)' },
+    { cls: 'seg-golden-dawn', from: pct(d.sunrise),                      to: pct(goldenMornEnd),                label: 'Golden Hour (Morning)' },
+    { cls: 'seg-day',         from: pct(goldenMornEnd),                  to: pct(goldenEvnStart),               label: 'Daylight' },
+    { cls: 'seg-golden-dusk', from: pct(goldenEvnStart),                 to: pct(d.sunset),                     label: 'Golden Hour (Evening)' },
+    { cls: 'seg-blue-dusk',   from: pct(d.sunset),                       to: pct(d.civil_twilight_end),         label: 'Blue Hour (Dusk)' },
+    { cls: 'seg-civil-dusk',  from: pct(d.civil_twilight_end),           to: pct(d.nautical_twilight_end),      label: 'Civil Twilight' },
+    { cls: 'seg-naut-dusk',   from: pct(d.nautical_twilight_end),        to: pct(d.astronomical_twilight_end),  label: 'Nautical Twilight' },
+    { cls: 'seg-astro-dusk',  from: pct(d.astronomical_twilight_end),    to: 100,                               label: 'Night' },
+  ].filter(s => s.from !== null && s.to !== null && s.to > s.from);
+
+  segments.forEach(s => {
+    const el = document.createElement('div');
+    el.className = `timeline-segment ${s.cls}`;
+    el.style.flex = `${s.to - s.from}`;
+    el.setAttribute('data-label', s.label);
+    bar.appendChild(el);
+  });
+
+  const ticks = document.getElementById('timeline-ticks');
+  ticks.innerHTML = '';
+  for (let h = 0; h <= 24; h += 3) {
+    const t = document.createElement('span');
+    t.textContent = h === 0 ? '12am' : h < 12 ? `${h}am` : h === 12 ? '12pm' : `${h-12}pm`;
+    ticks.appendChild(t);
+  }
+
+  const dateObj = new Date(document.getElementById('date').value + 'T12:00:00');
+  document.getElementById('date-display').textContent =
+    dateObj.toLocaleDateString([], {weekday:'long', month:'long', day:'numeric'});
+}
+
+// ── Countdown ──────────────────────────────────────────────────────────
+function startCountdown(d) {
+  if (countdownInterval) clearInterval(countdownInterval);
+
+  const sunriseDT     = new Date(d.sunrise);
+  const sunsetDT      = new Date(d.sunset);
+  const goldenMornEnd = new Date(sunriseDT.getTime() + 60 * 60000);
+  const goldenEvnStart = new Date(sunsetDT.getTime() - 60 * 60000);
+
+  const events = [
+    { label: 'Morning Golden Hour begins', time: sunriseDT },
+    { label: 'Morning Golden Hour ends',   time: goldenMornEnd },
+    { label: 'Evening Golden Hour begins', time: goldenEvnStart },
+    { label: 'Evening Golden Hour ends',   time: sunsetDT },
+  ];
+
+  function update() {
+    const now = new Date();
+    const upcoming = events.filter(e => e.time > now);
+    const dateInput = document.getElementById('date').value;
+    const todayStr = new Date().toISOString().slice(0,10);
+
+    let pos = '';
+    if (now < sunriseDT) pos = `Sunrise in ${fmtDuration(minutesDiff(now.toISOString(), d.sunrise))}`;
+    else if (now < sunsetDT) pos = `Sunset in ${fmtDuration(minutesDiff(now.toISOString(), d.sunset))}`;
+    else pos = 'Sunrise tomorrow';
+    document.getElementById('sun-position').textContent = pos;
+
+    if (dateInput !== todayStr) {
+      document.getElementById('next-label').textContent = 'Viewing another date';
+      document.getElementById('countdown').textContent = '—';
+      return;
+    }
+
+    if (upcoming.length === 0) {
+      document.getElementById('next-label').textContent = 'Golden hour has passed today';
+      document.getElementById('countdown').textContent = '—';
+      return;
+    }
+
+    const next = upcoming[0];
+    const diff = Math.max(0, next.time - now);
+    const h = Math.floor(diff / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+
+    document.getElementById('next-label').textContent = next.label;
+    document.getElementById('countdown').textContent = diff === 0 ? 'NOW'
+      : `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  }
+
+  update();
+  countdownInterval = setInterval(update, 1000);
+}
+
+// ── Location bar ───────────────────────────────────────────────────────
+function renderLocationBar(lat, lng, dateStr) {
+  document.getElementById('location-bar').innerHTML =
+    `<span>${Math.abs(lat).toFixed(4)}° ${lat >= 0 ? 'N' : 'S'}</span> &nbsp;·&nbsp; <span>${Math.abs(lng).toFixed(4)}° ${lng >= 0 ? 'E' : 'W'}</span> &nbsp;·&nbsp; ${dateStr}`;
+}
+
+// ── Auto-detect on load ────────────────────────────────────────────────
+window.addEventListener('load', () => {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(pos => {
+      document.getElementById('lat').value = pos.coords.latitude.toFixed(5);
+      document.getElementById('lng').value = pos.coords.longitude.toFixed(5);
+      calculate();
+    }, () => {});
+  }
+});
+</script>
+
+<script type="module">
+  import { analytics, logEvent } from '/assets/firebase-analytics.js';
+  logEvent(analytics, 'tool_opened', { tool_name: 'goldenhour' });
+</script>
+</body>
+</html>
