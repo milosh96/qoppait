@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Timelapse Calculator — Interval, Frames & Duration Planner</title>
+<meta name="description" content="Free timelapse calculator for photographers. Plan your shooting interval, total frames, clip duration, and storage needs for any timelapse project.">
+<meta name="keywords" content="timelapse calculator, time lapse interval calculator, timelapse photography calculator, how to calculate timelapse interval, timelapse frame calculation, frame rate calculator timelapse, timelapse FPS calculator, timelapse storage calculator, interval photography calculator, timelapse video duration calculator, timelapse shooting duration, timelapse settings calculator, hyperlapse calculator, time lapse math, timelapse planner">
+<link rel="canonical" href="https://qoppait.com/photoguide/tools/timelapse/">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://qoppait.com/photoguide/tools/timelapse/">
+<meta property="og:title" content="Timelapse Calculator — Interval, Frames & Duration Planner">
+<meta property="og:description" content="Free timelapse calculator for photographers. Plan your shooting interval, total frames, clip duration, and storage needs for any timelapse project.">
+<meta property="og:site_name" content="PhotoGuide by Qoppa">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Timelapse Calculator — Interval, Frames & Duration Planner">
+<meta name="twitter:description" content="Free timelapse calculator for photographers. Plan your shooting interval, total frames, clip duration, and storage needs for any timelapse project.">
+
+<!-- JSON-LD structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Timelapse Calculator",
+  "description": "Free timelapse calculator for photographers. Plan your shooting interval, total frames, clip duration, and storage needs for any timelapse project.",
+  "url": "https://qoppait.com/photoguide/tools/timelapse/",
+  "applicationCategory": "PhotographyApplication",
+  "operatingSystem": "Any",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Qoppa",
+    "url": "https://qoppait.com"
+  },
+  "featureList": [
+    "Timelapse interval calculation",
+    "Total frames calculation",
+    "Final clip duration calculation",
+    "Storage requirements estimation",
+    "Compression ratio visualization",
+    "Support for 24, 25, 30, 50, 60 fps",
+    "Shooting duration up to 24 hours"
+  ]
+}
+</script>
+
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink:    #111;
+    --paper:  #e0e0e0;
+    --time:   #a78bfa;
+    --accent: #c4b5fd;
+    --muted:  #888;
+  }
+
+  html, body {
+    height: 100%;
+    color: var(--paper);
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    overflow-x: hidden;
+  }
+
+  body {
+    background-color: #1a1a1a;
+    min-height: 100vh;
+    position: relative;
+  }
+
+  /* ── Nav ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    padding: 0.75rem 2rem;
+    background-color: rgba(26, 26, 26, 0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid #333;
+    z-index: 100;
+  }
+
+  .nav-links { display: flex; gap: 1.5rem; align-items: center; }
+
+  nav a {
+    color: #b0b0b0;
+    text-decoration: none;
+    font-size: 0.9rem;
+    padding-bottom: 2px;
+  }
+
+  nav a:hover { color: #ffffff; }
+  .nav-links a.active { color: var(--accent); }
+
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 5.5rem 1.5rem 4rem;
+  }
+
+  /* ── Header ── */
+  header {
+    text-align: center;
+    padding: 2rem 0 2.5rem;
+  }
+
+  .eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--time);
+    margin-bottom: 1rem;
+    opacity: 0.9;
+  }
+
+  h1 {
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+  }
+
+  h1 em {
+    font-style: normal;
+    font-weight: 600;
+    color: var(--time);
+  }
+
+  .subtitle {
+    font-size: 1rem;
+    font-weight: 300;
+    color: var(--muted);
+    margin-top: 0.75rem;
+  }
+
+  .time-ornament {
+    width: 42px;
+    height: 42px;
+    margin: 1.25rem auto 0;
+  }
+
+  .time-ornament svg {
+    width: 100%;
+    height: 100%;
+    animation: rotate-slow 12s linear infinite;
+  }
+
+  @keyframes rotate-slow { to { transform: rotate(360deg); } }
+
+  /* ── Input panel ── */
+  .panel {
+    background: rgba(167, 139, 250, 0.04);
+    border: 1px solid rgba(167, 139, 250, 0.2);
+    border-radius: 2px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    backdrop-filter: blur(4px);
+  }
+
+  .panel-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(167, 139, 250, 0.15);
+  }
+
+  .inputs-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 560px) {
+    .inputs-grid { grid-template-columns: 1fr; }
+    .container { padding: 4.5rem 1rem 3rem; }
+    .panel { padding: 1.25rem; }
+    nav { padding: 0.75rem 1.25rem; }
+    .nav-links { gap: 1rem; }
+    nav a { font-size: 0.85rem; }
+    header { padding: 1.5rem 0 1.75rem; }
+    .duration-row { flex-wrap: wrap; gap: 0.35rem; }
+  }
+
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .slider-row {
+    display: flex;
+    gap: 0.6rem;
+    align-items: center;
+  }
+
+  input[type="range"] {
+    flex: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 3px;
+    background: rgba(167, 139, 250, 0.2);
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--time);
+    cursor: pointer;
+    box-shadow: 0 0 6px rgba(167, 139, 250, 0.5);
+  }
+
+  input[type="number"] {
+    background: rgba(167, 139, 250, 0.05);
+    border: 1px solid rgba(167, 139, 250, 0.25);
+    border-radius: 2px;
+    padding: 0.45rem 0.6rem;
+    color: var(--paper);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+    outline: none;
+    width: 72px;
+    text-align: center;
+    transition: border-color 0.2s;
+  }
+
+  input[type="number"]:focus { border-color: var(--time); }
+
+  /* Duration row (hours + minutes) */
+  .duration-row {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .duration-row input[type="number"] {
+    width: 64px;
+  }
+
+  .duration-sep {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+  }
+
+  /* Pills */
+  .pill-group {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+
+  .pill {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    padding: 0.35rem 0.75rem;
+    border: 1px solid rgba(167, 139, 250, 0.25);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .pill:hover { border-color: var(--time); color: var(--paper); }
+  .pill.active {
+    background: rgba(167, 139, 250, 0.18);
+    border-color: var(--time);
+    color: var(--time);
+  }
+
+  /* ── Visualization ── */
+  .viz-wrap {
+    margin-bottom: 2rem;
+  }
+
+  .viz-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .timeline-wrap {
+    background: rgba(167, 139, 250, 0.03);
+    border: 1px solid rgba(167, 139, 250, 0.12);
+    border-radius: 2px;
+    padding: 1.5rem 1.25rem 1rem;
+  }
+
+  /* Real-time bar */
+  .tl-row {
+    margin-bottom: 1rem;
+  }
+
+  .tl-row-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.5rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.35rem;
+  }
+
+  .tl-bar-track {
+    height: 20px;
+    background: rgba(167, 139, 250, 0.08);
+    border-radius: 2px;
+    border: 1px solid rgba(167, 139, 250, 0.15);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .tl-bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.35s ease;
+    display: flex;
+    align-items: center;
+    padding-left: 0.5rem;
+  }
+
+  .tl-bar-fill-real {
+    background: rgba(167, 139, 250, 0.25);
+    border-right: 2px solid var(--time);
+    width: 100%;
+  }
+
+  .tl-bar-fill-clip {
+    background: rgba(196, 181, 253, 0.35);
+    border-right: 2px solid var(--accent);
+  }
+
+  .tl-bar-text {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.5rem;
+    letter-spacing: 0.08em;
+    color: var(--time);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .tl-bar-text-clip { color: var(--accent); }
+
+  .tl-ratio-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.55rem;
+    color: var(--muted);
+    text-align: right;
+    margin-top: 0.4rem;
+    letter-spacing: 0.06em;
+  }
+
+  /* Interval tick marks */
+  .tl-ticks {
+    position: relative;
+    height: 24px;
+    margin-top: 0.75rem;
+    overflow: hidden;
+  }
+
+  .tl-tick {
+    position: absolute;
+    top: 0;
+    width: 1px;
+    height: 8px;
+    background: rgba(167, 139, 250, 0.3);
+    transform: translateX(-50%);
+  }
+
+  /* ── Results grid ── */
+  .results-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: rgba(167, 139, 250, 0.1);
+    border: 1px solid rgba(167, 139, 250, 0.1);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+  }
+
+  @media (max-width: 560px) {
+    .results-grid { grid-template-columns: repeat(2, 1fr); }
+    .result-cell { padding: 1rem 0.75rem; }
+  }
+
+  .result-cell {
+    background: rgba(167, 139, 250, 0.03);
+    padding: 1.25rem 1rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    align-items: center;
+    animation: fadeUp 0.3s ease both;
+  }
+
+  .result-cell:nth-child(1) { animation-delay: 0.04s; }
+  .result-cell:nth-child(2) { animation-delay: 0.08s; }
+  .result-cell:nth-child(3) { animation-delay: 0.12s; }
+  .result-cell:nth-child(4) { animation-delay: 0.16s; }
+
+  .result-value {
+    font-family: 'DM Mono', monospace;
+    font-size: clamp(1rem, 3.5vw, 1.35rem);
+    font-weight: 300;
+    color: var(--paper);
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  .result-sublabel {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ── Creative look ── */
+  .creative-look {
+    background: rgba(167, 139, 250, 0.07);
+    border: 1px solid rgba(167, 139, 250, 0.25);
+    border-radius: 2px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .creative-look-text {
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: var(--paper);
+    line-height: 1.55;
+  }
+
+  .creative-look-text strong {
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  /* ── Attribution ── */
+  .attribution {
+    text-align: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: rgba(195, 196, 197, 0.5);
+    letter-spacing: 0.08em;
+    margin-bottom: 2rem;
+  }
+
+  /* ── CTA overrides ── */
+  .blog-cta-section {
+    border-top: 1px solid rgba(167, 139, 250, 0.15) !important;
+    background: transparent !important;
+  }
+
+  .blog-cta-form input[type="email"] {
+    background: rgba(167, 139, 250, 0.05) !important;
+    border-color: rgba(167, 139, 250, 0.25) !important;
+    color: var(--paper) !important;
+  }
+
+  .blog-cta-form input[type="email"]:focus {
+    border-color: var(--time) !important;
+  }
+
+  .blog-cta-form input[type="email"]::placeholder {
+    color: var(--muted) !important;
+  }
+
+  .blog-cta-form button {
+    background: linear-gradient(135deg, #7c3aed, #a78bfa) !important;
+    color: #fff !important;
+    border-radius: 4px !important;
+  }
+
+  footer {
+    text-align: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.55rem;
+    color: rgba(74, 138, 154, 0.4);
+    letter-spacing: 0.1em;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(167, 139, 250, 0.08);
+    margin-top: 1rem;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-links">
+    <a href="../../../photoguide.html">Home</a>
+    <a href="../index.html" class="active">Tools</a>
+    <a href="../../blog/index.html">Blog</a>
+  </div>
+</nav>
+
+<div class="container">
+
+  <header>
+    <p class="eyebrow">Timelapse Planner</p>
+    <h1><em>Timelapse</em><br>Calculator</h1>
+    <p class="subtitle">Plan your shoot. Nail your interval. Never miss the moment.</p>
+    <div class="time-ornament">
+      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="24" cy="24" r="18" stroke="#a78bfa" stroke-width="1.5"/>
+        <circle cx="24" cy="24" r="2" fill="#a78bfa"/>
+        <line x1="24" y1="24" x2="24" y2="10" stroke="#a78bfa" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="24" y1="24" x2="33" y2="28" stroke="#c4b5fd" stroke-width="1" stroke-linecap="round"/>
+        <circle cx="24" cy="24" r="18" stroke="#a78bfa" stroke-width="0.4" stroke-dasharray="2 4" opacity="0.3"/>
+      </svg>
+    </div>
+  </header>
+
+  <!-- Input panel -->
+  <div class="panel">
+    <div class="panel-title">Shooting Parameters</div>
+    <div class="inputs-grid">
+
+      <!-- Shooting Duration -->
+      <div class="input-group">
+        <label>Shooting Duration</label>
+        <div class="duration-row">
+          <input type="number" id="hours-input" min="0" max="24" value="1" style="width:64px;">
+          <span class="duration-sep">h</span>
+          <input type="number" id="minutes-input" min="0" max="59" value="0" style="width:64px;">
+          <span class="duration-sep">min</span>
+        </div>
+        <div style="font-family:'DM Mono',monospace;font-size:0.55rem;color:var(--muted);letter-spacing:0.08em;" id="duration-display">1 hour 0 min = 3600 s</div>
+      </div>
+
+      <!-- Interval -->
+      <div class="input-group">
+        <label>Interval Between Shots</label>
+        <div class="slider-row">
+          <input type="range" id="interval-slider" min="1" max="120" value="5" step="1">
+          <input type="number" id="interval-input" min="0.5" max="3600" value="5" step="0.5">
+        </div>
+        <div style="font-family:'DM Mono',monospace;font-size:0.55rem;color:var(--muted);letter-spacing:0.08em;" id="interval-display">5 sec</div>
+      </div>
+
+      <!-- Frame Rate -->
+      <div class="input-group">
+        <label>Output Frame Rate</label>
+        <div class="pill-group" id="fps-pills">
+          <button class="pill active" data-fps="24">24 fps</button>
+          <button class="pill" data-fps="25">25 fps</button>
+          <button class="pill" data-fps="30">30 fps</button>
+          <button class="pill" data-fps="50">50 fps</button>
+          <button class="pill" data-fps="60">60 fps</button>
+        </div>
+      </div>
+
+      <!-- File Size -->
+      <div class="input-group">
+        <label>File Size per Shot (MB)</label>
+        <div class="slider-row">
+          <input type="range" id="filesize-slider" min="1" max="100" value="25" step="1">
+          <input type="number" id="filesize-input" min="0.1" max="500" value="25" step="1">
+        </div>
+        <div style="font-family:'DM Mono',monospace;font-size:0.55rem;color:var(--muted);letter-spacing:0.08em;" id="filesize-display">25 MB / shot</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Visualization -->
+  <div class="viz-wrap">
+    <div class="timeline-wrap">
+      <div class="viz-label">Time Compression — Real duration vs. final clip</div>
+
+      <div class="tl-row">
+        <div class="tl-row-label">Real time</div>
+        <div class="tl-bar-track">
+          <div class="tl-bar-fill tl-bar-fill-real" id="bar-real">
+            <span class="tl-bar-text" id="bar-real-text"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-row">
+        <div class="tl-row-label">Final clip</div>
+        <div class="tl-bar-track">
+          <div class="tl-bar-fill tl-bar-fill-clip" id="bar-clip" style="width:0%">
+            <span class="tl-bar-text tl-bar-text-clip" id="bar-clip-text"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-ratio-label" id="tl-ratio-label"></div>
+
+      <div class="tl-ticks" id="tl-ticks"></div>
+    </div>
+  </div>
+
+  <!-- Results -->
+  <div class="results-grid">
+    <div class="result-cell">
+      <div class="result-value" id="res-frames">—</div>
+      <div class="result-sublabel">Total Frames</div>
+    </div>
+    <div class="result-cell">
+      <div class="result-value" id="res-clip">—</div>
+      <div class="result-sublabel">Clip Duration</div>
+    </div>
+    <div class="result-cell">
+      <div class="result-value" id="res-storage">—</div>
+      <div class="result-sublabel">Storage Needed</div>
+    </div>
+    <div class="result-cell">
+      <div class="result-value" id="res-ratio">—</div>
+      <div class="result-sublabel">Speed-up</div>
+    </div>
+  </div>
+
+  <!-- Creative interpretation -->
+  <div class="creative-look">
+    <span class="creative-look-text" id="creative-look-text">—</span>
+  </div>
+
+  <div class="attribution">
+    Formulas: total frames = shooting duration ÷ interval · clip duration = total frames ÷ fps · storage = frames × file size
+  </div>
+
+  <div id="blog-cta"></div>
+  <div id="site-footer"></div>
+
+</div>
+
+<script src="../../../assets/blog-cta.js"></script>
+<script src="/assets/footer.js"></script>
+
+<script>
+// ── State ────────────────────────────────────────────────────────────────
+let state = {
+  hours:    1,
+  minutes:  0,
+  interval: 5,    // seconds between shots
+  fps:      24,
+  fileSize: 25,   // MB per shot
+};
+
+// ── Calculations ─────────────────────────────────────────────────────────
+function calcTimelapse(hours, minutes, interval_s, fps, fileSizeMB) {
+  const durationSec = hours * 3600 + minutes * 60;
+  const totalFrames = Math.floor(durationSec / interval_s);
+  const clipSec     = totalFrames / fps;
+  const storageGB   = (totalFrames * fileSizeMB) / 1024;
+  const ratio       = durationSec / Math.max(clipSec, 0.001);
+
+  return { durationSec, totalFrames, clipSec, storageGB, ratio };
+}
+
+// ── Formatting ─────────────────────────────────────────────────────────
+function fmtDuration(sec) {
+  if (sec < 60)  return sec.toFixed(0) + 's';
+  if (sec < 3600) {
+    const m = Math.floor(sec / 60);
+    const s = Math.round(sec % 60);
+    return s > 0 ? m + 'm ' + s + 's' : m + 'm';
+  }
+  const h = Math.floor(sec / 3600);
+  const m = Math.round((sec % 3600) / 60);
+  return m > 0 ? h + 'h ' + m + 'm' : h + 'h';
+}
+
+function fmtFrames(n) {
+  if (n >= 1000) return (n / 1000).toFixed(1) + 'k';
+  return n.toString();
+}
+
+function fmtStorage(gb) {
+  if (gb < 1) return (gb * 1024).toFixed(0) + ' MB';
+  if (gb >= 1000) return (gb / 1000).toFixed(1) + ' TB';
+  return gb.toFixed(1) + ' GB';
+}
+
+function fmtRatio(r) {
+  if (r >= 1000) return Math.round(r / 100) * 100 + '×';
+  if (r >= 100)  return Math.round(r / 10) * 10 + '×';
+  if (r >= 10)   return Math.round(r) + '×';
+  return r.toFixed(1) + '×';
+}
+
+// ── Shooting duration display ─────────────────────────────────────────
+function updateDurationDisplay() {
+  const totalSec = state.hours * 3600 + state.minutes * 60;
+  let label;
+  if (state.hours === 0) {
+    label = state.minutes + ' min = ' + totalSec + ' s';
+  } else if (state.minutes === 0) {
+    label = state.hours + (state.hours === 1 ? ' hour' : ' hours') + ' = ' + totalSec + ' s';
+  } else {
+    label = state.hours + 'h ' + state.minutes + 'min = ' + totalSec + ' s';
+  }
+  document.getElementById('duration-display').textContent = label;
+}
+
+// ── Render results ────────────────────────────────────────────────────
+function renderResults(r) {
+  document.getElementById('res-frames').textContent  = fmtFrames(r.totalFrames);
+  document.getElementById('res-clip').textContent    = fmtDuration(r.clipSec);
+  document.getElementById('res-storage').textContent = fmtStorage(r.storageGB);
+  document.getElementById('res-ratio').textContent   = fmtRatio(r.ratio);
+
+  // Creative interpretation
+  const lookEl = document.getElementById('creative-look-text');
+  const { totalFrames, clipSec, durationSec, ratio, storageGB } = r;
+  const interval = state.interval;
+
+  let intervalTip = '';
+  if (interval <= 2) {
+    intervalTip = ' Note: very short intervals work best for fast-moving subjects like traffic or waterfalls.';
+  } else if (interval >= 30) {
+    intervalTip = ' Long intervals like this are great for slow subjects: clouds, construction, plant growth.';
+  } else if (interval >= 5 && interval <= 10) {
+    intervalTip = ' This interval is ideal for sky and weather timelapse.';
+  }
+
+  let look;
+  if (totalFrames < 24) {
+    look = `<strong>Too few frames.</strong> You'll only capture ${totalFrames} shot${totalFrames === 1 ? '' : 's'} — not enough for a smooth clip. Shorten your interval or extend your shooting duration.`;
+  } else if (clipSec < 3) {
+    look = `<strong>Very short clip — ${fmtDuration(clipSec)}.</strong> You'll get ${fmtFrames(totalFrames)} frames at ${state.fps} fps. Consider a longer shoot or lower frame rate to get more screen time.${intervalTip}`;
+  } else if (clipSec < 10) {
+    look = `<strong>${fmtDuration(clipSec)} clip from ${fmtDuration(durationSec)} of shooting.</strong> ${fmtFrames(totalFrames)} frames compressed ${fmtRatio(ratio)} faster than real time. Storage: ${fmtStorage(storageGB)}.${intervalTip}`;
+  } else if (clipSec < 60) {
+    look = `<strong>${fmtDuration(clipSec)} clip — solid length.</strong> ${fmtFrames(totalFrames)} frames at ${state.fps} fps from ${fmtDuration(durationSec)} of real time. That's ${fmtRatio(ratio)} faster. You'll need ${fmtStorage(storageGB)} of storage.${intervalTip}`;
+  } else {
+    look = `<strong>${fmtDuration(clipSec)} of final footage.</strong> ${fmtFrames(totalFrames)} shots over ${fmtDuration(durationSec)}, compressed ${fmtRatio(ratio)}. Budget ${fmtStorage(storageGB)} of storage — consider shooting JPEG if space is tight.${intervalTip}`;
+  }
+  lookEl.innerHTML = look;
+}
+
+// ── Render timeline visualization ─────────────────────────────────────
+function renderTimeline(r) {
+  const { durationSec, clipSec, ratio } = r;
+
+  // The real-time bar is always 100%
+  document.getElementById('bar-real-text').textContent = fmtDuration(durationSec) + ' real';
+
+  // Clip bar: proportion of real duration (capped at 98% for visibility)
+  const clipPct = Math.min((clipSec / durationSec) * 100, 98);
+  const clipBar = document.getElementById('bar-clip');
+  clipBar.style.width = Math.max(clipPct, 2) + '%';
+  document.getElementById('bar-clip-text').textContent = fmtDuration(clipSec) + ' clip';
+
+  document.getElementById('tl-ratio-label').textContent =
+    ratio >= 2 ? fmtRatio(ratio) + ' faster than real time' : '';
+
+  // Interval tick marks (show ~20 ticks max across the bar width)
+  const ticksEl = document.getElementById('tl-ticks');
+  ticksEl.innerHTML = '';
+  const maxTicks = 40;
+  const totalTicks = Math.min(r.totalFrames, maxTicks);
+  for (let i = 0; i <= totalTicks; i++) {
+    const tick = document.createElement('div');
+    tick.className = 'tl-tick';
+    tick.style.left = (i / totalTicks * 100) + '%';
+    ticksEl.appendChild(tick);
+  }
+}
+
+// ── Main update ──────────────────────────────────────────────────────
+function update() {
+  const r = calcTimelapse(state.hours, state.minutes, state.interval, state.fps, state.fileSize);
+  renderResults(r);
+  renderTimeline(r);
+}
+
+// ── Input wiring ─────────────────────────────────────────────────────
+
+// Hours
+document.getElementById('hours-input').addEventListener('input', function() {
+  state.hours = Math.max(0, Math.min(24, +this.value || 0));
+  this.value = state.hours;
+  updateDurationDisplay();
+  update();
+});
+
+// Minutes
+document.getElementById('minutes-input').addEventListener('input', function() {
+  state.minutes = Math.max(0, Math.min(59, +this.value || 0));
+  this.value = state.minutes;
+  updateDurationDisplay();
+  update();
+});
+
+// Interval slider
+document.getElementById('interval-slider').addEventListener('input', function() {
+  state.interval = +this.value;
+  document.getElementById('interval-input').value = state.interval;
+  document.getElementById('interval-display').textContent = state.interval + ' sec';
+  update();
+});
+
+document.getElementById('interval-input').addEventListener('input', function() {
+  const v = Math.max(0.5, +this.value || 5);
+  state.interval = v;
+  const sliderEl = document.getElementById('interval-slider');
+  sliderEl.value = Math.min(v, +sliderEl.max);
+  document.getElementById('interval-display').textContent = v + ' sec';
+  update();
+});
+
+// FPS pills
+document.getElementById('fps-pills').addEventListener('click', function(e) {
+  const btn = e.target.closest('.pill');
+  if (!btn) return;
+  document.querySelectorAll('#fps-pills .pill').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  state.fps = +btn.dataset.fps;
+  update();
+});
+
+// File size slider
+document.getElementById('filesize-slider').addEventListener('input', function() {
+  state.fileSize = +this.value;
+  document.getElementById('filesize-input').value = state.fileSize;
+  document.getElementById('filesize-display').textContent = state.fileSize + ' MB / shot';
+  update();
+});
+
+document.getElementById('filesize-input').addEventListener('input', function() {
+  const v = Math.max(0.1, +this.value || 25);
+  state.fileSize = v;
+  const sliderEl = document.getElementById('filesize-slider');
+  sliderEl.value = Math.min(v, +sliderEl.max);
+  document.getElementById('filesize-display').textContent = v + ' MB / shot';
+  update();
+});
+
+window.addEventListener('resize', update);
+
+// ── Init ────────────────────────────────────────────────────────────
+updateDurationDisplay();
+update();
+</script>
+
+<script type="module">
+  import { analytics, logEvent } from '/assets/firebase-analytics.js';
+  logEvent(analytics, 'tool_opened', { tool_name: 'timelapse' });
+</script>
+</body>
+</html>

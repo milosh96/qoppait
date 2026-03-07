@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flash Guide Number Calculator — Manual Flash Exposure & Distance</title>
+<meta name="description" content="Free flash guide number calculator for photographers. Find the correct aperture or distance for manual flash exposure, with ISO and power fraction adjustments.">
+<meta name="keywords" content="flash guide number calculator, manual flash exposure calculator, guide number formula, flash distance aperture, f-stop flash calculator, guide number ISO adjustment, flash power fractions, manual speedlight calculator, flash reach calculator, inverse square law flash, GN calculator, flash exposure, manual flash photography, speedlite calculator, guide number chart">
+<link rel="canonical" href="https://qoppait.com/photoguide/tools/flash/">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://qoppait.com/photoguide/tools/flash/">
+<meta property="og:title" content="Flash Guide Number Calculator — Manual Flash Exposure & Distance">
+<meta property="og:description" content="Free flash guide number calculator for photographers. Find the correct aperture or distance for manual flash exposure, with ISO and power fraction adjustments.">
+<meta property="og:site_name" content="PhotoGuide by Qoppa">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Flash Guide Number Calculator — Manual Flash Exposure & Distance">
+<meta name="twitter:description" content="Free flash guide number calculator for photographers. Find the correct aperture or distance for manual flash exposure, with ISO and power fraction adjustments.">
+
+<!-- JSON-LD structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Flash Guide Number Calculator",
+  "description": "Free flash guide number calculator for photographers. Find the correct aperture or distance for manual flash exposure, with ISO and power fraction adjustments.",
+  "url": "https://qoppait.com/photoguide/tools/flash/",
+  "applicationCategory": "PhotographyApplication",
+  "operatingSystem": "Any",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Qoppa",
+    "url": "https://qoppait.com"
+  },
+  "featureList": [
+    "Flash guide number calculation",
+    "Aperture needed for subject distance",
+    "Maximum flash distance for given aperture",
+    "ISO adjustment for effective guide number",
+    "Flash power fraction support",
+    "Metric and imperial units",
+    "Exposure delta in stops"
+  ]
+}
+</script>
+
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink:   #111;
+    --paper: #e0e0e0;
+    --flash: #38bdf8;
+    --accent: #7dd3fc;
+    --muted: #888;
+  }
+
+  html, body {
+    height: 100%;
+    color: var(--paper);
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    overflow-x: hidden;
+  }
+
+  body {
+    background-color: #1a1a1a;
+    min-height: 100vh;
+    position: relative;
+  }
+
+  /* ── Nav ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    padding: 0.75rem 2rem;
+    background-color: rgba(26, 26, 26, 0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid #333;
+    z-index: 100;
+  }
+
+  .nav-links { display: flex; gap: 1.5rem; align-items: center; }
+
+  nav a {
+    color: #b0b0b0;
+    text-decoration: none;
+    font-size: 0.9rem;
+    padding-bottom: 2px;
+  }
+
+  nav a:hover { color: #ffffff; }
+  .nav-links a.active { color: var(--accent); }
+
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 5.5rem 1.5rem 4rem;
+  }
+
+  /* ── Header ── */
+  header {
+    text-align: center;
+    padding: 2rem 0 2.5rem;
+  }
+
+  .eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--flash);
+    margin-bottom: 1rem;
+    opacity: 0.9;
+  }
+
+  h1 {
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+  }
+
+  h1 em {
+    font-style: normal;
+    font-weight: 600;
+    color: var(--flash);
+  }
+
+  .subtitle {
+    font-size: 1rem;
+    font-weight: 300;
+    color: var(--muted);
+    margin-top: 0.75rem;
+  }
+
+  .flash-ornament {
+    width: 42px;
+    height: 42px;
+    margin: 1.25rem auto 0;
+  }
+
+  .flash-ornament svg {
+    width: 100%;
+    height: 100%;
+    animation: pulse-glow 3s ease-in-out infinite;
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { opacity: 0.7; filter: drop-shadow(0 0 2px #38bdf8); }
+    50%       { opacity: 1;   filter: drop-shadow(0 0 8px #38bdf8); }
+  }
+
+  /* ── Input panel ── */
+  .panel {
+    background: rgba(56, 189, 248, 0.04);
+    border: 1px solid rgba(56, 189, 248, 0.2);
+    border-radius: 2px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    backdrop-filter: blur(4px);
+  }
+
+  .panel-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(56, 189, 248, 0.15);
+  }
+
+  .inputs-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 560px) {
+    .inputs-grid { grid-template-columns: 1fr; }
+    .container { padding: 4.5rem 1rem 3rem; }
+    .panel { padding: 1.25rem; }
+    nav { padding: 0.75rem 1.25rem; }
+    .nav-links { gap: 1rem; }
+    nav a { font-size: 0.85rem; }
+    header { padding: 1.5rem 0 1.75rem; }
+  }
+
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .slider-row {
+    display: flex;
+    gap: 0.6rem;
+    align-items: center;
+  }
+
+  input[type="range"] {
+    flex: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 3px;
+    background: rgba(56, 189, 248, 0.2);
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--flash);
+    cursor: pointer;
+    box-shadow: 0 0 6px rgba(56, 189, 248, 0.5);
+  }
+
+  input[type="number"] {
+    background: rgba(56, 189, 248, 0.05);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    border-radius: 2px;
+    padding: 0.45rem 0.6rem;
+    color: var(--paper);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+    outline: none;
+    width: 72px;
+    text-align: center;
+    transition: border-color 0.2s;
+  }
+
+  input[type="number"]:focus { border-color: var(--flash); }
+
+  /* Pills */
+  .pill-group {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+
+  .pill {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    padding: 0.35rem 0.75rem;
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .pill:hover { border-color: var(--flash); color: var(--paper); }
+  .pill.active {
+    background: rgba(56, 189, 248, 0.18);
+    border-color: var(--flash);
+    color: var(--flash);
+  }
+
+  /* Unit toggle */
+  .unit-toggle {
+    display: flex;
+    gap: 0;
+    margin-top: 0.15rem;
+  }
+
+  .unit-btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.1em;
+    padding: 0.3rem 0.65rem;
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .unit-btn:first-child { border-radius: 2px 0 0 2px; }
+  .unit-btn:last-child  { border-radius: 0 2px 2px 0; margin-left: -1px; }
+  .unit-btn.active { background: rgba(56, 189, 248, 0.18); border-color: var(--flash); color: var(--flash); }
+
+  /* Select */
+  select {
+    background: rgba(56, 189, 248, 0.05);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    border-radius: 2px;
+    padding: 0.55rem 0.75rem;
+    color: var(--paper);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+    outline: none;
+    cursor: pointer;
+    width: 100%;
+    transition: border-color 0.2s;
+  }
+
+  select:focus { border-color: var(--flash); }
+  select option { background: #1a1a1a; }
+
+  /* ── Visualization ── */
+  .viz-wrap {
+    margin-bottom: 2rem;
+  }
+
+  .viz-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .reach-wrap {
+    background: rgba(56, 189, 248, 0.03);
+    border: 1px solid rgba(56, 189, 248, 0.12);
+    border-radius: 2px;
+    padding: 1.5rem 1.25rem 1rem;
+  }
+
+  .reach-bar-outer {
+    position: relative;
+    height: 48px;
+    display: flex;
+    margin-bottom: 0.5rem;
+  }
+
+  .reach-camera {
+    position: absolute;
+    left: -8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    color: var(--muted);
+    z-index: 2;
+  }
+
+  .reach-bar {
+    flex: 1;
+    display: flex;
+    height: 100%;
+    border-radius: 2px;
+    overflow: visible;
+    position: relative;
+    margin-left: 14px;
+  }
+
+  .reach-zone {
+    height: 100%;
+    transition: flex 0.35s ease;
+    position: relative;
+  }
+
+  .zone-under {
+    background: rgba(56, 189, 248, 0.05);
+    border-radius: 2px 0 0 2px;
+    border: 1px solid rgba(56, 189, 248, 0.1);
+    border-right: none;
+  }
+
+  .zone-optimal {
+    background: rgba(56, 189, 248, 0.22);
+    border-top: 2px solid var(--flash);
+    border-bottom: 2px solid var(--flash);
+    position: relative;
+  }
+
+  .zone-optimal::after {
+    content: 'OPTIMAL';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.5rem;
+    letter-spacing: 0.2em;
+    color: var(--flash);
+    opacity: 0.7;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  .zone-over {
+    background: rgba(56, 189, 248, 0.04);
+    border-radius: 0 2px 2px 0;
+    border: 1px solid rgba(56, 189, 248, 0.1);
+    border-left: none;
+  }
+
+  .reach-markers {
+    position: relative;
+    height: 32px;
+    margin-left: 14px;
+  }
+
+  .reach-marker {
+    position: absolute;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    pointer-events: none;
+  }
+
+  .marker-tick {
+    width: 1px;
+    height: 8px;
+    background: var(--flash);
+    opacity: 0.6;
+  }
+
+  .marker-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.5rem;
+    letter-spacing: 0.06em;
+    color: var(--flash);
+    white-space: nowrap;
+    opacity: 0.8;
+  }
+
+  .marker-subject .marker-tick { opacity: 1; height: 10px; background: var(--accent); }
+  .marker-subject .marker-label { color: var(--accent); opacity: 1; }
+
+  /* ── Results grid ── */
+  .results-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: rgba(56, 189, 248, 0.1);
+    border: 1px solid rgba(56, 189, 248, 0.1);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+  }
+
+  @media (max-width: 560px) {
+    .results-grid { grid-template-columns: repeat(2, 1fr); }
+    .result-cell { padding: 1rem 0.75rem; }
+  }
+
+  .result-cell {
+    background: rgba(56, 189, 248, 0.03);
+    padding: 1.25rem 1rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    align-items: center;
+    animation: fadeUp 0.3s ease both;
+  }
+
+  .result-cell:nth-child(1) { animation-delay: 0.04s; }
+  .result-cell:nth-child(2) { animation-delay: 0.08s; }
+  .result-cell:nth-child(3) { animation-delay: 0.12s; }
+  .result-cell:nth-child(4) { animation-delay: 0.16s; }
+
+  .result-value {
+    font-family: 'DM Mono', monospace;
+    font-size: clamp(1rem, 3.5vw, 1.35rem);
+    font-weight: 300;
+    color: var(--paper);
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  .result-value.ev-good { color: #4ade80; }
+  .result-value.ev-warn { color: #e8a422; }
+  .result-value.ev-bad  { color: #f87171; }
+
+  .result-sublabel {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ── Creative look ── */
+  .creative-look {
+    background: rgba(56, 189, 248, 0.07);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    border-radius: 2px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .creative-look-text {
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: var(--paper);
+    line-height: 1.55;
+  }
+
+  .creative-look-text strong {
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  /* ── Attribution ── */
+  .attribution {
+    text-align: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: rgba(195, 196, 197, 0.5);
+    letter-spacing: 0.08em;
+    margin-bottom: 2rem;
+  }
+
+  /* ── CTA overrides ── */
+  .blog-cta-section {
+    border-top: 1px solid rgba(56, 189, 248, 0.15) !important;
+    background: transparent !important;
+  }
+
+  .blog-cta-form input[type="email"] {
+    background: rgba(56, 189, 248, 0.05) !important;
+    border-color: rgba(56, 189, 248, 0.25) !important;
+    color: var(--paper) !important;
+  }
+
+  .blog-cta-form input[type="email"]:focus {
+    border-color: var(--flash) !important;
+  }
+
+  .blog-cta-form input[type="email"]::placeholder {
+    color: var(--muted) !important;
+  }
+
+  .blog-cta-form button {
+    background: linear-gradient(135deg, #0ea5e9, #38bdf8) !important;
+    color: var(--ink) !important;
+    border-radius: 4px !important;
+  }
+
+  footer {
+    text-align: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.55rem;
+    color: rgba(74, 138, 154, 0.4);
+    letter-spacing: 0.1em;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(56, 189, 248, 0.08);
+    margin-top: 1rem;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-links">
+    <a href="../../../photoguide.html">Home</a>
+    <a href="../index.html" class="active">Tools</a>
+    <a href="../../blog/index.html">Blog</a>
+  </div>
+</nav>
+
+<div class="container">
+
+  <header>
+    <p class="eyebrow">Manual Flash Planner</p>
+    <h1><em>Flash</em><br>Guide Number Calculator</h1>
+    <p class="subtitle">Master manual flash exposure in any situation.</p>
+    <div class="flash-ornament">
+      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="26,4 14,26 22,26 20,44 34,22 26,22" stroke="#38bdf8" stroke-width="1.5" stroke-linejoin="round" fill="none"/>
+        <circle cx="24" cy="24" r="20" stroke="#38bdf8" stroke-width="0.5" stroke-dasharray="2 3" opacity="0.3"/>
+        <circle cx="24" cy="24" r="14" stroke="#38bdf8" stroke-width="0.4" stroke-dasharray="1 4" opacity="0.2"/>
+      </svg>
+    </div>
+  </header>
+
+  <!-- Input panel -->
+  <div class="panel">
+    <div class="panel-title">Flash & Camera Settings</div>
+    <div class="inputs-grid">
+
+      <!-- Guide Number -->
+      <div class="input-group">
+        <label>Guide Number (at ISO 100, full power)</label>
+        <div class="slider-row">
+          <input type="range" id="gn-slider" min="10" max="100" value="40" step="1">
+          <input type="number" id="gn-input" min="1" max="500" value="40">
+        </div>
+        <div style="font-family:'DM Mono',monospace;font-size:0.55rem;color:var(--muted);letter-spacing:0.08em;" id="gn-display">GN 40</div>
+      </div>
+
+      <!-- Flash Power -->
+      <div class="input-group">
+        <label>Flash Power</label>
+        <select id="power">
+          <option value="1">1/1 — Full</option>
+          <option value="0.5">1/2 — Half</option>
+          <option value="0.25">1/4</option>
+          <option value="0.125">1/8</option>
+          <option value="0.0625">1/16</option>
+          <option value="0.03125">1/32</option>
+          <option value="0.015625">1/64</option>
+        </select>
+      </div>
+
+      <!-- ISO -->
+      <div class="input-group">
+        <label>ISO</label>
+        <div class="pill-group" id="iso-pills">
+          <button class="pill active" data-iso="100">100</button>
+          <button class="pill" data-iso="200">200</button>
+          <button class="pill" data-iso="400">400</button>
+          <button class="pill" data-iso="800">800</button>
+          <button class="pill" data-iso="1600">1600</button>
+          <button class="pill" data-iso="3200">3200</button>
+        </div>
+      </div>
+
+      <!-- Subject Distance -->
+      <div class="input-group">
+        <label>Subject Distance</label>
+        <div class="slider-row">
+          <input type="range" id="dist-slider" min="0.5" max="30" value="3" step="0.1">
+          <input type="number" id="dist-input" min="0.1" max="10000" value="3" step="0.1">
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+          <div style="font-family:'DM Mono',monospace;font-size:0.55rem;color:var(--muted);letter-spacing:0.08em;" id="dist-display">3.0 m</div>
+          <div class="unit-toggle">
+            <button class="unit-btn active" id="unit-m" onclick="setUnit('m')">m</button>
+            <button class="unit-btn" id="unit-ft" onclick="setUnit('ft')">ft</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Aperture -->
+      <div class="input-group">
+        <label>Your Aperture</label>
+        <select id="aperture">
+          <option value="1.2">f / 1.2</option>
+          <option value="1.4">f / 1.4</option>
+          <option value="1.8">f / 1.8</option>
+          <option value="2">f / 2</option>
+          <option value="2.8" selected>f / 2.8</option>
+          <option value="4">f / 4</option>
+          <option value="5.6">f / 5.6</option>
+          <option value="8">f / 8</option>
+          <option value="11">f / 11</option>
+          <option value="16">f / 16</option>
+          <option value="22">f / 22</option>
+        </select>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Visualization -->
+  <div class="viz-wrap">
+    <div class="reach-wrap">
+      <div class="viz-label">Flash Reach — Optimal distance zone for your settings</div>
+      <div class="reach-bar-outer">
+        <svg class="reach-camera" viewBox="0 0 16 16" fill="none">
+          <rect x="1" y="4" width="10" height="8" rx="1.5" stroke="currentColor" stroke-width="1.2"/>
+          <path d="M11 7l4-2v6l-4-2V7z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
+          <circle cx="6" cy="8" r="2" stroke="currentColor" stroke-width="1"/>
+        </svg>
+        <div class="reach-bar" id="reach-bar">
+          <div class="reach-zone zone-under" id="zone-under"></div>
+          <div class="reach-zone zone-optimal" id="zone-optimal"></div>
+          <div class="reach-zone zone-over" id="zone-over"></div>
+        </div>
+      </div>
+      <div class="reach-markers" id="reach-markers"></div>
+    </div>
+  </div>
+
+  <!-- Results -->
+  <div class="results-grid">
+    <div class="result-cell">
+      <div class="result-value" id="res-gn-eff">—</div>
+      <div class="result-sublabel">Effective GN</div>
+    </div>
+    <div class="result-cell">
+      <div class="result-value" id="res-aperture">—</div>
+      <div class="result-sublabel">Aperture Needed</div>
+    </div>
+    <div class="result-cell">
+      <div class="result-value" id="res-dist-max">—</div>
+      <div class="result-sublabel">Max Distance</div>
+    </div>
+    <div class="result-cell">
+      <div class="result-value" id="res-ev-delta">—</div>
+      <div class="result-sublabel">Exposure Delta</div>
+    </div>
+  </div>
+
+  <!-- Creative interpretation -->
+  <div class="creative-look">
+    <span class="creative-look-text" id="creative-look-text">—</span>
+  </div>
+
+  <div class="attribution">
+    Calculations use GN = Distance × Aperture (ISO 100 baseline). Power fractions reduce GN by √(fraction).
+  </div>
+
+  <div id="blog-cta"></div>
+  <div id="site-footer"></div>
+
+</div>
+
+<script src="../../../assets/blog-cta.js"></script>
+<script src="/assets/footer.js"></script>
+
+<script>
+// ── State ────────────────────────────────────────────────────────────────
+let state = {
+  gn:   40,    // guide number at ISO 100, full power
+  iso:  100,
+  power: 1.0,  // fraction (1.0 = full, 0.5 = 1/2, etc.)
+  dist: 3,     // subject distance in metres
+  ap:   2.8,
+  unit: 'm',
+};
+
+// ── Calculations ─────────────────────────────────────────────────────────
+function calcFlash(gn, iso, power, dist_m, aperture) {
+  // GN scaled for ISO and power (GN is in metres at ISO 100)
+  const gnEff = gn * Math.sqrt(iso / 100) * Math.sqrt(power);
+
+  // What aperture is needed at this distance?
+  const apNeeded = gnEff / dist_m;
+
+  // Max distance at the chosen aperture
+  const distMax = gnEff / aperture;
+
+  // Exposure delta: how many stops is the actual exposure vs correct?
+  // Actual exposure from flash: GN / (dist * ap) — if > 1 it's overexposed
+  // EV delta = log2(gnEff / (dist * ap)) — positive = over, negative = under
+  const evDelta = Math.log2(gnEff / (dist_m * aperture));
+
+  return { gnEff, apNeeded, distMax, evDelta };
+}
+
+// ── Formatting ─────────────────────────────────────────────────────────
+function fmtDist(m) {
+  if (state.unit === 'ft') {
+    const ft = m * 3.28084;
+    return ft < 10 ? ft.toFixed(1) + ' ft' : Math.round(ft) + ' ft';
+  }
+  return m < 10 ? m.toFixed(2) + ' m' : m.toFixed(1) + ' m';
+}
+
+function fmtAperture(f) {
+  if (f < 1)   return 'f/' + f.toFixed(1);
+  if (f < 10)  return 'f/' + f.toFixed(1);
+  return 'f/' + Math.round(f);
+}
+
+function fmtEV(ev) {
+  if (Math.abs(ev) < 0.08) return '±0 EV';
+  const sign = ev > 0 ? '+' : '';
+  return sign + ev.toFixed(1) + ' EV';
+}
+
+// ── Render results ────────────────────────────────────────────────────
+function renderResults(r) {
+  document.getElementById('res-gn-eff').textContent    = Math.round(r.gnEff);
+  document.getElementById('res-aperture').textContent  = fmtAperture(r.apNeeded);
+  document.getElementById('res-dist-max').textContent  = fmtDist(r.distMax);
+
+  const evEl = document.getElementById('res-ev-delta');
+  evEl.textContent = fmtEV(r.evDelta);
+  evEl.className = 'result-value';
+  const absEV = Math.abs(r.evDelta);
+  if (absEV < 0.34)      evEl.classList.add('ev-good');
+  else if (absEV < 1.0)  evEl.classList.add('ev-warn');
+  else                   evEl.classList.add('ev-bad');
+
+  // Creative interpretation
+  const lookEl = document.getElementById('creative-look-text');
+  const gnEff  = r.gnEff;
+  const ev     = r.evDelta;
+  let look;
+
+  if (Math.abs(ev) < 0.34) {
+    look = `<strong>Perfect exposure.</strong> At f/${state.ap} and ${fmtDist(state.dist)}, your flash output is on target. The effective guide number of ${Math.round(gnEff)} matches your shooting conditions.`;
+  } else if (ev > 2) {
+    look = `<strong>Heavily overexposed — ${fmtEV(ev)} over.</strong> Your subject will be blown out. Stop down your aperture to f/${fmtAperture(r.apNeeded).replace('f/','')} to correct, or step back to ${fmtDist(r.distMax)}.`;
+  } else if (ev > 0.34) {
+    look = `<strong>Slightly overexposed — ${fmtEV(ev)} over.</strong> Close, but your flash is a little strong for this distance. Try f/${fmtAperture(r.apNeeded).replace('f/','')} for correct exposure.`;
+  } else if (ev < -2) {
+    look = `<strong>Heavily underexposed — ${fmtEV(ev)} under.</strong> Your flash can't reach this far at these settings. Move closer to ${fmtDist(r.distMax)}, or open up your aperture to f/${fmtAperture(r.apNeeded).replace('f/','')}.`;
+  } else {
+    look = `<strong>Slightly underexposed — ${fmtEV(ev)} under.</strong> Your flash is a touch weak for this distance. Open up to f/${fmtAperture(r.apNeeded).replace('f/','')}, or close in to ${fmtDist(r.distMax)}.`;
+  }
+  lookEl.innerHTML = look;
+}
+
+// ── Render reach bar ─────────────────────────────────────────────────
+function renderReach(r) {
+  // Show the range from 0 to ~1.5× max distance, log-scaled
+  const maxRange = Math.max(r.distMax * 1.4, state.dist * 1.8, 2);
+  function toLog(x) {
+    return Math.log1p(x) / Math.log1p(maxRange);
+  }
+
+  // Optimal zone: ±1 stop around correct distance = distMax * [0.5×, 1.4×]
+  const nearOptimal = r.distMax * 0.5;  // 1 stop over (2× closer = 2 stops over, let's show a zone)
+  const farOptimal  = r.distMax;
+
+  const nearPct    = Math.min(toLog(nearOptimal) * 100, 85);
+  const subjectPct = Math.min(toLog(state.dist)  * 100, 95);
+  const farPct     = Math.min(toLog(farOptimal)  * 100, 90);
+
+  document.getElementById('zone-under').style.flex   = nearPct;
+  document.getElementById('zone-optimal').style.flex = Math.max(farPct - nearPct, 2);
+  document.getElementById('zone-over').style.flex    = Math.max(100 - farPct, 3);
+
+  // Markers
+  const markersEl = document.getElementById('reach-markers');
+  markersEl.innerHTML = '';
+
+  function addMarker(pct, label, cls) {
+    const m = document.createElement('div');
+    m.className = 'reach-marker' + (cls ? ' ' + cls : '');
+    m.style.left = Math.min(pct, 96) + '%';
+    m.innerHTML = `<div class="marker-tick"></div><div class="marker-label">${label}</div>`;
+    markersEl.appendChild(m);
+  }
+
+  addMarker(farPct,     fmtDist(r.distMax) + ' max', '');
+  addMarker(subjectPct, fmtDist(state.dist) + ' subject', 'marker-subject');
+}
+
+// ── Main update ──────────────────────────────────────────────────────
+function update() {
+  const r = calcFlash(state.gn, state.iso, state.power, state.dist, state.ap);
+  renderResults(r);
+  renderReach(r);
+}
+
+// ── Unit toggle ──────────────────────────────────────────────────────
+function setUnit(u) {
+  state.unit = u;
+  document.getElementById('unit-m').classList.toggle('active', u === 'm');
+  document.getElementById('unit-ft').classList.toggle('active', u === 'ft');
+  const inEl = document.getElementById('dist-input');
+  if (u === 'ft') {
+    inEl.value = (state.dist * 3.28084).toFixed(1);
+    document.getElementById('dist-display').textContent = inEl.value + ' ft';
+  } else {
+    inEl.value = state.dist.toFixed(1);
+    document.getElementById('dist-display').textContent = state.dist.toFixed(1) + ' m';
+  }
+  update();
+}
+
+// ── Input wiring ─────────────────────────────────────────────────────
+
+// Guide Number slider
+document.getElementById('gn-slider').addEventListener('input', function() {
+  state.gn = +this.value;
+  document.getElementById('gn-input').value = state.gn;
+  document.getElementById('gn-display').textContent = 'GN ' + state.gn;
+  update();
+});
+
+document.getElementById('gn-input').addEventListener('input', function() {
+  const v = Math.max(1, Math.min(500, +this.value || 40));
+  state.gn = v;
+  const sliderEl = document.getElementById('gn-slider');
+  sliderEl.value = Math.min(v, +sliderEl.max);
+  document.getElementById('gn-display').textContent = 'GN ' + v;
+  update();
+});
+
+// Flash power
+document.getElementById('power').addEventListener('change', function() {
+  state.power = +this.value;
+  update();
+});
+
+// ISO pills
+document.getElementById('iso-pills').addEventListener('click', function(e) {
+  const btn = e.target.closest('.pill');
+  if (!btn) return;
+  document.querySelectorAll('#iso-pills .pill').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  state.iso = +btn.dataset.iso;
+  update();
+});
+
+// Subject distance slider
+document.getElementById('dist-slider').addEventListener('input', function() {
+  const raw = +this.value;
+  state.dist = state.unit === 'ft' ? raw / 3.28084 : raw;
+  const displayVal = state.unit === 'ft' ? (state.dist * 3.28084).toFixed(1) : state.dist.toFixed(1);
+  document.getElementById('dist-input').value = displayVal;
+  document.getElementById('dist-display').textContent = displayVal + ' ' + state.unit;
+  update();
+});
+
+document.getElementById('dist-input').addEventListener('input', function() {
+  const v = Math.max(0.1, +this.value || 3);
+  state.dist = state.unit === 'ft' ? v / 3.28084 : v;
+  const sliderEl = document.getElementById('dist-slider');
+  sliderEl.value = Math.min(state.unit === 'ft' ? v : state.dist, +sliderEl.max);
+  document.getElementById('dist-display').textContent = v.toFixed(1) + ' ' + state.unit;
+  update();
+});
+
+// Aperture
+document.getElementById('aperture').addEventListener('change', function() {
+  state.ap = +this.value;
+  update();
+});
+
+window.addEventListener('resize', update);
+
+// ── Init ────────────────────────────────────────────────────────────
+update();
+</script>
+
+<script type="module">
+  import { analytics, logEvent } from '/assets/firebase-analytics.js';
+  logEvent(analytics, 'tool_opened', { tool_name: 'flash' });
+</script>
+</body>
+</html>
