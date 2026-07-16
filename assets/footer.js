@@ -4,7 +4,7 @@
 
   var style = document.createElement('style');
   style.textContent = [
-    '#site-footer footer{text-align:center;padding:2.5rem 2rem;border-top:1px solid #2d2d2d;color:#555;font-size:0.85rem;}',
+    '#site-footer footer{text-align:center;margin-top:3rem;padding:2.5rem 2rem;border-top:1px solid #2d2d2d;color:#555;font-size:0.85rem;}',
     '#site-footer footer a{color:#777;text-decoration:none;}',
     '#site-footer footer a:hover{color:#aaa;}'
   ].join('');
