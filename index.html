@@ -111,6 +111,37 @@
             font-size: 1rem;
         }
 
+        .product-side {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .product-platforms {
+            display: flex;
+            gap: 0.6rem;
+        }
+
+        .platform-icon {
+            width: 16px;
+            height: 16px;
+        }
+
+        .platform-icon.ios {
+            fill: #e8e8e8;
+        }
+
+        .platform-icon.android {
+            fill: #3ddc84;
+        }
+
+        .platform-icon.web {
+            fill: none;
+            stroke: #58a6ff;
+            stroke-width: 2;
+        }
+
         nav {
             position: fixed;
             top: 0;
@@ -169,6 +200,18 @@
     </style>
 </head>
 <body>
+    <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+        <symbol id="icon-ios" viewBox="0 0 384 512">
+            <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/>
+        </symbol>
+        <symbol id="icon-android" viewBox="0 0 576 512">
+            <path d="M420.55 301.93a24 24 0 1 1 24-24 24 24 0 0 1-24 24m-265.1 0a24 24 0 1 1 24-24 24 24 0 0 1-24 24m273.7-144.48 47.94-83a10 10 0 1 0-17.27-10l-48.54 84.07a301.25 301.25 0 0 0-246.56 0L116.18 64.45a10 10 0 1 0-17.27 10l47.94 83C64.53 202.22 8.24 285.55 0 384h576c-8.24-98.45-64.54-181.78-146.85-226.55"/>
+        </symbol>
+        <symbol id="icon-web" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+        </symbol>
+    </svg>
     <nav>
         <a href="index.html" class="active">Apps</a>
         <a href="terms.html">Terms</a>
@@ -181,67 +224,109 @@
         </div> -->
         <div class="products-grid">
             <a href="https://4pilots.app" class="product-tile">
-                <img src="assets/4pilots.png" alt="4Pilots Icon" class="product-icon">
+                <div class="product-side">
+                    <img src="assets/4pilots.png" alt="4Pilots Icon" class="product-icon">
+                    <div class="product-platforms" aria-label="Available on iOS and Android">
+                        <svg class="platform-icon ios" aria-hidden="true"><use href="#icon-ios"/></svg>
+                        <svg class="platform-icon android" aria-hidden="true"><use href="#icon-android"/></svg>
+                    </div>
+                </div>
                 <div class="product-content">
                     <h2 class="product-title">4Pilots - Every Aviator's Toolkit</h2>
-                    <p class="product-description">Plan your next flight, run flight-related conversions, E6B calculations and Weight & Balance check</p>
-                </div>
+                    <p class="product-description">Plan your next flight, run flight-related conversions, E6B calculations and Weight & Balance check</p>                </div>
             </a>
             <a href="https://trainid.qoppait.com" class="product-tile">
-                <img src="assets/trainid.png" alt="Train ID Icon" class="product-icon">
+                <div class="product-side">
+                    <img src="assets/trainid.png" alt="Train ID Icon" class="product-icon">
+                    <div class="product-platforms" aria-label="Available on iOS and Android">
+                        <svg class="platform-icon ios" aria-hidden="true"><use href="#icon-ios"/></svg>
+                        <svg class="platform-icon android" aria-hidden="true"><use href="#icon-android"/></svg>
+                    </div>
+                </div>
                 <div class="product-content">
                     <h2 class="product-title">Train ID - AI Identifier</h2>
-                    <p class="product-description">Identify any train instantly using AI</p>
-                </div>
+                    <p class="product-description">Identify any train instantly using AI</p>                </div>
             </a>
             <a href="https://nomadmap.link" class="product-tile">
-                <img src="assets/nomadmap.png" alt="Nomad Map Icon" class="product-icon">
+                <div class="product-side">
+                    <img src="assets/nomadmap.png" alt="Nomad Map Icon" class="product-icon">
+                    <div class="product-platforms" aria-label="Available on iOS">
+                        <svg class="platform-icon ios" aria-hidden="true"><use href="#icon-ios"/></svg>
+                    </div>
+                </div>
                 <div class="product-content">
                     <h2 class="product-title">Nomad Map - Discover & Track Places</h2>
-                    <p class="product-description">Find, save, and share great work and hangout spots as you travel</p>
-                </div>
+                    <p class="product-description">Find, save, and share great work and hangout spots as you travel</p>                </div>
             </a>
             <a href="https://owlio.online" class="product-tile">
-                <img src="assets/travelplanner.png" alt="Owlio Icon" class="product-icon">
+                <div class="product-side">
+                    <img src="assets/travelplanner.png" alt="Owlio Icon" class="product-icon">
+                    <div class="product-platforms" aria-label="Available on iOS">
+                        <svg class="platform-icon ios" aria-hidden="true"><use href="#icon-ios"/></svg>
+                    </div>
+                </div>
                 <div class="product-content">
                     <h2 class="product-title">Owlio - Travel Planner</h2>
-                    <p class="product-description">Plan smarter and travel better with itinerary planning, interactive maps, and local discovery</p>
-                </div>
+                    <p class="product-description">Plan smarter and travel better with itinerary planning, interactive maps, and local discovery</p>                </div>
             </a>
             <a href="https://photoguide.site" class="product-tile">
-                <img src="assets/shutterfox.jpeg" alt="ShutterFox Icon" class="product-icon">
+                <div class="product-side">
+                    <img src="assets/shutterfox.jpeg" alt="ShutterFox Icon" class="product-icon">
+                    <div class="product-platforms" aria-label="Available on iOS and Android">
+                        <svg class="platform-icon ios" aria-hidden="true"><use href="#icon-ios"/></svg>
+                        <svg class="platform-icon android" aria-hidden="true"><use href="#icon-android"/></svg>
+                    </div>
+                </div>
                 <div class="product-content">
                     <h2 class="product-title">ShutterFox - Photo Guide</h2>
-                    <p class="product-description">Learn photography with daily lessons and access cheat sheets for common scenarios</p>
-                </div>
+                    <p class="product-description">Learn photography with daily lessons and access cheat sheets for common scenarios</p>                </div>
             </a>
             <a href="https://photoguide.site/mobile" class="product-tile">
-                <img src="assets/photoguide-mobile.jpg" alt="PhotoGuide Mobile Icon" class="product-icon">
+                <div class="product-side">
+                    <img src="assets/photoguide-mobile.jpg" alt="PhotoGuide Mobile Icon" class="product-icon">
+                    <div class="product-platforms" aria-label="Available on iOS and Android">
+                        <svg class="platform-icon ios" aria-hidden="true"><use href="#icon-ios"/></svg>
+                        <svg class="platform-icon android" aria-hidden="true"><use href="#icon-android"/></svg>
+                    </div>
+                </div>
                 <div class="product-content">
                     <h2 class="product-title">PhotoGuide Mobile - Phone Photography</h2>
-                    <p class="product-description">Master mobile photography with instant composition tips, cheat sheets, and camera techniques</p>
-                </div>
+                    <p class="product-description">Master mobile photography with instant composition tips, cheat sheets, and camera techniques</p>                </div>
             </a>
             <a href="https://vocabularycards.app" class="product-tile">
-                <img src="assets/vocabularycards.png" alt="Vocabulary Cards Icon" class="product-icon">
+                <div class="product-side">
+                    <img src="assets/vocabularycards.png" alt="Vocabulary Cards Icon" class="product-icon">
+                    <div class="product-platforms" aria-label="Available on iOS and Android">
+                        <svg class="platform-icon ios" aria-hidden="true"><use href="#icon-ios"/></svg>
+                        <svg class="platform-icon android" aria-hidden="true"><use href="#icon-android"/></svg>
+                    </div>
+                </div>
                 <div class="product-content">
                     <h2 class="product-title">Vocabulary Cards - Learn Languages</h2>
-                    <p class="product-description">Learn languages fast with flashcards and build your vocabulary day by day</p>
-                </div>
+                    <p class="product-description">Learn languages fast with flashcards and build your vocabulary day by day</p>                </div>
             </a>
             <a href="https://citymapguesser.app" class="product-tile">
-                <img src="assets/citymapguesser.png" alt="City Map Guesser Icon" class="product-icon">
+                <div class="product-side">
+                    <img src="assets/citymapguesser.png" alt="City Map Guesser Icon" class="product-icon">
+                    <div class="product-platforms" aria-label="Available on iOS and Android">
+                        <svg class="platform-icon ios" aria-hidden="true"><use href="#icon-ios"/></svg>
+                        <svg class="platform-icon android" aria-hidden="true"><use href="#icon-android"/></svg>
+                    </div>
+                </div>
                 <div class="product-content">
                     <h2 class="product-title">City Map Guesser - Geography Game</h2>
-                    <p class="product-description">Guess the city from its map alone and test your geography knowledge</p>
-                </div>
+                    <p class="product-description">Guess the city from its map alone and test your geography knowledge</p>                </div>
             </a>
             <a href="https://venuedesk.site" class="product-tile">
-                <img src="assets/venuedesk.png" alt="VenueDesk Icon" class="product-icon">
+                <div class="product-side">
+                    <img src="assets/venuedesk.png" alt="VenueDesk Icon" class="product-icon">
+                    <div class="product-platforms" aria-label="Available on web">
+                        <svg class="platform-icon web" aria-hidden="true"><use href="#icon-web"/></svg>
+                    </div>
+                </div>
                 <div class="product-content">
                     <h2 class="product-title">VenueDesk - Venue Management</h2>
-                    <p class="product-description">Manage your venue and simplify your workflow with bookings, scheduling, and more</p>
-                </div>
+                    <p class="product-description">Manage your venue and simplify your workflow with bookings, scheduling, and more</p>                </div>
             </a>
         </div>
     </div>
